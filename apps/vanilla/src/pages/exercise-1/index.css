@@ -8,9 +8,10 @@
     font-weight: bold;
 }
 
-.book-group__book-list {
+.book-group__books-container {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
 .book-card {
@@ -30,4 +31,16 @@
     font-weight: bold;
     text-align: left;
     overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 786px) {
+    .book-card__book-cover {
+        width: 172.5px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .book-card__book-cover {
+        width: 148px;
+    }
 }
