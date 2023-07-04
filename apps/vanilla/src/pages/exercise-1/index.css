@@ -50,6 +50,52 @@
     overflow-wrap: break-word;
 }
 
+.book-filters {
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    gap: 8px;
+}
+
+.search-field {
+    height: 48px;
+    border-radius: 16px;
+    padding: 8px 16px 8px 16px;
+    box-sizing: border-box;
+    border: none;
+    background: rgb(240, 243, 240);
+}
+
+.select-field {
+    height: 48px;
+    border-radius: 16px;
+    padding: 0px 16px 0px 16px;
+    border: none;
+    background: rgb(240, 243, 240);
+    color: gray;
+}
+
+.book-filters__search-field {
+    width: 276px;
+}
+
+.books-filters__sorting-field {
+    width: 276px;
+}
+
+.book_filter__comics-show-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox_field {
+    width: 20px;
+    height: 20px;
+    border: 2px solid black;
+    border-radius: 4px;
+}
+
 @media screen and (max-width: 786px) {
     .book-card__book-cover {
         width: 172.5px;
