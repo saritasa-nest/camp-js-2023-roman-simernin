@@ -1,12 +1,32 @@
-.book-group {}
-
-.book-group__group-title {
+.subtitle-text {
     font-size: 18px;
-    font-family: "Inter";
+    line-height: 24px;
+    font-weight: 600;
     text-transform: uppercase;
+    font-family: "Inter";
+}
+
+.body-text {
+    font-size: 20px;
+    line-height: 32px;
+    font-family: "Inter";
+}
+
+.body-small-text {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    font-family: "Inter";
+}
+
+.logo-text {
+    font-size: 20px;
     line-height: 24px;
     font-weight: bold;
+    font-family: "Inter";
 }
+
+.book-group {}
 
 .book-group__books-container {
     display: flex;
@@ -26,10 +46,6 @@
 }
 
 .book-card__book-name {
-    font-size: 18px;
-    font-family: "Inter";
-    line-height: 24px;
-    font-weight: bold;
     text-align: left;
     overflow-wrap: break-word;
 }
