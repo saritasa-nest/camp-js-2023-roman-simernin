@@ -1,0 +1,33 @@
+.book-group {}
+
+.book-group__group-title {
+    font-size: 18px;
+    font-family: "Inter";
+    text-transform: uppercase;
+    line-height: 24px;
+    font-weight: bold;
+}
+
+.book-group__book-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.book-card {
+    width: min-content;
+}
+
+.book-card__book-cover {
+    border-radius: 10%;
+    height: 250.8px;
+    width: 167.2px;
+}
+
+.book-card__book-name {
+    font-size: 18px;
+    font-family: "Inter";
+    line-height: 24px;
+    font-weight: bold;
+    text-align: left;
+    overflow-wrap: break-word;
+}
