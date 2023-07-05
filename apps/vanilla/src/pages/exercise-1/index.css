@@ -64,10 +64,14 @@
 .search-field {
     height: 48px;
     border-radius: 16px;
-    padding: 8px 16px 8px 16px;
+    padding: 8px 16px 8px 56px;
     box-sizing: border-box;
     border: none;
-    background: rgb(240, 243, 240);
+    background-color: rgb(240, 243, 240);
+    background-image: url('./icons/magnifying-glass.svg');
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 16px center;
 }
 
 .select-field {
@@ -75,8 +79,14 @@
     border-radius: 16px;
     padding: 0px 16px 0px 16px;
     border: none;
-    background: rgb(240, 243, 240);
+    background-color: rgb(240, 243, 240);
     color: gray;
+    background-image: url('./icons/chevron-down.svg');
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: right;
+    background-origin: content-box;
+    appearance: none;
 }
 
 .book-filters-form__search-field {
