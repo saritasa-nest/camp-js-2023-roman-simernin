@@ -51,6 +51,10 @@
 }
 
 .book-filters {
+    float: right;
+}
+
+.book-filters-form {
     display: flex;
     flex-direction: column;
     width: min-content;
@@ -75,35 +79,75 @@
     color: gray;
 }
 
-.book-filters__search-field {
-    width: 276px;
+.book-filters-form__search-field {
+    width: 320px;
 }
 
-.books-filters__sorting-field {
-    width: 276px;
+.book-filters-form__sorting-field {
+    width: 320px;
 }
 
-.book_filter__comics-show-filter {
+.book_filter-form__comics-show-filter {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.checkbox_field {
+.checkbox-field {
     width: 20px;
     height: 20px;
     border: 2px solid black;
     border-radius: 4px;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (min-width: 787px) and (max-width: 1280px) {
+    .book-filters-form__search-field {
+        width: 276px;
+    }
+
+    .book-filters-form__sorting-field {
+        width: 276px;
+    }
+}
+
+
+@media screen and (min-width: 361px) and (max-width: 786px) {
     .book-card__book-cover {
         width: 172.5px;
+    }
+
+    .book-filters-form__search-field {
+        width: 287.5px;
+    }
+
+    .book-filters-form__sorting-field {
+        width: 287.5px;
+    }
+
+    .book-filters {
+        float: none;
+    }
+
+    .book-filters-form {
+        flex-direction: row;
+        width: max-content;
     }
 }
 
 @media screen and (max-width: 360px) {
     .book-card__book-cover {
         width: 148px;
+    }
+
+    .book-filters-form__search-field {
+        width: 312px;
+    }
+
+    .book-filters-form__sorting-field {
+        width: 312px;
+    }
+
+    .book-filters {
+        float: none;
     }
 }
