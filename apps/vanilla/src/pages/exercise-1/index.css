@@ -28,7 +28,7 @@
 
 .book-group {}
 
-.book-group__books-container {
+.book-group__container {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
