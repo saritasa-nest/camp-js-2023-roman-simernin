@@ -1,23 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --primary-color: #F15924;
+    --on-primary-color: #FFFFFF;
+    --border-color: #D0D0D0;
+    --surface-color: #FFFFFF;
+    --surface-overlay-color: #E8E8E8;
+    --on-surface-color: #000000;
+    --on-surface-dim-color: #7A7A7A;
+
+    --common-font-family: "Inter"
+}
+
 .subtitle-text {
     font-size: 18px;
     line-height: 24px;
     font-weight: 600;
     text-transform: uppercase;
-    font-family: "Inter";
+    font-family: var(--common-font-family);
 }
 
 .body-text {
     font-size: 20px;
     line-height: 32px;
-    font-family: "Inter";
+    font-family: var(--common-font-family);
 }
 
 .body-small-text {
     font-size: 16px;
     line-height: 24px;
-    font-weight: 500;
-    font-family: "Inter";
+    font-weight: 600;
+    font-family: var(--common-font-family);
 }
+
+.logo-text {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: bold;
+    font-family: var(--common-font-family);
+}
+
+
 
 .content-container {
     display: flex;
@@ -25,16 +48,7 @@
     gap: 10px;
 }
 
-.content-container__book-filters {
-    align-self: flex-start;
-}
 
-.logo-text {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: bold;
-    font-family: "Inter";
-}
 
 .book-group {}
 
@@ -67,6 +81,11 @@
     overflow-wrap: break-word;
 }
 
+
+.content-container__book-filters {
+    align-self: flex-start;
+}
+
 .book-filters {
     position: sticky;
     position: -webkit-sticky;
@@ -80,17 +99,25 @@
     gap: 8px;
 }
 
+.book-filters-form__search-field {
+    width: 320px;
+}
+
 .search-field {
     height: 48px;
     border-radius: 16px;
     padding: 8px 16px 8px 56px;
     box-sizing: border-box;
     border: none;
-    background-color: rgb(240, 243, 240);
+    background-color: var(--surface-overlay-color);
     background-image: url('./icons/magnifying-glass.svg');
     background-repeat: no-repeat;
     background-size: 24px 24px;
     background-position: 16px center;
+}
+
+.book-filters-form__sorting-field {
+    width: 320px;
 }
 
 .select-field {
@@ -98,7 +125,7 @@
     border-radius: 16px;
     padding: 0px 16px 0px 16px;
     border: none;
-    background-color: rgb(240, 243, 240);
+    background-color: var(--surface-overlay-color);
     color: gray;
     background-image: url('./icons/chevron-down.svg');
     background-repeat: no-repeat;
@@ -108,30 +135,24 @@
     appearance: none;
 }
 
-.book-filters-form__search-field {
-    width: 320px;
-}
-
-.book-filters-form__sorting-field {
-    width: 320px;
-}
-
 .book_filter-form__comics-show-filter {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
+.checkbox-field {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+}
+
 .book-filters__border {
     display: none;
 }
 
-.checkbox-field {
-    width: 20px;
-    height: 20px;
-    border: 2px solid black;
-    border-radius: 4px;
-}
+
 
 @media screen and (min-width: 787px) and (max-width: 1280px) {
     .book-filters-form__search-field {
