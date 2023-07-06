@@ -25,6 +25,10 @@
     gap: 10px;
 }
 
+.content-container__book-filters {
+    align-self: flex-start;
+}
+
 .logo-text {
     font-size: 20px;
     line-height: 24px;
@@ -33,6 +37,13 @@
 }
 
 .book-group {}
+
+.book-group__title {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    background-color: white;
+}
 
 .book-group__container {
     display: flex;
@@ -58,8 +69,8 @@
 
 .book-filters {
     position: sticky;
+    position: -webkit-sticky;
     top: 0px;
-    align-self: flex-start;
     background: white;
 }
 
