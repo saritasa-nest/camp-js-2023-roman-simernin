@@ -152,6 +152,36 @@
     display: none;
 }
 
+.footer-container {
+    height: 128px;
+}
+
+.footer-content {
+    padding: 24px 0px 24px 0px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.app-info-container {
+    width: 281px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.github-link {
+    color: var(--on-surface-color);
+}
+
+.footer-content__top-link {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.top-link {
+    color: var(--on-surface-color);
+    text-decoration: none;
+}
+
 
 
 @media screen and (min-width: 787px) and (max-width: 1280px) {
@@ -219,5 +249,13 @@
 
     .book-filters__border {
         display: block;
+    }
+
+    .app-info {
+        width: 312px;
+    }
+
+    .app-info__github-link {
+        margin-right: 0px;
     }
 }
