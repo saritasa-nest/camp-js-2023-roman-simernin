@@ -176,7 +176,8 @@
 }
 
 .app-info-container {
-    width: 281px;
+    width: 50%;
+    max-width: 315px;
     display: flex;
     justify-content: space-between;
 }
@@ -273,5 +274,10 @@
     .book-group__title {
         top: 228px;
         z-index: 0;
+    }
+
+    .app-info-container {
+        width: 100%;
+        max-width: none;
     }
 }
