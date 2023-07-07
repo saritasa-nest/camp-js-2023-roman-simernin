@@ -40,11 +40,19 @@
     font-family: var(--common-font-family);
 }
 
+.body-container {
+    display: flex;
+    justify-content: center;
+}
 
+.main-container {
+    width: fit-content;
+}
 
 .content-container {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -81,12 +89,8 @@
     overflow-wrap: break-word;
 }
 
-
 .content-container__book-filters {
     align-self: flex-start;
-}
-
-.book-filters {
     position: sticky;
     position: -webkit-sticky;
     top: 0px;
@@ -192,10 +196,6 @@
     .book-filters-form__sorting-field {
         width: 276px;
     }
-
-    .book-filters {
-        right: 0px;
-    }
 }
 
 
@@ -212,13 +212,8 @@
         width: 287.5px;
     }
 
-    .book-filters {
-        float: none;
-    }
-
     .book-filters-form {
         flex-direction: row;
-        width: max-content;
     }
 
     .content-container {
@@ -249,13 +244,5 @@
 
     .book-filters__border {
         display: block;
-    }
-
-    .app-info {
-        width: 312px;
-    }
-
-    .app-info__github-link {
-        margin-right: 0px;
     }
 }
