@@ -159,6 +159,29 @@
     height: 20px;
     border: 2px solid var(--border-color);
     border-radius: 4px;
+    position: relative;
+    appearance: none;
+}
+
+.checkbox-field:checked {
+    border: 2px solid var(--primary-color);
+}
+
+.checkbox-field::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.checkbox-field:checked::after {
+    display: block;
 }
 
 .book-filters__border {
