@@ -6,7 +6,6 @@
     top: 0px;
     background-color: var(--surface-color);
     outline: 1px solid var(--on-primary-color);
-    margin-top: 0px;
 }
 
 .book-group-container {
@@ -44,7 +43,7 @@
     }
 
     .book-group-title {
-        top: 107px;
+        top: 124px;
     }
 }
 
@@ -54,6 +53,6 @@
     }
 
     .book-group-title {
-        top: 218px;
+        top: 236px;
     }
 }

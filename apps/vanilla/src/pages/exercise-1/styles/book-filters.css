@@ -1,9 +1,5 @@
 @import "./colors.css";
 
-.book-filters-title {
-    margin-top: 0px;
-}
-
 .book-filters-form {
     display: flex;
     flex-direction: column;
