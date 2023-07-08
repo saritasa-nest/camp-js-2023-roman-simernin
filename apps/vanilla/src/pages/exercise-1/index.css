@@ -1,37 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "./styles/typographies.css";
 @import "./styles/colors.css";
-
-:root {
-    --common-font-family: "Inter"
-}
-
-.subtitle-text {
-    font-size: 18px;
-    line-height: 24px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: var(--common-font-family);
-}
-
-.body-text {
-    font-size: 20px;
-    line-height: 32px;
-    font-family: var(--common-font-family);
-}
-
-.body-small-text {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 600;
-    font-family: var(--common-font-family);
-}
-
-.logo-text {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: bold;
-    font-family: var(--common-font-family);
-}
 
 html,
 body {
