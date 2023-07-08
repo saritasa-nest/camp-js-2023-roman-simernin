@@ -15,15 +15,16 @@
     </header>
     <div class="main-container__content content-container">
       <section class="content-container__book-filters">
-        <h3 class="subtitle-typography">Filters</h3>
+        <h3 class="book-filters-title subtitle-typography">Filters</h3>
         <form class="book-filters-form">
-          <input class="book-filters-form__search-field search-field body-typography" placeholder='e.g "Refactoring"' />
-          <select class="book-filters-form__sorting-field select-field body-typography">
-            <option selected disabled>Choose sort field</option>
+          <input class="book-filters-form__search-field body-typography" placeholder='e.g "Refactoring"' />
+          <select required class="book-filters-form__sort-field body-typography">
+            <option value="" selected disabled>Choose sort field</option>
+            <option value="length">Length</option>
           </select>
-          <div class="book_filter-form__comics-show-filter">
-            <input class="checkbox-field" type="checkbox" />
-            <label class="body-typography">Show comics</label>
+          <div class="book-filter-form__comics-show-field">
+            <input id="comic-show" class="checkbox-field" type="checkbox" />
+            <label for="comic-show" class="body-typography">Show comics</label>
           </div>
         </form>
       </section>
