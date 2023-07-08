@@ -22,15 +22,8 @@ body {
 .header-container {
     height: 64px;
     border-bottom: 1px solid var(--border-color);
-    position: relative;
-}
-
-.header-container__title {
-    position: absolute;
-    top: 50%;
-    margin: 0;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
 }
 
 .main-container__content {
