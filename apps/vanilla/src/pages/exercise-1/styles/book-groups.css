@@ -1,0 +1,59 @@
+@import "./colors.css";
+
+.book-group-title {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    background-color: var(--surface-color);
+    outline: 1px solid var(--on-primary-color);
+    margin-top: 0px;
+}
+
+.book-group-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.book-card {
+    width: min-content;
+}
+
+.book-card__book-cover {
+    border-radius: 24px;
+    height: 250.8px;
+    width: 167.2px;
+    border: 1px solid var(--border-color);
+}
+
+.book-card__book-name {
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 786px) {
+    .book-group-title {
+        /* To filters sticky block be above sticky book group title*/
+        z-index: 0;
+    }
+}
+
+@media screen and (min-width: 361px) and (max-width: 786px) {
+    .book-card__book-cover {
+        width: 172.5px;
+    }
+
+    .book-group-title {
+        top: 107px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .book-card__book-cover {
+        width: 148px;
+    }
+
+    .book-group-title {
+        top: 218px;
+    }
+}
