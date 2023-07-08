@@ -21,6 +21,7 @@ export default defineConfig({
     rollupOptions: {
       input: [
         resolve(root, 'index.html'),
+        resolve(root, 'exercise1', 'index.html'),
       ],
     },
   },
