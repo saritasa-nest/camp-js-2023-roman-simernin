@@ -1,14 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import "./styles/colors.css";
 
 :root {
-    --primary-color: #F15924;
-    --on-primary-color: #FFFFFF;
-    --border-color: #D0D0D0;
-    --surface-color: #FFFFFF;
-    --surface-overlay-color: #E8E8E8;
-    --on-surface-color: #000000;
-    --on-surface-dim-color: #7A7A7A;
-
     --common-font-family: "Inter"
 }
 
