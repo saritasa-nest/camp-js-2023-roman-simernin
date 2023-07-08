@@ -87,7 +87,7 @@
     border-radius: 24px;
     height: 250.8px;
     width: 167.2px;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
 }
 
 .book-card__book-name {
