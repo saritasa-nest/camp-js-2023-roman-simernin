@@ -1,5 +1,9 @@
 @import "./colors.css";
 
+.books-container {
+    width: 900px;
+}
+
 .book-group-title {
     position: sticky;
     position: -webkit-sticky;
@@ -11,7 +15,7 @@
 .book-group-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 12px;
 }
 
 .book-card {
@@ -31,6 +35,11 @@
 }
 
 @media screen and (max-width: 786px) {
+
+    .books-container {
+        width: 100%;
+    }
+
     .book-group-title {
         /* To filters sticky block be above sticky book group title*/
         z-index: 0;
