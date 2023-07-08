@@ -40,17 +40,21 @@
     font-family: var(--common-font-family);
 }
 
-.body-container {
-    display: flex;
-    justify-content: center;
+html,
+body {
+    height: 100%;
 }
 
 .main-container {
     width: fit-content;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .main-container__header {
     margin-bottom: 2px;
+    flex: 0 0 auto;
 }
 
 .header-container {
@@ -65,6 +69,10 @@
     margin: 0;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+
+.main-container__content {
+    flex: 1 0 auto;
 }
 
 .content-container {
@@ -200,14 +208,23 @@
     display: none;
 }
 
+.main-container__footer {
+    flex: 0 0 auto;
+}
+
 .footer-container {
     height: 128px;
+}
+
+.footer-container__content {
+    margin-top: 30px;
 }
 
 .footer-content {
     padding: 24px 0px 24px 0px;
     display: flex;
     flex-wrap: wrap;
+    border-top: 1px solid var(--border-color);
 }
 
 .app-info-container {
@@ -231,7 +248,11 @@
     text-decoration: none;
 }
 
-
+@media screen and (min-width: 1280px) {
+    .main-container {
+        margin: 0 auto;
+    }
+}
 
 @media screen and (min-width: 787px) and (max-width: 1280px) {
     .book-filters-form__search-field {
