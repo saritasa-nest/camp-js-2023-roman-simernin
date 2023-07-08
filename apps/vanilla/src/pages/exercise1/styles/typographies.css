@@ -1,33 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
-    --common-font-family: "Inter"
+  --common-font-family: "Inter";
 }
 
 .subtitle-typography {
-    font-size: 18px;
-    line-height: 24px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-family: var(--common-font-family);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: var(--common-font-family);
 }
 
 .body-typography {
-    font-size: 20px;
-    line-height: 32px;
-    font-family: var(--common-font-family);
+  font-size: 20px;
+  line-height: 32px;
+  font-family: var(--common-font-family);
 }
 
 .body-small-typography {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 600;
-    font-family: var(--common-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  font-family: var(--common-font-family);
 }
 
 .logo-typography {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: bold;
-    font-family: var(--common-font-family);
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: bold;
+  font-family: var(--common-font-family);
 }
