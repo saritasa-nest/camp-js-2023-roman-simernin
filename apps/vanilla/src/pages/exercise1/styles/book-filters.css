@@ -14,7 +14,7 @@
   box-sizing: border-box;
   border: none;
   background-color: var(--surface-overlay-color);
-  background-image: url("./icons/magnifying-glass.svg");
+  background-image: url("../icons/magnifying-glass.svg");
   background-repeat: no-repeat;
   background-size: 24px 24px;
   background-position: 16px center;
@@ -30,7 +30,7 @@
   border: none;
   box-sizing: border-box;
   background-color: var(--surface-overlay-color);
-  background-image: url("./icons/chevron-down.svg");
+  background-image: url("../icons/chevron-down.svg");
   background-repeat: no-repeat;
   background-size: 24px 24px;
   background-position: right;
