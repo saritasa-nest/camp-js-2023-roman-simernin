@@ -17,27 +17,22 @@ body {
 }
 
 .main-container__header {
-  flex: 0 0 auto;
-}
-
-.header-container {
   height: 64px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-}
-
-.main-container__footer {
   flex: 0 0 auto;
 }
 
-.footer-container {
+
+.main-container__footer {
   height: 128px;
   border-top: 1px solid var(--border-color);
   padding: 24px 0;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
+  flex: 0 0 auto;
 }
 
 .app-info-container {
