@@ -24,7 +24,6 @@ body {
   flex: 0 0 auto;
 }
 
-
 .main-container__footer {
   height: 128px;
   border-top: 1px solid var(--border-color);
