@@ -44,7 +44,7 @@
   }
 }
 
-@media screen and (min-width: 361px) and (max-width: 786px) {
+@media screen and (max-width: 786px) {
   .book-card__book-cover {
     width: 172.5px;
   }
