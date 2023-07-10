@@ -53,9 +53,6 @@ body {
 .footer-content__top-link {
   flex-grow: 1;
   text-align: right;
-}
-
-.top-link {
   color: var(--on-surface-color);
   text-decoration: none;
 }
