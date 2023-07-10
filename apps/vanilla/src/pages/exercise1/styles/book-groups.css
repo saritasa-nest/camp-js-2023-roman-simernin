@@ -25,7 +25,8 @@
   border-radius: 24px;
   height: 250.8px;
   width: 167.2px;
-  border: 1px solid var(--border-color);
+  outline: 1px solid var(--border-color);
+  outline-offset: -1px;
 }
 
 .book-card__book-name {
