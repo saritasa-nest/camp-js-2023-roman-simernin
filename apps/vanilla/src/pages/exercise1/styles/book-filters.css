@@ -1,5 +1,10 @@
 @import "./colors.css";
 
+:root {
+  --search-field-icon-gap: 16px;
+  --search-field-icon-size: 24px;
+}
+
 .book-filters-form {
   display: flex;
   flex-direction: column;
@@ -16,11 +21,9 @@
   background-color: var(--surface-overlay-color);
   background-image: url("../icons/magnifying-glass.svg");
   background-repeat: no-repeat;
-  background-size: 24px 24px;
-  background-position: 16px center;
-
-  /* 16px background-position + 24px background-size + 8px gap */
-  padding-left: 56px;
+  background-size: var(--search-field-icon-size) var(--search-field-icon-size);
+  background-position: var(--search-field-icon-gap) center;
+  padding-left: calc(2 * var(--search-field-icon-gap) + var(--search-field-icon-size));
 }
 
 .book-filters-form__sort-field {
