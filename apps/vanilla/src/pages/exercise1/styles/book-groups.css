@@ -23,8 +23,8 @@
 
 .book-card__book-cover {
   border-radius: 24px;
-  height: 250.8px;
-  width: 167.2px;
+  height: 251px;
+  width: 167px;
   outline: 1px solid var(--border-color);
   outline-offset: -1px;
 }
@@ -47,7 +47,7 @@
 
 @media screen and (max-width: 786px) {
   .book-card__book-cover {
-    width: 172.5px;
+    width: 173px;
   }
 
   .book-group-title {

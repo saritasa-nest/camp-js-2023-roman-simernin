@@ -41,7 +41,7 @@ body {
 }
 
 .app-info-container {
-  width: 281px;
+  width: 280px;
   display: flex;
   justify-content: space-between;
 }
