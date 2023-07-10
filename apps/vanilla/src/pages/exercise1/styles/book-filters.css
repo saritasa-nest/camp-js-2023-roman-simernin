@@ -52,6 +52,10 @@
   gap: 8px;
 }
 
+.book-filters__comics-show-label {
+  white-space: nowrap;
+}
+
 .checkbox-field {
   width: 20px;
   height: 20px;
