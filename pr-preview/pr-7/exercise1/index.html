@@ -6,78 +6,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Books app</title>
-  <link rel="stylesheet" href="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/index-6a1ddcb4.css">
+  <link rel="stylesheet" href="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/index-539a324b.css">
 </head>
 
 <body class="main-container">
   <header class="main-container__header">
-    <h1 class="typography-logo">📚 Books app</h1>
+    <h1 class="typography typography_logo">📚 Books app</h1>
   </header>
   <div class="main-container__content content-container">
     <section class="content-container__book-filters">
       <p>
-        <span class="typography-subtitle">Filters</span>
+        <span class="typography typography_subtitle">Filters</span>
       </p>
       <form class="book-filters">
-        <input class="book-filters__search-field typography-body" placeholder='e.g "Refactoring"' />
-        <select required class="book-filters__sort-field typography-body">
+        <input class="book-filters__search-field typography typography_body" placeholder='e.g "Refactoring"' />
+        <select required class="book-filters__sort-field typography typography_body">
           <option value="" selected disabled>Choose sort field</option>
           <option value="length">Length</option>
         </select>
         <div class="book-filters__comics-show-field">
           <input id="comic-show" class="checkbox-field" type="checkbox" />
-          <label for="comic-show" class="typography-body">Show comics</label>
+          <label for="comic-show" class="book-filters__comics-show-label typography typography_body">Show comics</label>
         </div>
       </form>
     </section>
     <main class="books-container">
       <section>
-        <h2 class="book-group-title typography-subtitle">2020 year</h2>
+        <h2 class="book-group-title typography typography_subtitle">2020 year</h2>
         <div class="book-group-container">
           <div class="book-card">
             <img alt="Black background" class="book-card__book-cover" src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/refactoring-ui-ed10ab58.png">
-            <span class="book-card__book-name typography-body-small">Refactoring UI</span>
+            <span class="book-card__book-name typography typography_body_small">Refactoring UI</span>
           </div>
           <div class="book-card">
             <img alt="Blue background" class="book-card__book-cover" src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/debugging-css-ea3b9771.png">
-            <span class="book-card__book-name typography-body-small">Master the Skill of Debugging CSS</span>
+            <span class="book-card__book-name typography typography_body_small">Master the Skill of Debugging CSS</span>
           </div>
           <div class="book-card">
             <img alt="White-haired boy with a brush in his hand" class="book-card__book-cover"
               src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/anime-boy-f5a5b5b8.png">
-            <span class="book-card__book-name typography-body-small">Blue Period</span>
+            <span class="book-card__book-name typography typography_body_small">Blue Period</span>
           </div>
         </div>
       </section>
       <section>
-        <h2 class="book-group-title typography-subtitle">1980 year</h2>
+        <h2 class="book-group-title typography typography_subtitle">1980 year</h2>
         <div class="book-group-container">
           <div class="book-card">
             <img alt="Green-haired girl is sitting on a scooter" class="book-card__book-cover"
               src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/anime-women-08762ce6.png">
-            <span class="book-card__book-name typography-body-small">Yokohama Kaidashi Kikou</span>
+            <span class="book-card__book-name typography typography_body_small">Yokohama Kaidashi Kikou</span>
           </div>
           <div class="book-card">
             <img alt="Small gray bird is sitting on a branch" class="book-card__book-cover"
               src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/js-patterns-bd65bab1.png">
-            <span class="book-card__book-name typography-body-small">Learning JavaScript Design Patterns</span>
+            <span class="book-card__book-name typography typography_body_small">Learning JavaScript Design
+              Patterns</span>
           </div>
           <div class="book-card">
             <img alt="Little green-haired girl with a large bouquet of sunflowers" class="book-card__book-cover"
               src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/anime-girl-0f2012ca.png">
-            <span class="book-card__book-name typography-body-small">Yotsuba to!</span>
+            <span class="book-card__book-name typography typography_body_small">Yotsuba to!</span>
           </div>
           <div class="book-card">
             <img alt="Painting in the genre of surrealism" class="book-card__book-cover" src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/ddd-ca5da553.png">
-            <span class="book-card__book-name typography-body-small">Domain-Driven Design</span>
+            <span class="book-card__book-name typography typography_body_small">Domain-Driven Design</span>
           </div>
           <div class="book-card">
             <img alt="Red-brown background" class="book-card__book-cover" src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/ddd-implementing-09a0d3c4.png">
-            <span class="book-card__book-name typography-body-small">Implementing Domain-Driven Design</span>
+            <span class="book-card__book-name typography typography_body_small">Implementing Domain-Driven Design</span>
           </div>
           <div class="book-card">
             <img alt="Red background" class="book-card__book-cover" src="/camp-js-2023-roman-simernin/pr-preview/pr-7/assets/seven-skills-586364d4.png">
-            <span class="book-card__book-name typography-body-small">7 Навыков высоко эффективных людей</span>
+            <span class="book-card__book-name typography typography_body_small">7 Навыков высоко эффективных
+              людей</span>
           </div>
         </div>
       </section>
@@ -86,12 +88,12 @@
   <footer class="main-container__footer">
     <div class="app-info-container">
       <div>
-        <span class="typography-logo">Books app</span>
-        <span class="typography-body">© 2023</span>
+        <span class="typography typography_logo">Books app</span>
+        <span class="typography typography_body">© 2023</span>
       </div>
-      <a class="github-link typography-body" href="#">Github</a>
+      <a class="github-link typography typography_body" href="#">Github</a>
     </div>
-    <a class="footer-content__top-link typography-body" href="#">Go to top ↑</a>
+    <a class="footer-content__top-link typography typography_body" href="#">Go to top ↑</a>
   </footer>
 </body>
 
