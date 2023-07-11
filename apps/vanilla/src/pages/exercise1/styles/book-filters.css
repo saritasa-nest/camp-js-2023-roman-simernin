@@ -3,6 +3,7 @@
 :root {
   --search-field-icon-gap: 16px;
   --search-field-icon-size: 24px;
+  --filter-field-border-radius: 16px;
 }
 
 .book-filters {
@@ -14,7 +15,7 @@
 
 .book-filters__search-field {
   height: 48px;
-  border-radius: 16px;
+  border-radius: var(--filter-field-border-radius);
   padding: 8px 16px;
   box-sizing: border-box;
   border: none;
@@ -28,7 +29,7 @@
 
 .book-filters__sort-field {
   height: 48px;
-  border-radius: 16px;
+  border-radius: var(--filter-field-border-radius);
   padding: 0 16px;
   border: none;
   box-sizing: border-box;
