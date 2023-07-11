@@ -29,6 +29,7 @@
 
 .book-filters__sort-field {
   height: 48px;
+  color: var(--on-surface-color);
   border-radius: var(--filter-field-border-radius);
   padding: 0 16px;
   border: none;
@@ -45,6 +46,15 @@
 /* For default value if sort field is unselected. */
 .book-filters__sort-field:invalid {
   color: var(--on-surface-dim-color);
+}
+
+.book-filters__sort-field-option {
+  color: var(--on-surface-color);
+}
+
+.book-filters__search-field:focus,
+.book-filters__sort-field:focus {
+  border: 1px solid var(--on-surface-color);
 }
 
 .book-filters__comics-show-field {

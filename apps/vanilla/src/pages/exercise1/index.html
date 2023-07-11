@@ -20,8 +20,8 @@
       <form class="book-filters">
         <input class="book-filters__search-field typography typography_body" placeholder='e.g "Refactoring"' />
         <select required class="book-filters__sort-field typography typography_body">
-          <option value="" selected disabled>Choose sort field</option>
-          <option value="length">Length</option>
+          <option value="" selected disabled hidden>Choose sort field</option>
+          <option value="length" class="book-filters__sort-field-option">Length</option>
         </select>
         <div class="book-filters__comics-show-field">
           <input id="comic-show" class="checkbox-field" type="checkbox" />
