@@ -107,10 +107,7 @@
     flex-direction: row;
   }
 
-  .book-filters__search-field {
-    width: 288px;
-  }
-
+  .book-filters__search-field,
   .book-filters__sort-field {
     width: 288px;
   }
