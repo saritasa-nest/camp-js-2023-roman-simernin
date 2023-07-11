@@ -1,0 +1,124 @@
+@import "./colors.css";
+
+:root {
+  --search-field-icon-gap: 16px;
+  --search-field-icon-size: 24px;
+  --filter-field-border-radius: 16px;
+}
+
+.book-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 320px;
+}
+
+.book-filters__search-field {
+  height: 48px;
+  border-radius: var(--filter-field-border-radius);
+  padding: 8px 16px;
+  box-sizing: border-box;
+  border: none;
+  background-color: var(--surface-overlay-color);
+  background-image: url("../icons/magnifying-glass.svg");
+  background-repeat: no-repeat;
+  background-size: var(--search-field-icon-size) var(--search-field-icon-size);
+  background-position: var(--search-field-icon-gap) center;
+  padding-left: calc(2 * var(--search-field-icon-gap) + var(--search-field-icon-size));
+}
+
+.book-filters__sort-field {
+  height: 48px;
+  color: var(--on-surface-color);
+  border-radius: var(--filter-field-border-radius);
+  padding: 0 16px;
+  border: none;
+  box-sizing: border-box;
+  background-color: var(--surface-overlay-color);
+  background-image: url("../icons/chevron-down.svg");
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  background-position: right;
+  background-origin: content-box;
+  appearance: none;
+}
+
+/* For default value if sort field is unselected. */
+.book-filters__sort-field:invalid {
+  color: var(--on-surface-dim-color);
+}
+
+.book-filters__sort-field-option {
+  color: var(--on-surface-color);
+}
+
+.book-filters__search-field:focus,
+.book-filters__sort-field:focus {
+  border: 1px solid var(--on-surface-color);
+}
+
+.book-filters__comics-show-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.book-filters__comics-show-label {
+  white-space: nowrap;
+}
+
+.checkbox-field {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  position: relative;
+  appearance: none;
+}
+
+.checkbox-field:checked {
+  border: 2px solid var(--primary-color);
+}
+
+.checkbox-field::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.checkbox-field:checked::after {
+  display: block;
+}
+
+@media screen and (max-width: 1280px) {
+  .book-filters {
+    width: 276px;
+  }
+}
+
+@media screen and (max-width: 786px) {
+  .book-filters {
+    border-bottom: 1px solid var(--border-color);
+    gap: 16px;
+    padding-bottom: 16px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 361px) and (max-width: 786px) {
+  .book-filters {
+    flex-direction: row;
+  }
+
+  .book-filters__search-field,
+  .book-filters__sort-field {
+    width: 288px;
+  }
+}

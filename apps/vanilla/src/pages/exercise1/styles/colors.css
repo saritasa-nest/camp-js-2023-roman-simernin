@@ -1,0 +1,9 @@
+:root {
+  --primary-color: #f15924;
+  --on-primary-color: #fff;
+  --border-color: #d0d0d0;
+  --surface-color: #fff;
+  --surface-overlay-color: #e8e8e8;
+  --on-surface-color: #000;
+  --on-surface-dim-color: #7a7a7a;
+}
