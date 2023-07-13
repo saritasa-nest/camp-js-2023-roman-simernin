@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 320px;
+  width: 100%;
 }
 
 .book-filters__search-field {
@@ -97,22 +97,20 @@
   display: block;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (min-width: 1280px) and (max-width: 1919px) {
   .book-filters {
     width: 276px;
   }
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 1279px) {
   .book-filters {
     border-bottom: 1px solid var(--border-color);
-    gap: 16px;
     padding-bottom: 16px;
-    width: 100%;
   }
 }
 
-@media screen and (min-width: 361px) and (max-width: 786px) {
+@media screen and (min-width: 786px) and (max-width: 1279px) {
   .book-filters {
     flex-direction: row;
   }
