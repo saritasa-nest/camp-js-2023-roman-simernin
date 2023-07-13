@@ -61,7 +61,12 @@ body {
   gap: 24px;
 }
 
+.content-container__books-container {
+  max-width: 900px;
+}
+
 .content-container__book-filters {
+  width: 320px;
   align-self: flex-start;
   background: var(--surface-color);
   outline: 1px solid var(--on-primary-color);
@@ -79,6 +84,12 @@ body {
 @media screen and (min-width: 786px) {
   .main-container {
     margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1919px) {
+  .content-container__book-filters {
+    width: 276px;
   }
 }
 
