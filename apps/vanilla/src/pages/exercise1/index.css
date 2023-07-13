@@ -3,6 +3,11 @@
 @import "./styles/book-filters.css";
 @import "./styles/book-groups.css";
 
+:root {
+  --phone-book-filters-height: 248px;
+  --tablet-book-filters-height: 120px;
+}
+
 html,
 body {
   height: 100%;
@@ -99,21 +104,27 @@ body {
   }
 
   .content-container__book-filters {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
     /* To filters sticky block be above sticky book group title */
     z-index: 1;
-    width: 100%;
+    height: var(--tablet-book-filters-height);
   }
 
   .content-container__book-group-title {
     /* To filters sticky block be above sticky book group title */
     z-index: 0;
-    top: 120px;
+    top: var(--tablet-book-filters-height);
   }
 }
 
 @media screen and (max-width: 785px) {
+  .content-container__book-filters {
+    height: var(--phone-book-filters-height);
+  }
+
   .content-container__book-group-title {
-    top: 248px;
+    top: var(--phone-book-filters-height);
   }
 }
 

@@ -97,13 +97,6 @@
   display: block;
 }
 
-@media screen and (max-width: 1279px) {
-  .book-filters {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 16px;
-  }
-}
-
 @media screen and (min-width: 786px) and (max-width: 1279px) {
   .book-filters {
     flex-direction: row;
