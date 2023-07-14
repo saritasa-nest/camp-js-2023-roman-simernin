@@ -4,7 +4,7 @@
 @import "./styles/book-groups.css";
 
 :root {
-  --phone-book-filters-height: 248px;
+  --mobile-book-filters-height: 248px;
   --tablet-book-filters-height: 120px;
 }
 
@@ -121,11 +121,11 @@ body {
 
 @media screen and (max-width: 785px) {
   .content-container__book-filters {
-    height: var(--phone-book-filters-height);
+    height: var(--mobile-book-filters-height);
   }
 
   .content-container__book-group-title {
-    top: var(--phone-book-filters-height);
+    top: var(--mobile-book-filters-height);
   }
 }
 
