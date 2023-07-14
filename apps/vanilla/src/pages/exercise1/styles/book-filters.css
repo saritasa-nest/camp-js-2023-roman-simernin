@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  width: 320px;
+  width: 100%;
 }
 
 .book-filters__search-field {
@@ -97,28 +97,14 @@
   display: block;
 }
 
-@media screen and (max-width: 1280px) {
-  .book-filters {
-    width: 276px;
-  }
-}
-
-@media screen and (max-width: 786px) {
-  .book-filters {
-    border-bottom: 1px solid var(--border-color);
-    gap: 16px;
-    padding-bottom: 16px;
-    width: 100%;
-  }
-}
-
-@media screen and (min-width: 361px) and (max-width: 786px) {
+@media (786px <= width < 1280px) {
   .book-filters {
     flex-direction: row;
   }
 
   .book-filters__search-field,
   .book-filters__sort-field {
-    width: 288px;
+    max-width: 288px;
+    width: 100%;
   }
 }

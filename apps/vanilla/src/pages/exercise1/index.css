@@ -3,6 +3,11 @@
 @import "./styles/book-filters.css";
 @import "./styles/book-groups.css";
 
+:root {
+  --mobile-book-filters-height: 248px;
+  --tablet-book-filters-height: 120px;
+}
+
 html,
 body {
   height: 100%;
@@ -61,39 +66,70 @@ body {
   gap: 24px;
 }
 
-.content-container__book-filters {
-  align-self: flex-start;
-  position: sticky;
-  top: 0;
-  background: var(--surface-color);
-  outline: 1px solid var(--on-primary-color);
+.content-container__books-container {
+  max-width: 900px;
 }
 
-@media screen and (min-width: 1280px) {
+.content-container__book-filters {
+  width: 320px;
+  align-self: flex-start;
+  background: var(--surface-color);
+  outline: 1px solid var(--on-primary-color);
+  position: sticky;
+  top: 0;
+}
+
+.content-container__book-group-title {
+  background-color: var(--surface-color);
+  outline: 1px solid var(--on-primary-color);
+  position: sticky;
+  top: 0;
+}
+
+@media (width > 786px) {
   .main-container {
     margin: 0 auto;
   }
 }
 
-@media screen and (max-width: 786px) {
+@media (width < 1920px) {
   .content-container__book-filters {
+    width: 276px;
+  }
+}
+
+@media (width < 1280px) {
+  .content-container {
+    flex-direction: column;
+  }
+
+  .content-container__book-filters {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+
     /* To filters sticky block be above sticky book group title */
     z-index: 1;
-    width: 100%;
+    height: var(--tablet-book-filters-height);
+  }
+
+  .content-container__book-group-title {
+    /* To filters sticky block be above sticky book group title */
+    z-index: 0;
+    top: var(--tablet-book-filters-height);
   }
 }
 
-@media screen and (min-width: 361px) and (max-width: 786px) {
-  .content-container {
-    flex-direction: column;
+@media (width < 786px) {
+  .content-container__book-filters {
+    height: var(--mobile-book-filters-height);
+  }
+
+  .content-container__book-group-title {
+    top: var(--mobile-book-filters-height);
   }
 }
 
-@media screen and (max-width: 360px) {
-  .content-container {
-    flex-direction: column;
-  }
-
+@media (width <= 360px) {
   .app-info-container {
     width: 100%;
   }
