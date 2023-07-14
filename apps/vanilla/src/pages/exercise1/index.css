@@ -129,7 +129,7 @@ body {
   }
 }
 
-@media (width <=360px) {
+@media (width <= 360px) {
   .app-info-container {
     width: 100%;
   }

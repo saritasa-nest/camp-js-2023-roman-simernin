@@ -97,7 +97,7 @@
   display: block;
 }
 
-@media (786px <=width < 1280px) {
+@media (786px <= width < 1280px) {
   .book-filters {
     flex-direction: row;
   }

@@ -23,13 +23,13 @@
   overflow-wrap: break-word;
 }
 
-@media (width <=786px) {
+@media (width <= 786px) {
   .book-card__book-cover {
     width: 173px;
   }
 }
 
-@media (width <=360px) {
+@media (width <= 360px) {
   .book-card__book-cover {
     width: 148px;
   }
