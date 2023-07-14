@@ -86,19 +86,19 @@ body {
   top: 0;
 }
 
-@media screen and (min-width: 786px) {
+@media (width > 786px) {
   .main-container {
     margin: 0 auto;
   }
 }
 
-@media screen and (max-width: 1919px) {
+@media (width < 1920px) {
   .content-container__book-filters {
     width: 276px;
   }
 }
 
-@media screen and (max-width: 1279px) {
+@media (width < 1280px) {
   .content-container {
     flex-direction: column;
   }
@@ -119,7 +119,7 @@ body {
   }
 }
 
-@media screen and (max-width: 785px) {
+@media (width < 786px) {
   .content-container__book-filters {
     height: var(--mobile-book-filters-height);
   }
@@ -129,7 +129,7 @@ body {
   }
 }
 
-@media screen and (max-width: 360px) {
+@media (width <=360px) {
   .app-info-container {
     width: 100%;
   }
