@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JS camp</title>
+  <link rel="stylesheet" href="./index.css" />
+  <script defer type="module" src="./index.ts"></script>
+</head>
+
+<body class="blackjack-container">
+  <h1 class="blackjack-title">Blackjack</h1>
+  <section class="points-container">
+    <h2 class="points-container__title">Dice cap - <span id="dice-points-sum">0</span></h2>
+    <ul id="dice-points-list" class="points-container__points-list"></ul>
+  </section>
+  <section id="computer-points-container" class="points-container">
+    <h2 class="points-container__title">Computer - <span id="computer-points-sum">0</span></h2>
+    <ul id="computer-points-list" class="points-container__points-list"></ul>
+  </section>
+  <section id="self-points-container" class="points-container">
+    <h2 class="points-container__title">You - <span id="self-points-sum">0</span></h2>
+    <ul id="self-points-list" class="points-container__points-list"></ul>
+  </section>
+  <div class="blackjack-actions-container">
+    <button id="roll-button" type="button" class="blackjack-actions-container__action">Roll the dice</button>
+    <button id="pass-button" type="button" class="blackjack-actions-container__action">Pass</button>
+  </div>
+</body>
+
+</html>
