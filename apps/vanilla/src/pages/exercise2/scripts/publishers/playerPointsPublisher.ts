@@ -1,49 +1,61 @@
-import { Publisher } from "./publisher";
-import { Subscriber } from "../subscribers/subscriber";
-import { Player } from "../domain/player";
-import { ProvidedPublisher } from "./providedPublisher";
-import { PlayerDecorator } from "../decorators/playerDecorator";
+import { Subscriber } from '../subscribers/subscriber';
+import { Player } from '../domain/player';
 
-/* Message type for publication of player points changing.*/
+import { PlayerDecorator } from '../decorators/playerDecorator';
+
+import { ProvidedPublisher } from './providedPublisher';
+import { Publisher } from './publisher';
+
+/**
+ * Message type for publication of player points changing.
+ */
 export interface PlayerPoints {
-    playerName: string;
-    points: number;
+
+	/**
+	 * Player name.
+	 */
+	playerName: string;
+
+	/**
+	 * Points.
+	 */
+	points: number;
 }
 
-/* Publisher for player points changing. */
+/**
+ * Publisher for player points changing.
+ */
 export class PlayerPointsPublisher extends PlayerDecorator implements Publisher<PlayerPoints> {
 
-    private providedPublisher: ProvidedPublisher<PlayerPoints>;
+	private providedPublisher: ProvidedPublisher<PlayerPoints>;
 
-    constructor(player: Player) {
-        super(player);
+	public constructor(player: Player) {
+		super(player);
 
-        this.providedPublisher = new ProvidedPublisher(() => {
-            return {
-                playerName: player.name,
-                points: player.lastPoints
-            }
-        });
-    }
+		this.providedPublisher = new ProvidedPublisher(() => ({
+			playerName: player.name,
+			points: player.lastPoints,
+		}));
+	}
 
-    /** @inheritdoc */
-    public override addPoints(points: number): void {
-        super.addPoints(points);
-        this.providedPublisher.notify();
-    }
+	/** @inheritdoc */
+	public override addPoints(points: number): void {
+		super.addPoints(points);
+		this.providedPublisher.notify();
+	}
 
-    /** @inheritdoc */
-    public subscribe(subscriber: Subscriber<PlayerPoints>): void {
-        this.providedPublisher.subscribe(subscriber);
-    }
+	/** @inheritdoc */
+	public subscribe(subscriber: Subscriber<PlayerPoints>): void {
+		this.providedPublisher.subscribe(subscriber);
+	}
 
-    /** @inheritdoc */
-    public unsubscribe(subscriber: Subscriber<PlayerPoints>): void {
-        this.providedPublisher.unsubscribe(subscriber);
-    }
+	/** @inheritdoc */
+	public unsubscribe(subscriber: Subscriber<PlayerPoints>): void {
+		this.providedPublisher.unsubscribe(subscriber);
+	}
 
-    /** @inheritdoc */
-    public notify(): void {
-        this.providedPublisher.notify();
-    }
+	/** @inheritdoc */
+	public notify(): void {
+		this.providedPublisher.notify();
+	}
 }

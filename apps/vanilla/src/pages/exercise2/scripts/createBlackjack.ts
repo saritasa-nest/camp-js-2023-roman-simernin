@@ -1,64 +1,99 @@
-import { Blackjack } from "./domain/blackjack";
-import { Dice } from "./domain/dice";
-import { Player } from "./domain/player";
-import { CurrentDiceSide, CurrentDiceSidePublisher } from "./publishers/currentDiceSidePublisher";
-import { PlayerPoints, PlayerPointsPublisher } from "./publishers/playerPointsPublisher";
-import { PlayerWinStatus, PlayerWinStatusPublisher } from "./publishers/playerWinStatusPublisher";
-import { Subscriber } from "./subscribers/subscriber";
+import { Blackjack } from './domain/blackjack';
+import { Dice } from './domain/dice';
+import { Player } from './domain/player';
+import { CurrentDiceSide, CurrentDiceSidePublisher } from './publishers/currentDiceSidePublisher';
+import { PlayerPoints, PlayerPointsPublisher } from './publishers/playerPointsPublisher';
+import { PlayerWinStatus, PlayerWinStatusPublisher } from './publishers/playerWinStatusPublisher';
+import { Subscriber } from './subscribers/subscriber';
 
-/* Blackjack creation parameters. */
+/**
+ * Blackjack creation parameters.
+ */
 export interface BlackjackParameters {
-    diceSideCount: number,
-    playerNames: string[],
-    currentDiceSideSubscriber: Subscriber<CurrentDiceSide>,
-    playerPointsSubscriber: Subscriber<PlayerPoints>,
-    playerWinStatusSubscriber: Subscriber<PlayerWinStatus>
+
+	/**
+	 * Dice side count.
+	 */
+	diceSideCount: number;
+
+	/**
+	 * Player names.
+	 */
+	playerNames: string[];
+
+	/**
+	 * Current dice side subscriber.
+	 */
+	currentDiceSideSubscriber: Subscriber<CurrentDiceSide>;
+
+	/**
+	 * Player points subscriber.
+	 */
+	playerPointsSubscriber: Subscriber<PlayerPoints>;
+
+	/**
+	 * Player win status subscriber.
+	 */
+	playerWinStatusSubscriber: Subscriber<PlayerWinStatus>;
 }
 
-/* Blackjack creation result. */
+/**
+ * Blackjack creation result.
+ */
 export interface BlackjackCreationResult {
-    blackjackInstanse: Blackjack,
-    clearSubscriptions: () => void
+
+	/**
+	 * Blackjack instanse.
+	 */
+	blackjackInstanse: Blackjack;
+
+	/**
+	 * Clear subscriptions.
+	 */
+	clearSubscriptions: () => void;
 }
 
-/* Initialize Blackjack game. */
+/**
+ * Initialize Blackjack game.
+ * @param parameters - Blackjack parameters.
+ */
 export function createBlackjack(parameters: BlackjackParameters): BlackjackCreationResult {
-    let dice = new Dice();
+	let dice = new Dice();
 
-    const currentDiceSidePublisher = new CurrentDiceSidePublisher(dice);
-    currentDiceSidePublisher.subscribe(parameters.currentDiceSideSubscriber);
-    dice = currentDiceSidePublisher;
+	const currentDiceSidePublisher = new CurrentDiceSidePublisher(dice);
+	currentDiceSidePublisher.subscribe(parameters.currentDiceSideSubscriber);
+	dice = currentDiceSidePublisher;
 
-    const players: Player[] = [];
-    const playerUnsubscribes: (() => void)[] = [];
+	const players: Player[] = [];
+	const playerUnsubscribes: (() => void)[] = [];
 
-    for (const playerName of parameters.playerNames) {
-        const player = new Player();
-        player.name = playerName;
+	for (const playerName of parameters.playerNames) {
+		const player = new Player();
+		player.name = playerName;
 
-        const playerPointsPublisher = new PlayerPointsPublisher(player);
-        playerPointsPublisher.subscribe(parameters.playerPointsSubscriber);
-        playerUnsubscribes.push(() => playerPointsPublisher.unsubscribe(parameters.playerPointsSubscriber));
+		const playerPointsPublisher = new PlayerPointsPublisher(player);
+		playerPointsPublisher.subscribe(parameters.playerPointsSubscriber);
+		playerUnsubscribes.push(() => playerPointsPublisher.unsubscribe(parameters.playerPointsSubscriber));
 
-        const playerWinStatusSubscriber = new PlayerWinStatusPublisher(playerPointsPublisher);
-        playerWinStatusSubscriber.subscribe(parameters.playerWinStatusSubscriber);
-        playerUnsubscribes.push(() => playerWinStatusSubscriber.unsubscribe(parameters.playerWinStatusSubscriber));
+		const playerWinStatusSubscriber = new PlayerWinStatusPublisher(playerPointsPublisher);
+		playerWinStatusSubscriber.subscribe(parameters.playerWinStatusSubscriber);
+		playerUnsubscribes.push(() => playerWinStatusSubscriber.unsubscribe(parameters.playerWinStatusSubscriber));
 
-        players.push(playerWinStatusSubscriber)
-    }
+		players.push(playerWinStatusSubscriber);
+	}
 
-    const blackjack = new Blackjack(dice, players);
+	const blackjack = new Blackjack(dice, players);
 
-    const clearSubscriptions = () => {
-        currentDiceSidePublisher.unsubscribe(parameters.currentDiceSideSubscriber);
+	const clearSubscriptions: () => void = () => {
+		currentDiceSidePublisher.unsubscribe(parameters.currentDiceSideSubscriber);
 
-        for (const playerUnsubscribe of playerUnsubscribes) {
-            playerUnsubscribe();
-        }
-    };
+		for (const playerUnsubscribe of playerUnsubscribes) {
+			playerUnsubscribe();
+		}
+	};
 
-    return {
-        blackjackInstanse: blackjack,
-        clearSubscriptions: clearSubscriptions
-    };
+	return {
+		blackjackInstanse: blackjack,
+		clearSubscriptions,
+	};
 }

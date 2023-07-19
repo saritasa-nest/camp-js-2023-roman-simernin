@@ -1,104 +1,106 @@
-import { ActivePlayerLoop } from "./activePlayerLoop";
-import { Dice } from "./dice";
-import { Player } from "./player";
+import { ActivePlayerLoop } from './activePlayerLoop';
+import { Dice } from './dice';
+import { Player } from './player';
 
-/* Contain logic for game Blackjack.*/
+/**
+ * Contain logic for game Blackjack.
+ */
 export class Blackjack {
 
-    private gameEndedValue: boolean = false;
+	private gameEndedValue = false;
 
-    private readonly dice: Dice;
-    private readonly allPlayers: Player[];
-    private readonly activePlayers: ActivePlayerLoop;
+	private readonly dice: Dice;
 
-    constructor(dice: Dice, players: Player[]) {
-        if (players.length === 0) {
-            throw 'Player count can not be zero';
-        }
+	private readonly allPlayers: Player[];
 
-        this.dice = dice;
-        this.allPlayers = players;
-        this.activePlayers = new ActivePlayerLoop(players);
-    }
+	private readonly activePlayers: ActivePlayerLoop;
 
-    /*
-    * Provides game ended (there are no active players).
-    */
-    public get gameEnded(): boolean {
-        return this.gameEndedValue;
-    }
+	public constructor(dice: Dice, players: Player[]) {
+		if (players.length === 0) {
+			throw new Error('Player count can not be zero');
+		}
 
-    /*
-    * Roll dice by next player and add points to him.
-    */
-    public rollDice(): void {
-        if (this.gameEndedValue) {
-            throw 'Can not roll dice because game ended';
-        };
+		this.dice = dice;
+		this.allPlayers = players;
+		this.activePlayers = new ActivePlayerLoop(players);
+	}
 
-        const activePlayerResult = this.activePlayers.next();
+	/**
+	 * Provides game ended (there are no active players).
+	 */
+	public get gameEnded(): boolean {
+		return this.gameEndedValue;
+	}
 
-        if (activePlayerResult.done || activePlayerResult.value === null) {
-            throw 'Can not roll dice without active players';
-        }
+	/**
+	 * Roll dice by next player and add points to him.
+	 */
+	public rollDice(): void {
+		if (this.gameEndedValue) {
+			throw new Error('Can not roll dice because game ended');
+		}
 
-        const currentPlayer: Player = activePlayerResult.value;
+		const activePlayerResult = this.activePlayers.next();
 
-        this.dice.roll();
-        currentPlayer.addPoints(this.dice.currentSide);
-    }
+		if (activePlayerResult.done || activePlayerResult.value === null) {
+			throw new Error('Can not roll dice without active players');
+		}
 
-    /*
-    * Make pass by current player and end game if passed player is last.
-    */
-    public pass(): void {
-        if (this.gameEndedValue) {
-            throw 'Can not make a pass because game ended';
-        };
+		const currentPlayer: Player = activePlayerResult.value;
 
-        const activePlayerResult = this.activePlayers.next();
+		this.dice.roll();
+		currentPlayer.addPoints(this.dice.currentSide);
+	}
 
-        if (activePlayerResult.done || activePlayerResult.value === null) {
-            throw 'Can not make a pass without active players';
-        }
+	/**
+	 * Make pass by current player and end game if passed player is last.
+	 */
+	public pass(): void {
+		if (this.gameEndedValue) {
+			throw new Error('Can not make a pass because game ended');
+		}
 
-        const currentPlayer: Player = activePlayerResult.value;
+		const activePlayerResult = this.activePlayers.next();
 
-        currentPlayer.pass();
+		if (activePlayerResult.done || activePlayerResult.value === null) {
+			throw new Error('Can not make a pass without active players');
+		}
 
-        if (this.activePlayers.activePlayersEnded) {
-            this.endGame();
-        }
-    }
+		const currentPlayer: Player = activePlayerResult.value;
 
-    private endGame(): void {
-        const maxAvailablePoints = 21;
+		currentPlayer.pass();
 
-        const availablePoints = this.allPlayers
-            .map(player => player.totalPoints)
-            .filter(points => points > 0
-                && points <= maxAvailablePoints);
+		if (this.activePlayers.activePlayersEnded) {
+			this.endGame();
+		}
+	}
 
-        const noWinner = availablePoints.length === 0;
+	private endGame(): void {
+		const maxAvailablePoints = 21;
 
-        if (noWinner) {
-            for (const player of this.allPlayers) {
-                player.winStatus = false;
-            }
-        }
-        else {
-            const winnerPoints = Math.max(...availablePoints);
+		const availablePoints = this.allPlayers
+			.map(player => player.totalPoints)
+			.filter(points => points > 0 &&
+				points <= maxAvailablePoints);
 
-            for (const player of this.allPlayers) {
-                if (player.totalPoints === winnerPoints) {
-                    player.winStatus = true;
-                }
-                else {
-                    player.winStatus = false;
-                }
-            }
-        }
+		const noWinner = availablePoints.length === 0;
 
-        this.gameEndedValue = true;
-    }
+		if (noWinner) {
+			for (const player of this.allPlayers) {
+				player.winStatus = false;
+			}
+		} else {
+			const winnerPoints = Math.max(...availablePoints);
+
+			for (const player of this.allPlayers) {
+				if (player.totalPoints === winnerPoints) {
+					player.winStatus = true;
+				} else {
+					player.winStatus = false;
+				}
+			}
+		}
+
+		this.gameEndedValue = true;
+	}
 }

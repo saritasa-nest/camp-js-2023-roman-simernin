@@ -1,86 +1,90 @@
-/* Domain model for player */
+/**
+ * Domain model for player.
+ */
 export class Player {
 
-    private nameValue: string = 'no name';
-    private lastPointsValue: number = 0;
-    private totalPointsValue: number = 0;
-    private winStatusValue: boolean | undefined;
-    private passStatusValue: boolean = false;
+	private nameValue = 'no name';
 
-    /**
-    * Set player name.
-    * @param name - Player name.
-    */
-    public set name(name: string) {
-        this.nameValue = name;
-    }
+	private lastPointsValue = 0;
 
-    /**
-    * Get player name.
-    */
-    public get name() {
-        return this.nameValue;
-    }
+	private totalPointsValue = 0;
 
+	private winStatusValue: boolean | undefined;
 
-    /**
-    * Get last points for current player.
-    */
-    public get lastPoints(): number {
-        return this.lastPointsValue;
-    }
+	private passStatusValue = false;
 
+	/**
+	 * Set player name.
+	 * @param name - Player name.
+	 */
+	public set name(name: string) {
+		this.nameValue = name;
+	}
 
-    /**
-    * Get sum of all points for current player.
-    */
-    public get totalPoints(): number {
-        return this.totalPointsValue;
-    }
+	/**
+	 * Get player name.
+	 */
+	public get name(): string {
+		return this.nameValue;
+	}
 
-    /**
-    * Set winning status.
-    * @param winStatus - Provides player win or not.
-    */
-    public set winStatus(winStatus: boolean) {
-        this.winStatusValue = winStatus;
-    }
+	/**
+	 * Get last points for current player.
+	 */
+	public get lastPoints(): number {
+		return this.lastPointsValue;
+	}
 
-    /**
-    * Get winning status.
-    */
-    public get winStatus(): boolean | undefined {
-        return this.winStatusValue;
-    }
+	/**
+	 * Get sum of all points for current player.
+	 */
+	public get totalPoints(): number {
+		return this.totalPointsValue;
+	}
 
-    /**
-    * Get status that provides user passed or not.
-    */
-    public get passStatus(): boolean {
-        return this.passStatusValue;
-    }
+	/**
+	 * Set winning status.
+	 * @param winStatus - Provides player win or not.
+	 */
+	public set winStatus(winStatus: boolean) {
+		this.winStatusValue = winStatus;
+	}
 
-    /**
-    * Add points.
-    * @param points - Points.
-    */
-    public addPoints(points: number) {
-        if (this.passStatusValue) {
-            throw 'Can not add points when player make a pass';
-        }
+	/**
+	 * Get winning status.
+	 */
+	public get winStatus(): boolean | undefined {
+		return this.winStatusValue;
+	}
 
-        if (points <= 0) {
-            throw 'Can not add zero or less points';
-        }
+	/**
+	 * Get status that provides user passed or not.
+	 */
+	public get passStatus(): boolean {
+		return this.passStatusValue;
+	}
 
-        this.lastPointsValue = points;
-        this.totalPointsValue += points;
-    }
+	/**
+	 * Add points.
+	 * @param points - Points.
+	 */
+	public addPoints(points: number): void {
+		if (this.passStatusValue) {
+			throw new Error('Can not add points when player make a pass');
+		}
 
-    /**
-    * Make player be passed. After pass player can not add points.
-    */
-    public pass() {
-        this.passStatusValue = true;
-    }
+		if (points <= 0) {
+			throw new Error('Can not add zero or less points');
+		}
+
+		this.lastPointsValue = points;
+		this.totalPointsValue += points;
+	}
+
+	/**
+	 * Make player be passed. After pass player can not add points.
+	 */
+	public pass(): void {
+		this.passStatusValue = true;
+	}
 }

@@ -1,53 +1,67 @@
-import { Publisher } from "./publisher";
-import { Subscriber } from "../subscribers/subscriber";
-import { Player } from "../domain/player";
-import { ProvidedPublisher } from "./providedPublisher";
-import { PlayerDecorator } from "../decorators/playerDecorator";
+import { Subscriber } from '../subscribers/subscriber';
+import { Player } from '../domain/player';
 
-/* Message type for publication of player winning status changing.*/
+import { PlayerDecorator } from '../decorators/playerDecorator';
+
+import { ProvidedPublisher } from './providedPublisher';
+import { Publisher } from './publisher';
+
+/**
+ * Message type for publication of player winning status changing.
+ */
 export interface PlayerWinStatus {
-    playerName: string;
-    winStatus: boolean;
+
+	/**
+	 * Player name.
+	 */
+	playerName: string;
+
+	/**
+	 * Winning status.
+	 */
+	winStatus: boolean;
 }
 
-/* Publisher for player winning status changing. */
+/**
+ * Publisher for player winning status changing.
+ */
 export class PlayerWinStatusPublisher extends PlayerDecorator implements Publisher<PlayerWinStatus> {
 
-    private providedPublisher: ProvidedPublisher<PlayerWinStatus>;
+	private providedPublisher: ProvidedPublisher<PlayerWinStatus>;
 
-    constructor(player: Player) {
-        super(player);
+	public constructor(player: Player) {
+		super(player);
 
-        this.providedPublisher = new ProvidedPublisher(() => {
-            if (player.winStatus === undefined) {
-                throw 'Play win status is not defined';
-            }
+		this.providedPublisher = new ProvidedPublisher(() => {
+			if (player.winStatus === undefined) {
+				throw new Error('Play win status is not defined');
+			}
 
-            return {
-                playerName: player.name,
-                winStatus: player.winStatus
-            }
-        });
-    }
+			return {
+				playerName: player.name,
+				winStatus: player.winStatus,
+			};
+		});
+	}
 
-    /** @inheritdoc */
-    public override set winStatus(winStatus: boolean) {
-        super.winStatus = winStatus;
-        this.providedPublisher.notify();
-    }
+	/** @inheritdoc */
+	public override set winStatus(winStatus: boolean) {
+		super.winStatus = winStatus;
+		this.providedPublisher.notify();
+	}
 
-    /** @inheritdoc */
-    public subscribe(subscriber: Subscriber<PlayerWinStatus>): void {
-        this.providedPublisher.subscribe(subscriber);
-    }
+	/** @inheritdoc */
+	public subscribe(subscriber: Subscriber<PlayerWinStatus>): void {
+		this.providedPublisher.subscribe(subscriber);
+	}
 
-    /** @inheritdoc */
-    public unsubscribe(subscriber: Subscriber<PlayerWinStatus>): void {
-        this.providedPublisher.unsubscribe(subscriber);
-    }
+	/** @inheritdoc */
+	public unsubscribe(subscriber: Subscriber<PlayerWinStatus>): void {
+		this.providedPublisher.unsubscribe(subscriber);
+	}
 
-    /** @inheritdoc */
-    public notify(): void {
-        this.providedPublisher.notify();
-    }
+	/** @inheritdoc */
+	public notify(): void {
+		this.providedPublisher.notify();
+	}
 }

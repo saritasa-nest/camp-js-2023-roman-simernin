@@ -1,38 +1,50 @@
-import { PlayerPoints } from "../publishers/playerPointsPublisher";
-import { Subscriber } from "./subscriber";
+import { PlayerPoints } from '../publishers/playerPointsPublisher';
 
-/* Present all dice roll and total points by players. */
+import { Subscriber } from './subscriber';
+
+/**
+ * Present all dice roll and total points by players.
+ */
 export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
-    private readonly playerPointsSums: Map<string, number> = new Map<string, number>();
+	private readonly playerPointsSums: Map<string, number> = new Map<string, number>();
 
-    /** @inheritdoc */
-    update(message: PlayerPoints): void {
-        let playerPointsSum = this.playerPointsSums.get(message.playerName);
+	/** @inheritdoc */
+	public update(message: PlayerPoints): void {
+		let playerPointsSum = this.playerPointsSums.get(message.playerName);
 
-        if (playerPointsSum === undefined) {
-            playerPointsSum = message.points;
-        }
-        else {
-            playerPointsSum += message.points;
-        }
+		if (playerPointsSum === undefined) {
+			playerPointsSum = message.points;
+		} else {
+			playerPointsSum += message.points;
+		}
 
-        this.playerPointsSums.set(message.playerName, playerPointsSum);
+		this.playerPointsSums.set(message.playerName, playerPointsSum);
 
-        this.presentUpdatedPointSum(message.playerName, playerPointsSum);
+		this.presentUpdatedPointSum(message.playerName, playerPointsSum);
 
-        this.presentAppendedPoints(message.playerName, message.points);
-    }
+		this.presentAppendedPoints(message.playerName, message.points);
+	}
 
-    private presentUpdatedPointSum(playerName: string, playerPointsSum: number): void {
-        const playerPointsSumElement = document.getElementById(`${playerName}-points-sum`)!;
-        playerPointsSumElement.textContent = playerPointsSum.toString();
-    }
+	private presentUpdatedPointSum(playerName: string, playerPointsSum: number): void {
+		const playerPointsSumElement = document.getElementById(`${playerName}-points-sum`);
 
-    private presentAppendedPoints(playerName: string, playerPoints: number) {
-        const playerPointsElement = document.createElement('li');
-        playerPointsElement.textContent = playerPoints.toString();
+		if (playerPointsSumElement === null) {
+			throw new Error('Player points sum element is missed');
+		}
 
-        const playerPointListElement = document.getElementById(`${playerName}-points-list`)!;
-        playerPointListElement.appendChild(playerPointsElement);
-    }
+		playerPointsSumElement.textContent = playerPointsSum.toString();
+	}
+
+	private presentAppendedPoints(playerName: string, playerPoints: number): void {
+		const playerPointsElement = document.createElement('li');
+		playerPointsElement.textContent = playerPoints.toString();
+
+		const playerPointListElement = document.getElementById(`${playerName}-points-list`);
+
+		if (playerPointListElement === null) {
+			throw new Error('Player points list element is missed');
+		}
+
+		playerPointListElement.appendChild(playerPointsElement);
+	}
 }
