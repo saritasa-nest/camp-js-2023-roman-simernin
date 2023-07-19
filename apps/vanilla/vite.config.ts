@@ -22,6 +22,7 @@ export default defineConfig({
       input: [
         resolve(root, 'index.html'),
         resolve(root, 'exercise1', 'index.html'),
+        resolve(root, 'exercise2', 'index.html')
       ],
     },
   },
