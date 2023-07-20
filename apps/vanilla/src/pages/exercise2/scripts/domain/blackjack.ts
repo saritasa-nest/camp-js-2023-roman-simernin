@@ -40,7 +40,7 @@ export class Blackjack {
 			throw new Error('Can not roll dice without active players');
 		}
 
-		const currentPlayer: Player = activePlayerResult.value;
+		const currentPlayer = activePlayerResult.value;
 
 		this.dice.roll();
 		currentPlayer.addPoints(this.dice.currentSide);

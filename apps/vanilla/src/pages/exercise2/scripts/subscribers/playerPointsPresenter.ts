@@ -4,7 +4,7 @@ import { Subscriber } from './subscriber';
 
 /** Present all dice roll and total points by players. */
 export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
-	private readonly playerPointsSums: Map<string, number> = new Map<string, number>();
+	private readonly playerPointsSums = new Map<string, number>();
 
 	/** @inheritdoc */
 	public update(message: PlayerPoints): void {
