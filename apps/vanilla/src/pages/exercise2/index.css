@@ -54,7 +54,7 @@
   display: none;
 }
 
-.main-title,
+.blackjack-title,
 .points-container__title,
 .points-container__points-list li,
 .blackjack-actions-container__action {
@@ -69,7 +69,7 @@
 }
 
 @media (786px <= width <= 1280px) {
-  .main-title,
+  .blackjack-title,
   .points-container__title,
   .points-container__points-list li,
   .blackjack-actions-container__action {
@@ -82,7 +82,7 @@
 }
 
 @media (width < 786px) {
-  .main-title,
+  .blackjack-title,
   .points-container__title,
   .points-container__points-list li,
   .blackjack-actions-container__action {
