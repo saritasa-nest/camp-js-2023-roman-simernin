@@ -13,7 +13,7 @@ export class WinnerPresenter implements Subscriber<PlayerWinStatus> {
 			throw new Error('Player points container element is missed');
 		}
 
-		if (message.winStatus === true) {
+		if (message.winStatus) {
 			playerPointsContainerElement.classList.add('gamer-points-container--winner');
 		} else {
 			playerPointsContainerElement.classList.add('gamer-points-container--looser');
