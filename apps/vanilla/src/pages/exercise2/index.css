@@ -61,7 +61,7 @@
   font-size: var(--computer-font-size);
 }
 
-@media (width <= 786px) {
+@media (width < 786px) {
   .blackjack-container {
     max-width: 100%;
     margin: auto;
