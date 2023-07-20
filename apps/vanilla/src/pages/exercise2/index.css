@@ -35,7 +35,12 @@
   overflow-y: hidden;
 }
 
-.points-container__points-list li {
+.points-container__points-item {
+  list-style-type: none;
+  font-weight: 500;
+}
+
+.points-container__points-item {
   list-style-type: none;
   font-weight: 500;
 }
@@ -56,7 +61,7 @@
 
 .blackjack-title,
 .points-container__title,
-.points-container__points-list li,
+.points-container__points-item,
 .blackjack-actions-container__action {
   font-size: var(--computer-font-size);
 }
@@ -71,7 +76,7 @@
 @media (786px <= width <= 1280px) {
   .blackjack-title,
   .points-container__title,
-  .points-container__points-list li,
+  .points-container__points-item,
   .blackjack-actions-container__action {
     font-size: var(--tablet-font-size);
   }
@@ -84,7 +89,7 @@
 @media (width < 786px) {
   .blackjack-title,
   .points-container__title,
-  .points-container__points-list li,
+  .points-container__points-item,
   .blackjack-actions-container__action {
     font-size: var(--mobile-font-size);
   }

@@ -1,4 +1,5 @@
 import { PlayerPoints } from '../publishers/playerPointsPublisher';
+import { createPointsItemElement } from './createPointsItemElement';
 
 import { Subscriber } from './subscriber';
 
@@ -32,8 +33,7 @@ export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
 	}
 
 	private presentAppendedPoints(playerName: string, playerPoints: number): void {
-		const playerPointsElement = document.createElement('li');
-		playerPointsElement.textContent = playerPoints.toString();
+		const playerPointsItemElement = createPointsItemElement(playerPoints);
 
 		const playerPointListElement = document.getElementById(`${playerName}-points-list`);
 
@@ -41,6 +41,6 @@ export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
 			throw new Error('Player points list element is missed');
 		}
 
-		playerPointListElement.appendChild(playerPointsElement);
+		playerPointListElement.appendChild(playerPointsItemElement);
 	}
 }

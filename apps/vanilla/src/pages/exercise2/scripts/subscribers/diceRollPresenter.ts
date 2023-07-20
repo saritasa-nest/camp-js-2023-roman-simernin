@@ -1,4 +1,5 @@
 import { CurrentDiceSide } from '../publishers/currentDiceSidePublisher';
+import { createPointsItemElement } from './createPointsItemElement';
 
 import { Subscriber } from './subscriber';
 
@@ -26,8 +27,7 @@ export class DiceRollPresenter implements Subscriber<CurrentDiceSide> {
 	}
 
 	private presentAppendedPoints(dicePoints: number): void {
-		const dicePointsElement = document.createElement('li');
-		dicePointsElement.textContent = dicePoints.toString();
+		const dicePointsItemElement = createPointsItemElement(dicePoints);
 
 		const dicePointListElement = document.getElementById('dice-points-list');
 
@@ -35,6 +35,6 @@ export class DiceRollPresenter implements Subscriber<CurrentDiceSide> {
 			throw new Error('Dice points list element is missed');
 		}
 
-		dicePointListElement.appendChild(dicePointsElement);
+		dicePointListElement.appendChild(dicePointsItemElement);
 	}
 }
