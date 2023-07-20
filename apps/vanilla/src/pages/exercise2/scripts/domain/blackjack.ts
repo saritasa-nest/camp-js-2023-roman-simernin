@@ -75,21 +75,18 @@ export class Blackjack {
 			.filter(points => points > 0 &&
 				points <= maxAvailablePoints);
 
-		const noWinner = availablePoints.length === 0;
+		const hasWinner = availablePoints.length !== 0;
 
-		if (noWinner) {
-			for (const player of this.allPlayers) {
-				player.winStatus = false;
-			}
-		} else {
+		if (hasWinner) {
 			const winnerPoints = Math.max(...availablePoints);
 
 			for (const player of this.allPlayers) {
-				if (player.totalPoints === winnerPoints) {
-					player.winStatus = true;
-				} else {
-					player.winStatus = false;
-				}
+				player.winStatus = player.totalPoints === winnerPoints;
+			}
+
+		} else {
+			for (const player of this.allPlayers) {
+				player.winStatus = false;
 			}
 		}
 
