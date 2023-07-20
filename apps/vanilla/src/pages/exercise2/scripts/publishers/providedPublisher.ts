@@ -2,12 +2,15 @@ import { Subscriber } from '../subscribers/subscriber';
 
 import { Publisher } from './publisher';
 
+/** Provider function type. */
+export type ProviderFunction<T> = () => T;
+
 /** Publisher who get message for publication from provider (external function). */
 export class ProvidedPublisher<T> implements Publisher<T> {
 
 	private readonly subscribers: Subscriber<T>[] = [];
 
-	public constructor(private readonly provider: () => T) {
+	public constructor(private readonly provider: ProviderFunction<T>) {
 	}
 
 	/** @inheritdoc */
