@@ -2,9 +2,7 @@ reviewers:
   # The default core reviewers.
   # Reviews may only be requested from collaborators.
   defaults:
-    - daoduong-saritasa
-    - karbik-creator
-    - timofei-maximov-saritasa
-    - golovachev-yaroslav
-    - andrey-gazzaev
-    - gevorg-gevorgyan-saritasa
+    - panov-aleksey-saritasa
+    - ShestakovaElena
+    - dbitkovski
+    - DaniilMaslovSaritasa
