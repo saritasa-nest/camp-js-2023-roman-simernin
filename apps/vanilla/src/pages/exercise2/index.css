@@ -32,7 +32,7 @@
   display: flex;
   gap: 10px;
   padding-left: 0;
-  overflow: scroll hidden;
+  overflow-y: hidden;
 }
 
 .points-container__points-list li {
