@@ -1,6 +1,6 @@
 import { Blackjack } from './domain/blackjack';
 import { Dice } from './domain/dice';
-import { Player } from './domain/player';
+import { Player, IPlayer } from './domain/player';
 import { CurrentDiceSide, CurrentDiceSidePublisher } from './publishers/currentDiceSidePublisher';
 import { PlayerPoints, PlayerPointsPublisher } from './publishers/playerPointsPublisher';
 import { PlayerWinStatus, PlayerWinStatusPublisher } from './publishers/playerWinStatusPublisher';
@@ -48,12 +48,11 @@ export function createBlackjack(parameters: BlackjackParameters): BlackjackCreat
 	const currentDiceSidePublisher = new CurrentDiceSidePublisher(dice);
 	currentDiceSidePublisher.subscribe(parameters.currentDiceSideSubscriber);
 
-	const players: Player[] = [];
+	const players: IPlayer[] = [];
 	const playerUnsubscribes: UnsubscribeFunction[] = [];
 
 	for (const playerName of parameters.playerNames) {
-		const player = new Player();
-		player.name = playerName;
+		const player = new Player(playerName);
 
 		const playerPointsPublisher = new PlayerPointsPublisher(player);
 		playerPointsPublisher.subscribe(parameters.playerPointsSubscriber);

@@ -1,7 +1,39 @@
-/** Domain model for player. */
-export class Player {
+/** Provides player interface. */
+export interface IPlayer {
 
-	private _name = 'no name';
+	/** Player name. */
+	readonly name: string;
+
+	/** Last points for current player. */
+	readonly lastPoints: number;
+
+	/** Sum of all points for current player. */
+	readonly totalPoints: number;
+
+	/** Status provides user won or not.. */
+	readonly winStatus: boolean | undefined;
+
+	/** Status provides user passed or not.. */
+	readonly passStatus: boolean;
+
+	/**
+	 * Add points.
+	 * @param points - Points.
+	 */
+	readonly addPoints: (points: number) => void;
+
+	/**
+	 * Set winning status.
+	 * @param winStatus - Provides player win or not.
+	 */
+	readonly setWinStatus: (winStatus: boolean) => void;
+
+	/** Make player be passed. After pass player can not add points. */
+	readonly pass: () => void;
+}
+
+/** Domain model for player. */
+export class Player implements IPlayer {
 
 	private _lastPoints = 0;
 
@@ -11,43 +43,25 @@ export class Player {
 
 	private _passStatus = false;
 
-	/**
-	 * Set player name.
-	 * @param name - Player name.
-	 */
-	public set name(name: string) {
-		this._name = name;
+	constructor(readonly name: string) {
 	}
 
-	/** Get player name. */
-	public get name(): string {
-		return this._name;
-	}
-
-	/** Get last points for current player. */
+	/** @inheritdoc */
 	public get lastPoints(): number {
 		return this._lastPoints;
 	}
 
-	/** Get sum of all points for current player. */
+	/** @inheritdoc */
 	public get totalPoints(): number {
 		return this._totalPoints;
 	}
 
-	/**
-	 * Set winning status.
-	 * @param winStatus - Provides player win or not.
-	 */
-	public set winStatus(winStatus: boolean) {
-		this._winStatus = winStatus;
-	}
-
-	/** Get winning status. */
+	/** @inheritdoc */
 	public get winStatus(): boolean | undefined {
 		return this._winStatus;
 	}
 
-	/** Get status that provides user passed or not. */
+	/** @inheritdoc */
 	public get passStatus(): boolean {
 		return this._passStatus;
 	}
@@ -69,7 +83,16 @@ export class Player {
 		this._totalPoints += points;
 	}
 
-	/** Make player be passed. After pass player can not add points. */
+	/** @inheritdoc */
+	public setWinStatus(winStatus: boolean) {
+		if (this._winStatus !== undefined) {
+			throw new Error('Win status has already defined.');
+		}
+
+		this._winStatus = winStatus;
+	}
+
+	/** @inheritdoc */
 	public pass(): void {
 		this._passStatus = true;
 	}

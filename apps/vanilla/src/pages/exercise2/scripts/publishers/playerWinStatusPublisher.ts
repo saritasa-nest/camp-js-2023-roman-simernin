@@ -1,5 +1,5 @@
 import { Subscriber } from '../subscribers/subscriber';
-import { Player } from '../domain/player';
+import { IPlayer } from '../domain/player';
 
 import { PlayerDecorator } from '../decorators/playerDecorator';
 
@@ -21,7 +21,7 @@ export class PlayerWinStatusPublisher extends PlayerDecorator implements Publish
 
 	private readonly providedPublisher: ProvidedPublisher<PlayerWinStatus>;
 
-	public constructor(player: Player) {
+	public constructor(player: IPlayer) {
 		super(player);
 
 		this.providedPublisher = new ProvidedPublisher(() => {
@@ -37,8 +37,8 @@ export class PlayerWinStatusPublisher extends PlayerDecorator implements Publish
 	}
 
 	/** @inheritdoc */
-	public override set winStatus(winStatus: boolean) {
-		super.winStatus = winStatus;
+	public override setWinStatus(winStatus: boolean) {
+		super.setWinStatus(winStatus);
 		this.providedPublisher.notify();
 	}
 

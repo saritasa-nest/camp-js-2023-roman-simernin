@@ -1,11 +1,11 @@
-import { Player } from './player';
+import { IPlayer } from './player';
 
 /** Collection of players that return only player who not pass. */
-export class ActivePlayerLoop implements IterableIterator<Player | null> {
+export class ActivePlayerLoop implements IterableIterator<IPlayer | null> {
 
 	private currentIndex = -1;
 
-	public constructor(private readonly players: Player[]) {
+	public constructor(private readonly players: IPlayer[]) {
 	}
 
 	private get passedPlayerIndexes(): number[] {
@@ -20,7 +20,7 @@ export class ActivePlayerLoop implements IterableIterator<Player | null> {
 	}
 
 	/** Get next active player. */
-	public next(): IteratorResult<Player | null> {
+	public next(): IteratorResult<IPlayer | null> {
 		if (!this.hasActivePlayers) {
 			return {
 				done: false,
@@ -45,7 +45,7 @@ export class ActivePlayerLoop implements IterableIterator<Player | null> {
 	}
 
 	/** Using for enumeration in for..of circle. */
-	public [Symbol.iterator](): IterableIterator<Player | null> {
+	public [Symbol.iterator](): IterableIterator<IPlayer | null> {
 		return this;
 	}
 }

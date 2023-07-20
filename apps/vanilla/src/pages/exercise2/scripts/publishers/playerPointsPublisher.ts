@@ -1,5 +1,5 @@
 import { Subscriber } from '../subscribers/subscriber';
-import { Player } from '../domain/player';
+import { IPlayer } from '../domain/player';
 
 import { PlayerDecorator } from '../decorators/playerDecorator';
 
@@ -21,7 +21,7 @@ export class PlayerPointsPublisher extends PlayerDecorator implements Publisher<
 
 	private readonly providedPublisher: ProvidedPublisher<PlayerPoints>;
 
-	public constructor(player: Player) {
+	public constructor(player: IPlayer) {
 		super(player);
 
 		this.providedPublisher = new ProvidedPublisher(() => ({

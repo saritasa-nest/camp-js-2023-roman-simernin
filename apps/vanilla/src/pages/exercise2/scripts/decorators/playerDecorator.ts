@@ -1,54 +1,48 @@
-import { Player } from '../domain/player';
+import { IPlayer } from '../domain/player';
 
 /** Wrap Player for adding new functionality. */
-export class PlayerDecorator extends Player {
+export class PlayerDecorator implements IPlayer {
 
-	public constructor(private readonly player: Player) {
-		super();
+	public constructor(private readonly player: IPlayer) {
 	}
 
 	/** @inheritdoc */
-	public override set name(name: string) {
-		this.player.name = name;
-	}
-
-	/** @inheritdoc */
-	public override get name(): string {
+	public get name(): string {
 		return this.player.name;
 	}
 
 	/** @inheritdoc */
-	public override get lastPoints(): number {
+	public get lastPoints(): number {
 		return this.player.lastPoints;
 	}
 
 	/** @inheritdoc */
-	public override get totalPoints(): number {
+	public get totalPoints(): number {
 		return this.player.totalPoints;
 	}
 
 	/** @inheritdoc */
-	public override set winStatus(winStatus: boolean) {
-		this.player.winStatus = winStatus;
-	}
-
-	/** @inheritdoc */
-	public override get winStatus(): boolean | undefined {
+	public get winStatus(): boolean | undefined {
 		return this.player.winStatus;
 	}
 
 	/** @inheritdoc */
-	public override get passStatus(): boolean {
+	public get passStatus(): boolean {
 		return this.player.passStatus;
 	}
 
 	/** @inheritdoc */
-	public override addPoints(points: number): void {
+	public addPoints(points: number): void {
 		this.player.addPoints(points);
 	}
 
 	/** @inheritdoc */
-	public override pass(): void {
+	public setWinStatus(winStatus: boolean) {
+		this.player.setWinStatus(winStatus);
+	}
+
+	/** @inheritdoc */
+	public pass(): void {
 		this.player.pass();
 	}
 }

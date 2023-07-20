@@ -1,18 +1,18 @@
 import { ActivePlayerLoop } from './activePlayerLoop';
 import { Dice } from './dice';
-import { Player } from './player';
+import { IPlayer } from './player';
 
 /** Contain logic for game Blackjack. */
 export class Blackjack {
 
 	private _isEnd = false;
 
-	private readonly allPlayers: Player[];
+	private readonly allPlayers: IPlayer[];
 
 	private readonly activePlayers: ActivePlayerLoop;
 
 	public constructor(
-		players: Player[],
+		players: IPlayer[],
 		private readonly dice: Dice) {
 
 		if (players.length === 0) {
@@ -58,7 +58,7 @@ export class Blackjack {
 			throw new Error('Can not make a pass without active players');
 		}
 
-		const currentPlayer: Player = activePlayerResult.value;
+		const currentPlayer = activePlayerResult.value;
 
 		currentPlayer.pass();
 
@@ -81,12 +81,12 @@ export class Blackjack {
 			const winnerPoints = Math.max(...availablePoints);
 
 			for (const player of this.allPlayers) {
-				player.winStatus = player.totalPoints === winnerPoints;
+				player.setWinStatus(player.totalPoints === winnerPoints);
 			}
 
 		} else {
 			for (const player of this.allPlayers) {
-				player.winStatus = false;
+				player.setWinStatus(false);
 			}
 		}
 
