@@ -6,6 +6,9 @@ import { PlayerPoints, PlayerPointsPublisher } from './publishers/playerPointsPu
 import { PlayerWinStatus, PlayerWinStatusPublisher } from './publishers/playerWinStatusPublisher';
 import { Subscriber } from './subscribers/subscriber';
 
+/** Unsubscribe function type. */
+type UnsubscribeFunction = () => void;
+
 /** Blackjack creation parameters. */
 export interface BlackjackParameters {
 
@@ -46,7 +49,7 @@ export function createBlackjack(parameters: BlackjackParameters): BlackjackCreat
 	currentDiceSidePublisher.subscribe(parameters.currentDiceSideSubscriber);
 
 	const players: Player[] = [];
-	const playerUnsubscribes: (() => void)[] = [];
+	const playerUnsubscribes: UnsubscribeFunction[] = [];
 
 	for (const playerName of parameters.playerNames) {
 		const player = new Player();
