@@ -10,29 +10,29 @@ import { Subscriber } from './subscribers/subscriber';
 export interface BlackjackParameters {
 
 	/** Dice side count. */
-	diceSideCount: number;
+	readonly diceSideCount: number;
 
 	/** Player names. */
-	playerNames: string[];
+	readonly playerNames: string[];
 
 	/** Current dice side subscriber. */
-	currentDiceSideSubscriber: Subscriber<CurrentDiceSide>;
+	readonly currentDiceSideSubscriber: Subscriber<CurrentDiceSide>;
 
 	/** Player points subscriber. */
-	playerPointsSubscriber: Subscriber<PlayerPoints>;
+	readonly playerPointsSubscriber: Subscriber<PlayerPoints>;
 
 	/** Player win status subscriber. */
-	playerWinStatusSubscriber: Subscriber<PlayerWinStatus>;
+	readonly playerWinStatusSubscriber: Subscriber<PlayerWinStatus>;
 }
 
 /** Blackjack creation result. */
 export interface BlackjackCreationResult {
 
 	/** Blackjack instanse. */
-	blackjackInstanse: Blackjack;
+	readonly blackjackInstanse: Blackjack;
 
 	/** Clear subscriptions. */
-	clearSubscriptions: () => void;
+	readonly clearSubscriptions: () => void;
 }
 
 /**

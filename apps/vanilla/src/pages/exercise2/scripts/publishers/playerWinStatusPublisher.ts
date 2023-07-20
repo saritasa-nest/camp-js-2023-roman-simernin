@@ -10,16 +10,16 @@ import { Publisher } from './publisher';
 export interface PlayerWinStatus {
 
 	/** Player name. */
-	playerName: string;
+	readonly playerName: string;
 
 	/** Winning status. */
-	winStatus: boolean;
+	readonly winStatus: boolean;
 }
 
 /** Publisher for player winning status changing. */
 export class PlayerWinStatusPublisher extends PlayerDecorator implements Publisher<PlayerWinStatus> {
 
-	private providedPublisher: ProvidedPublisher<PlayerWinStatus>;
+	private readonly providedPublisher: ProvidedPublisher<PlayerWinStatus>;
 
 	public constructor(player: Player) {
 		super(player);

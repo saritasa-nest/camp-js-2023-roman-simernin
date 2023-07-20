@@ -10,13 +10,13 @@ import { Publisher } from './publisher';
 export interface CurrentDiceSide {
 
 	/** Current side. */
-	currentSide: number;
+	readonly currentSide: number;
 }
 
 /** Publisher for current dice side changing. */
 export class CurrentDiceSidePublisher extends DiceDecorator implements Publisher<CurrentDiceSide> {
 
-	private providedPublisher: ProvidedPublisher<CurrentDiceSide>;
+	private readonly providedPublisher: ProvidedPublisher<CurrentDiceSide>;
 
 	public constructor(dice: Dice) {
 		super(dice);

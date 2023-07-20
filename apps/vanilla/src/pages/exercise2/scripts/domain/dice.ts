@@ -4,7 +4,7 @@ export class Dice {
 
 	private _sidesCount = 6;
 
-	private currentSideValue: number | undefined;
+	private _currentSide: number | undefined;
 
 	/**
 	 * Set dice side count value.
@@ -20,16 +20,16 @@ export class Dice {
 
 	/** Get dice current side. */
 	public get currentSide(): number {
-		if (this.currentSideValue === undefined) {
+		if (this._currentSide === undefined) {
 			throw new Error('Current is not defined, need to roll before');
 		}
 
-		return this.currentSideValue;
+		return this._currentSide;
 	}
 
 	/** Randomize new dice side. */
 	public roll(): void {
-		this.currentSideValue = this.getRandomNumber(this._sidesCount);
+		this._currentSide = this.getRandomNumber(this._sidesCount);
 	}
 
 	private getRandomNumber(maxValue: number): number {

@@ -10,16 +10,16 @@ import { Publisher } from './publisher';
 export interface PlayerPoints {
 
 	/** Player name. */
-	playerName: string;
+	readonly playerName: string;
 
 	/** Points. */
-	points: number;
+	readonly points: number;
 }
 
 /** Publisher for player points changing. */
 export class PlayerPointsPublisher extends PlayerDecorator implements Publisher<PlayerPoints> {
 
-	private providedPublisher: ProvidedPublisher<PlayerPoints>;
+	private readonly providedPublisher: ProvidedPublisher<PlayerPoints>;
 
 	public constructor(player: Player) {
 		super(player);

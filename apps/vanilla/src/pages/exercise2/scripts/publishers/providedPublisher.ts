@@ -5,7 +5,7 @@ import { Publisher } from './publisher';
 /** Publisher who get message for publication from provider (external function). */
 export class ProvidedPublisher<T> implements Publisher<T> {
 
-	private subscribers: Subscriber<T>[] = [];
+	private readonly subscribers: Subscriber<T>[] = [];
 
 	public constructor(private readonly provider: () => T) {
 	}
