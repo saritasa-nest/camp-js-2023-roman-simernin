@@ -10,11 +10,9 @@ export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
 	public update(message: PlayerPoints): void {
 		let playerPointsSum = this.playerPointsSums.get(message.playerName);
 
-		if (playerPointsSum === undefined) {
-			playerPointsSum = message.points;
-		} else {
-			playerPointsSum += message.points;
-		}
+		playerPointsSum = playerPointsSum === undefined
+			? message.points
+			: playerPointsSum + message.points;
 
 		this.playerPointsSums.set(message.playerName, playerPointsSum);
 
