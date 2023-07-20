@@ -31,7 +31,7 @@ rollButton.addEventListener('click', () => {
 passButton.addEventListener('click', () => {
 	blackjack.pass();
 
-	if (blackjack.gameEnded) {
+	if (blackjack.isEnd) {
 		blackjackCreationResult.clearSubscriptions();
 
 		rollButton.classList.add('blackjack-actions-container__action--game-ended');

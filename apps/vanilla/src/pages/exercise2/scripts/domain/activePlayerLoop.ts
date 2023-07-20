@@ -15,13 +15,13 @@ export class ActivePlayerLoop implements IterableIterator<Player | null> {
 	}
 
 	/** Provides there is any player who not pass. */
-	public get activePlayersEnded(): boolean {
-		return this.passedPlayerIndexes.length === this.players.length;
+	public get hasActivePlayers(): boolean {
+		return this.passedPlayerIndexes.length !== this.players.length;
 	}
 
 	/** Get next active player. */
 	public next(): IteratorResult<Player | null> {
-		if (this.activePlayersEnded) {
+		if (!this.hasActivePlayers) {
 			return {
 				done: false,
 				value: null,

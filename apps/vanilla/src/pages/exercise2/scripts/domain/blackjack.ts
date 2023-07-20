@@ -5,7 +5,7 @@ import { Player } from './player';
 /** Contain logic for game Blackjack. */
 export class Blackjack {
 
-	private _gameEnded = false;
+	private _isEnd = false;
 
 	private readonly allPlayers: Player[];
 
@@ -24,13 +24,13 @@ export class Blackjack {
 	}
 
 	/** Provides game ended (there are no active players). */
-	public get gameEnded(): boolean {
-		return this._gameEnded;
+	public get isEnd(): boolean {
+		return this._isEnd;
 	}
 
 	/** Roll dice by next player and add points to him. */
 	public rollDice(): void {
-		if (this._gameEnded) {
+		if (this.isEnd) {
 			throw new Error('Can not roll dice because game ended');
 		}
 
@@ -48,7 +48,7 @@ export class Blackjack {
 
 	/** Make pass by current player and end game if passed player is last. */
 	public pass(): void {
-		if (this._gameEnded) {
+		if (this.isEnd) {
 			throw new Error('Can not make a pass because game ended');
 		}
 
@@ -62,7 +62,7 @@ export class Blackjack {
 
 		currentPlayer.pass();
 
-		if (this.activePlayers.activePlayersEnded) {
+		if (!this.activePlayers.hasActivePlayers) {
 			this.endGame();
 		}
 	}
@@ -93,6 +93,6 @@ export class Blackjack {
 			}
 		}
 
-		this._gameEnded = true;
+		this._isEnd = true;
 	}
 }
