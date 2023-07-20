@@ -18,11 +18,11 @@
   width: 100%;
 }
 
-.gamer-points-container--winner {
+.gamer-points-container_winner {
   background-color: green;
 }
 
-.gamer-points-container--looser {
+.gamer-points-container_looser {
   background-color: red;
 }
 

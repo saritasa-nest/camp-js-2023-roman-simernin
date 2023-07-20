@@ -14,9 +14,9 @@ export class WinnerPresenter implements Subscriber<PlayerWinStatus> {
 		}
 
 		if (message.winStatus) {
-			playerPointsContainerElement.classList.add('gamer-points-container--winner');
+			playerPointsContainerElement.classList.add('gamer-points-container_winner');
 		} else {
-			playerPointsContainerElement.classList.add('gamer-points-container--looser');
+			playerPointsContainerElement.classList.add('gamer-points-container_looser');
 		}
 	}
 }
