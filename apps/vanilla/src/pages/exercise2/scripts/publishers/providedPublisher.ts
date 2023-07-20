@@ -5,12 +5,9 @@ import { Publisher } from './publisher';
 /** Publisher who get message for publication from provider (external function). */
 export class ProvidedPublisher<T> implements Publisher<T> {
 
-	private provider: () => T;
-
 	private subscribers: Subscriber<T>[] = [];
 
-	public constructor(provider: () => T) {
-		this.provider = provider;
+	public constructor(private readonly provider: () => T) {
 	}
 
 	/** @inheritdoc */

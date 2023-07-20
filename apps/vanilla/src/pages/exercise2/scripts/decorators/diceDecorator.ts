@@ -3,12 +3,8 @@ import { Dice } from '../domain/dice';
 /** Wrap Dice for adding new functionality. */
 export abstract class DiceDecorator extends Dice {
 
-	private readonly dice: Dice;
-
-	public constructor(dice: Dice) {
+	public constructor(private readonly dice: Dice) {
 		super();
-
-		this.dice = dice;
 	}
 
 	/** @inheritdoc */

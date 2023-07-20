@@ -3,12 +3,9 @@ import { Player } from './player';
 /** Collection of players that return only player who not pass. */
 export class ActivePlayerLoop implements IterableIterator<Player | null> {
 
-	private readonly players: Player[];
-
 	private currentIdex = -1;
 
-	public constructor(players: Player[]) {
-		this.players = players;
+	public constructor(private readonly players: Player[]) {
 	}
 
 	private get passedPlayerIndexes(): number[] {

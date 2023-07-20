@@ -7,18 +7,18 @@ export class Blackjack {
 
 	private gameEndedValue = false;
 
-	private readonly dice: Dice;
-
 	private readonly allPlayers: Player[];
 
 	private readonly activePlayers: ActivePlayerLoop;
 
-	public constructor(dice: Dice, players: Player[]) {
+	public constructor(
+		players: Player[],
+		private readonly dice: Dice) {
+
 		if (players.length === 0) {
 			throw new Error('Player count can not be zero');
 		}
 
-		this.dice = dice;
 		this.allPlayers = players;
 		this.activePlayers = new ActivePlayerLoop(players);
 	}

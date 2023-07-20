@@ -3,12 +3,8 @@ import { Player } from '../domain/player';
 /** Wrap Player for adding new functionality. */
 export class PlayerDecorator extends Player {
 
-	private readonly player: Player;
-
-	public constructor(player: Player) {
+	public constructor(private readonly player: Player) {
 		super();
-
-		this.player = player;
 	}
 
 	/** @inheritdoc */

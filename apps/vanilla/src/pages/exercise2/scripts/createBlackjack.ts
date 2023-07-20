@@ -63,7 +63,7 @@ export function createBlackjack(parameters: BlackjackParameters): BlackjackCreat
 		players.push(playerWinStatusSubscriber);
 	}
 
-	const blackjack = new Blackjack(currentDiceSidePublisher, players);
+	const blackjack = new Blackjack(players, currentDiceSidePublisher);
 
 	const clearSubscriptions: () => void = () => {
 		currentDiceSidePublisher.unsubscribe(parameters.currentDiceSideSubscriber);
