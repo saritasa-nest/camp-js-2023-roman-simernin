@@ -2,7 +2,7 @@
 /** Domain model for dice. */
 export class Dice {
 
-	private sidesCountValue = 6;
+	private _sidesCount = 6;
 
 	private currentSideValue: number | undefined;
 
@@ -15,7 +15,7 @@ export class Dice {
 			throw new Error('Side count can not be equal or less then zero');
 		}
 
-		this.sidesCountValue = sideCount;
+		this._sidesCount = sideCount;
 	}
 
 	/** Get dice current side. */
@@ -29,7 +29,7 @@ export class Dice {
 
 	/** Randomize new dice side. */
 	public roll(): void {
-		this.currentSideValue = this.getRandomNumber(this.sidesCountValue);
+		this.currentSideValue = this.getRandomNumber(this._sidesCount);
 	}
 
 	private getRandomNumber(maxValue: number): number {

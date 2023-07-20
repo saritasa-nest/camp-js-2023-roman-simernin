@@ -1,37 +1,37 @@
 /** Domain model for player. */
 export class Player {
 
-	private nameValue = 'no name';
+	private _name = 'no name';
 
-	private lastPointsValue = 0;
+	private _lastPoints = 0;
 
-	private totalPointsValue = 0;
+	private _totalPoints = 0;
 
-	private winStatusValue: boolean | undefined;
+	private _winStatus: boolean | undefined;
 
-	private passStatusValue = false;
+	private _passStatus = false;
 
 	/**
 	 * Set player name.
 	 * @param name - Player name.
 	 */
 	public set name(name: string) {
-		this.nameValue = name;
+		this._name = name;
 	}
 
 	/** Get player name. */
 	public get name(): string {
-		return this.nameValue;
+		return this._name;
 	}
 
 	/** Get last points for current player. */
 	public get lastPoints(): number {
-		return this.lastPointsValue;
+		return this._lastPoints;
 	}
 
 	/** Get sum of all points for current player. */
 	public get totalPoints(): number {
-		return this.totalPointsValue;
+		return this._totalPoints;
 	}
 
 	/**
@@ -39,17 +39,17 @@ export class Player {
 	 * @param winStatus - Provides player win or not.
 	 */
 	public set winStatus(winStatus: boolean) {
-		this.winStatusValue = winStatus;
+		this._winStatus = winStatus;
 	}
 
 	/** Get winning status. */
 	public get winStatus(): boolean | undefined {
-		return this.winStatusValue;
+		return this._winStatus;
 	}
 
 	/** Get status that provides user passed or not. */
 	public get passStatus(): boolean {
-		return this.passStatusValue;
+		return this._passStatus;
 	}
 
 	/**
@@ -57,7 +57,7 @@ export class Player {
 	 * @param points - Points.
 	 */
 	public addPoints(points: number): void {
-		if (this.passStatusValue) {
+		if (this._passStatus) {
 			throw new Error('Can not add points when player make a pass');
 		}
 
@@ -65,12 +65,12 @@ export class Player {
 			throw new Error('Can not add zero or less points');
 		}
 
-		this.lastPointsValue = points;
-		this.totalPointsValue += points;
+		this._lastPoints = points;
+		this._totalPoints += points;
 	}
 
 	/** Make player be passed. After pass player can not add points. */
 	public pass(): void {
-		this.passStatusValue = true;
+		this._passStatus = true;
 	}
 }
