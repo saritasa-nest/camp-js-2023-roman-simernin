@@ -3,7 +3,7 @@ import { Player } from './player';
 /** Collection of players that return only player who not pass. */
 export class ActivePlayerLoop implements IterableIterator<Player | null> {
 
-	private currentIdex = -1;
+	private currentIndex = -1;
 
 	public constructor(private readonly players: Player[]) {
 	}
@@ -28,19 +28,19 @@ export class ActivePlayerLoop implements IterableIterator<Player | null> {
 			};
 		}
 
-		this.currentIdex++;
+		this.currentIndex++;
 
-		if (this.currentIdex === this.players.length) {
-			this.currentIdex = 0;
+		if (this.currentIndex === this.players.length) {
+			this.currentIndex = 0;
 		}
 
-		if (this.passedPlayerIndexes.includes(this.currentIdex)) {
+		if (this.passedPlayerIndexes.includes(this.currentIndex)) {
 			this.next();
 		}
 
 		return {
 			done: false,
-			value: this.players[this.currentIdex],
+			value: this.players[this.currentIndex],
 		};
 	}
 
