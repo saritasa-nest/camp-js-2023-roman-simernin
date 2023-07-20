@@ -40,11 +40,10 @@ export interface BlackjackCreationResult {
  * @param parameters - Blackjack parameters.
  */
 export function createBlackjack(parameters: BlackjackParameters): BlackjackCreationResult {
-	let dice = new Dice();
+	const dice = new Dice();
 
 	const currentDiceSidePublisher = new CurrentDiceSidePublisher(dice);
 	currentDiceSidePublisher.subscribe(parameters.currentDiceSideSubscriber);
-	dice = currentDiceSidePublisher;
 
 	const players: Player[] = [];
 	const playerUnsubscribes: (() => void)[] = [];
@@ -64,7 +63,7 @@ export function createBlackjack(parameters: BlackjackParameters): BlackjackCreat
 		players.push(playerWinStatusSubscriber);
 	}
 
-	const blackjack = new Blackjack(dice, players);
+	const blackjack = new Blackjack(currentDiceSidePublisher, players);
 
 	const clearSubscriptions: () => void = () => {
 		currentDiceSidePublisher.unsubscribe(parameters.currentDiceSideSubscriber);
