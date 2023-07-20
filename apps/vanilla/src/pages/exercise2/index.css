@@ -1,8 +1,12 @@
 :root {
-  --computer-font-size: 45px;
-  --tablet-font-size: 30px;
+  --desktop-font-size: 25px;
+  --tablet-font-size: 20px;
   --mobile-font-size: 15px;
-  --points-list-height-coefficient: 2;
+  --points-list-height-coefficient: 3;
+}
+
+html {
+  font-size: var(--desktop-font-size);
 }
 
 .blackjack-container {
@@ -12,10 +16,17 @@
 
 .blackjack-title {
   text-align: center;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .points-container {
   width: 100%;
+}
+
+.points-container__title {
+  font-size: 1.5rem;
+  margin: 10px 0;
 }
 
 .gamer-points-container_winner {
@@ -28,21 +39,18 @@
 
 .points-container__points-list {
   /* To get rid of the effect of increasing the height of the block when adding the first element to an empty list */
-  height: calc(var(--computer-font-size) * var(--points-list-height-coefficient));
+  height: calc(var(--desktop-font-size) * var(--points-list-height-coefficient));
   display: flex;
   gap: 10px;
   padding-left: 0;
   overflow-y: hidden;
+  margin: 0;
 }
 
 .points-container__points-item {
   list-style-type: none;
   font-weight: 500;
-}
-
-.points-container__points-item {
-  list-style-type: none;
-  font-weight: 500;
+  font-size: 1rem;
 }
 
 .blackjack-actions-container {
@@ -53,17 +61,11 @@
 
 .blackjack-actions-container__action {
   width: 50%;
+  font-size: 1.5rem;
 }
 
 .blackjack-actions-container__action--game-ended {
   display: none;
-}
-
-.blackjack-title,
-.points-container__title,
-.points-container__points-item,
-.blackjack-actions-container__action {
-  font-size: var(--computer-font-size);
 }
 
 @media (width < 786px) {
@@ -74,10 +76,7 @@
 }
 
 @media (786px <= width <= 1280px) {
-  .blackjack-title,
-  .points-container__title,
-  .points-container__points-item,
-  .blackjack-actions-container__action {
+  .html {
     font-size: var(--tablet-font-size);
   }
 
@@ -87,10 +86,7 @@
 }
 
 @media (width < 786px) {
-  .blackjack-title,
-  .points-container__title,
-  .points-container__points-item,
-  .blackjack-actions-container__action {
+  .html {
     font-size: var(--mobile-font-size);
   }
 
