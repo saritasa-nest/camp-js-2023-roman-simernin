@@ -6,25 +6,17 @@ import { PlayerDecorator } from '../decorators/playerDecorator';
 import { ProvidedPublisher } from './providedPublisher';
 import { Publisher } from './publisher';
 
-/**
- * Message type for publication of player winning status changing.
- */
+/** Message type for publication of player winning status changing. */
 export interface PlayerWinStatus {
 
-	/**
-	 * Player name.
-	 */
+	/** Player name. */
 	playerName: string;
 
-	/**
-	 * Winning status.
-	 */
+	/** Winning status. */
 	winStatus: boolean;
 }
 
-/**
- * Publisher for player winning status changing.
- */
+/** Publisher for player winning status changing. */
 export class PlayerWinStatusPublisher extends PlayerDecorator implements Publisher<PlayerWinStatus> {
 
 	private providedPublisher: ProvidedPublisher<PlayerWinStatus>;

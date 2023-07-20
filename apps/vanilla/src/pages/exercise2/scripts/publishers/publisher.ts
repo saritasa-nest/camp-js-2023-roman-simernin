@@ -1,8 +1,6 @@
 import { Subscriber } from '../subscribers/subscriber';
 
-/**
- * Provides subscriber management and notification for them.
- */
+/** Provides subscriber management and notification for them. */
 export interface Publisher<T> {
 
 	/**
@@ -17,8 +15,6 @@ export interface Publisher<T> {
 	 */
 	unsubscribe(observer: Subscriber<T>): void;
 
-	/**
-	 * Notify all subscribers.
-	 */
+	/** Notify all subscribers. */
 	notify(): void;
 }

@@ -1,8 +1,6 @@
 import { Player } from '../domain/player';
 
-/**
- * Wrap Player for adding new functionality.
- */
+/** Wrap Player for adding new functionality. */
 export class PlayerDecorator extends Player {
 
 	private readonly player: Player;

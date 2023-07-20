@@ -6,50 +6,32 @@ import { PlayerPoints, PlayerPointsPublisher } from './publishers/playerPointsPu
 import { PlayerWinStatus, PlayerWinStatusPublisher } from './publishers/playerWinStatusPublisher';
 import { Subscriber } from './subscribers/subscriber';
 
-/**
- * Blackjack creation parameters.
- */
+/** Blackjack creation parameters. */
 export interface BlackjackParameters {
 
-	/**
-	 * Dice side count.
-	 */
+	/** Dice side count. */
 	diceSideCount: number;
 
-	/**
-	 * Player names.
-	 */
+	/** Player names. */
 	playerNames: string[];
 
-	/**
-	 * Current dice side subscriber.
-	 */
+	/** Current dice side subscriber. */
 	currentDiceSideSubscriber: Subscriber<CurrentDiceSide>;
 
-	/**
-	 * Player points subscriber.
-	 */
+	/** Player points subscriber. */
 	playerPointsSubscriber: Subscriber<PlayerPoints>;
 
-	/**
-	 * Player win status subscriber.
-	 */
+	/** Player win status subscriber. */
 	playerWinStatusSubscriber: Subscriber<PlayerWinStatus>;
 }
 
-/**
- * Blackjack creation result.
- */
+/** Blackjack creation result. */
 export interface BlackjackCreationResult {
 
-	/**
-	 * Blackjack instanse.
-	 */
+	/** Blackjack instanse. */
 	blackjackInstanse: Blackjack;
 
-	/**
-	 * Clear subscriptions.
-	 */
+	/** Clear subscriptions. */
 	clearSubscriptions: () => void;
 }
 

@@ -6,25 +6,17 @@ import { PlayerDecorator } from '../decorators/playerDecorator';
 import { ProvidedPublisher } from './providedPublisher';
 import { Publisher } from './publisher';
 
-/**
- * Message type for publication of player points changing.
- */
+/** Message type for publication of player points changing. */
 export interface PlayerPoints {
 
-	/**
-	 * Player name.
-	 */
+	/** Player name. */
 	playerName: string;
 
-	/**
-	 * Points.
-	 */
+	/** Points. */
 	points: number;
 }
 
-/**
- * Publisher for player points changing.
- */
+/** Publisher for player points changing. */
 export class PlayerPointsPublisher extends PlayerDecorator implements Publisher<PlayerPoints> {
 
 	private providedPublisher: ProvidedPublisher<PlayerPoints>;

@@ -2,9 +2,7 @@ import { PlayerWinStatus } from '../publishers/playerWinStatusPublisher';
 
 import { Subscriber } from './subscriber';
 
-/**
- * Present who win and who lose the game.
- */
+/** Present who win and who lose the game. */
 export class WinnerPresenter implements Subscriber<PlayerWinStatus> {
 
 	/** @inheritdoc */

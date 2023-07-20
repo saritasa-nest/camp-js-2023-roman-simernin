@@ -6,20 +6,14 @@ import { DiceDecorator } from '../decorators/diceDecorator';
 import { ProvidedPublisher } from './providedPublisher';
 import { Publisher } from './publisher';
 
-/**
- * Message type for publication of current dice side changing.
- */
+/** Message type for publication of current dice side changing. */
 export interface CurrentDiceSide {
 
-	/**
-	 * Current side.
-	 */
+	/** Current side. */
 	currentSide: number;
 }
 
-/**
- * Publisher for current dice side changing.
- */
+/** Publisher for current dice side changing. */
 export class CurrentDiceSidePublisher extends DiceDecorator implements Publisher<CurrentDiceSide> {
 
 	private providedPublisher: ProvidedPublisher<CurrentDiceSide>;

@@ -2,9 +2,7 @@ import { ActivePlayerLoop } from './activePlayerLoop';
 import { Dice } from './dice';
 import { Player } from './player';
 
-/**
- * Contain logic for game Blackjack.
- */
+/** Contain logic for game Blackjack. */
 export class Blackjack {
 
 	private gameEndedValue = false;
@@ -25,16 +23,12 @@ export class Blackjack {
 		this.activePlayers = new ActivePlayerLoop(players);
 	}
 
-	/**
-	 * Provides game ended (there are no active players).
-	 */
+	/** Provides game ended (there are no active players). */
 	public get gameEnded(): boolean {
 		return this.gameEndedValue;
 	}
 
-	/**
-	 * Roll dice by next player and add points to him.
-	 */
+	/** Roll dice by next player and add points to him. */
 	public rollDice(): void {
 		if (this.gameEndedValue) {
 			throw new Error('Can not roll dice because game ended');
@@ -52,9 +46,7 @@ export class Blackjack {
 		currentPlayer.addPoints(this.dice.currentSide);
 	}
 
-	/**
-	 * Make pass by current player and end game if passed player is last.
-	 */
+	/** Make pass by current player and end game if passed player is last. */
 	public pass(): void {
 		if (this.gameEndedValue) {
 			throw new Error('Can not make a pass because game ended');

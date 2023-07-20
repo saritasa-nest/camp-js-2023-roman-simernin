@@ -2,9 +2,7 @@ import { CurrentDiceSide } from '../publishers/currentDiceSidePublisher';
 
 import { Subscriber } from './subscriber';
 
-/**
- * Present all dice rolls and total points for it.
- */
+/** Present all dice rolls and total points for it. */
 export class DiceRollPresenter implements Subscriber<CurrentDiceSide> {
 
 	private dicePointsSum = 0;

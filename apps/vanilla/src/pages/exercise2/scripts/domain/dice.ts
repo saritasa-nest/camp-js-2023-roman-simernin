@@ -1,7 +1,5 @@
 
-/**
- * Domain model for dice.
- */
+/** Domain model for dice. */
 export class Dice {
 
 	private sidesCountValue = 6;
@@ -20,9 +18,7 @@ export class Dice {
 		this.sidesCountValue = sideCount;
 	}
 
-	/**
-	 * Get dice current side.
-	 */
+	/** Get dice current side. */
 	public get currentSide(): number {
 		if (this.currentSideValue === undefined) {
 			throw new Error('Current is not defined, need to roll before');
@@ -31,9 +27,7 @@ export class Dice {
 		return this.currentSideValue;
 	}
 
-	/**
-	 * Randomize new dice side.
-	 */
+	/** Randomize new dice side. */
 	public roll(): void {
 		this.currentSideValue = this.getRandomNumber(this.sidesCountValue);
 	}

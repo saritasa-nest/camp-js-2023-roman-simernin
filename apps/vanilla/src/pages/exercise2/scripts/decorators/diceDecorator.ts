@@ -1,8 +1,6 @@
 import { Dice } from '../domain/dice';
 
-/**
- * Wrap Dice for adding new functionality.
- */
+/** Wrap Dice for adding new functionality. */
 export abstract class DiceDecorator extends Dice {
 
 	private readonly dice: Dice;

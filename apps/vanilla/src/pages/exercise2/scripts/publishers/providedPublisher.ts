@@ -2,9 +2,7 @@ import { Subscriber } from '../subscribers/subscriber';
 
 import { Publisher } from './publisher';
 
-/**
- * Publisher who get message for publication from provider (external function).
- */
+/** Publisher who get message for publication from provider (external function). */
 export class ProvidedPublisher<T> implements Publisher<T> {
 
 	private provider: () => T;

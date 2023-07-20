@@ -1,6 +1,4 @@
-/**
- * Domain model for player.
- */
+/** Domain model for player. */
 export class Player {
 
 	private nameValue = 'no name';
@@ -21,23 +19,17 @@ export class Player {
 		this.nameValue = name;
 	}
 
-	/**
-	 * Get player name.
-	 */
+	/** Get player name. */
 	public get name(): string {
 		return this.nameValue;
 	}
 
-	/**
-	 * Get last points for current player.
-	 */
+	/** Get last points for current player. */
 	public get lastPoints(): number {
 		return this.lastPointsValue;
 	}
 
-	/**
-	 * Get sum of all points for current player.
-	 */
+	/** Get sum of all points for current player. */
 	public get totalPoints(): number {
 		return this.totalPointsValue;
 	}
@@ -50,16 +42,12 @@ export class Player {
 		this.winStatusValue = winStatus;
 	}
 
-	/**
-	 * Get winning status.
-	 */
+	/** Get winning status. */
 	public get winStatus(): boolean | undefined {
 		return this.winStatusValue;
 	}
 
-	/**
-	 * Get status that provides user passed or not.
-	 */
+	/** Get status that provides user passed or not. */
 	public get passStatus(): boolean {
 		return this.passStatusValue;
 	}
@@ -81,9 +69,7 @@ export class Player {
 		this.totalPointsValue += points;
 	}
 
-	/**
-	 * Make player be passed. After pass player can not add points.
-	 */
+	/** Make player be passed. After pass player can not add points. */
 	public pass(): void {
 		this.passStatusValue = true;
 	}

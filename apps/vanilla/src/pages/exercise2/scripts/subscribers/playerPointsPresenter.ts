@@ -2,9 +2,7 @@ import { PlayerPoints } from '../publishers/playerPointsPublisher';
 
 import { Subscriber } from './subscriber';
 
-/**
- * Present all dice roll and total points by players.
- */
+/** Present all dice roll and total points by players. */
 export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
 	private readonly playerPointsSums: Map<string, number> = new Map<string, number>();
 
