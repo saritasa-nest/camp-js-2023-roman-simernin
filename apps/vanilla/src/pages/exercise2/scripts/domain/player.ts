@@ -43,7 +43,7 @@ export class Player implements IPlayer {
 
 	private _passStatus = false;
 
-	constructor(readonly name: string) {
+	public constructor(public readonly name: string) {
 	}
 
 	/** @inheritdoc */
@@ -84,7 +84,7 @@ export class Player implements IPlayer {
 	}
 
 	/** @inheritdoc */
-	public setWinStatus(winStatus: boolean) {
+	public setWinStatus(winStatus: boolean): void {
 		if (this._winStatus !== undefined) {
 			throw new Error('Win status has already defined.');
 		}

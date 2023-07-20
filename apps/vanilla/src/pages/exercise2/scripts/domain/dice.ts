@@ -1,5 +1,6 @@
 /** Provides dice interface. */
 export interface IDice {
+
 	/** Dice current side. */
 	readonly currentSide: number;
 
@@ -14,7 +15,7 @@ export class Dice implements IDice {
 
 	private _currentSide: number | undefined;
 
-	constructor(sideCount: number) {
+	public constructor(sideCount: number) {
 		if (sideCount <= 0) {
 			throw new Error('Side count can not be equal or less then zero');
 		}

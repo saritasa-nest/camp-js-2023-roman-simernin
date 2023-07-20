@@ -1,4 +1,5 @@
 import { CurrentDiceSide } from '../publishers/currentDiceSidePublisher';
+
 import { createPointsItemElement } from './createPointsItemElement';
 
 import { Subscriber } from './subscriber';

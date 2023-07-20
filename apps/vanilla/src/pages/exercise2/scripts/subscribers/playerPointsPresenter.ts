@@ -1,4 +1,5 @@
 import { PlayerPoints } from '../publishers/playerPointsPublisher';
+
 import { createPointsItemElement } from './createPointsItemElement';
 
 import { Subscriber } from './subscriber';
@@ -11,9 +12,9 @@ export class PlayerPointsPresenter implements Subscriber<PlayerPoints> {
 	public update(message: PlayerPoints): void {
 		let playerPointsSum = this.playerPointsSums.get(message.playerName);
 
-		playerPointsSum = playerPointsSum === undefined
-			? message.points
-			: playerPointsSum + message.points;
+		playerPointsSum = playerPointsSum === undefined ?
+			message.points :
+			playerPointsSum + message.points;
 
 		this.playerPointsSums.set(message.playerName, playerPointsSum);
 

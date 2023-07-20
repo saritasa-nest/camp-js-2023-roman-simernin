@@ -1,5 +1,5 @@
 import { Blackjack } from './domain/blackjack';
-import { Dice, IDice } from './domain/dice';
+import { Dice } from './domain/dice';
 import { Player, IPlayer } from './domain/player';
 import { CurrentDiceSide, CurrentDiceSidePublisher } from './publishers/currentDiceSidePublisher';
 import { PlayerPoints, PlayerPointsPublisher } from './publishers/playerPointsPublisher';

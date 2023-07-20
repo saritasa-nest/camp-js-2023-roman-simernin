@@ -37,7 +37,7 @@ export class PlayerDecorator implements IPlayer {
 	}
 
 	/** @inheritdoc */
-	public setWinStatus(winStatus: boolean) {
+	public setWinStatus(winStatus: boolean): void {
 		this.player.setWinStatus(winStatus);
 	}
 

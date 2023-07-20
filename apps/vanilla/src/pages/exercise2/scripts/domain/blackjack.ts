@@ -13,7 +13,8 @@ export class Blackjack {
 
 	public constructor(
 		players: IPlayer[],
-		private readonly dice: IDice) {
+		private readonly dice: IDice,
+	) {
 
 		if (players.length === 0) {
 			throw new Error('Player count can not be zero');

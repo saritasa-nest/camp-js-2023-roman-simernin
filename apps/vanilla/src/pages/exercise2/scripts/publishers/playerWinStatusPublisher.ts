@@ -37,7 +37,7 @@ export class PlayerWinStatusPublisher extends PlayerDecorator implements Publish
 	}
 
 	/** @inheritdoc */
-	public override setWinStatus(winStatus: boolean) {
+	public override setWinStatus(winStatus: boolean): void {
 		super.setWinStatus(winStatus);
 		this.providedPublisher.notify();
 	}
