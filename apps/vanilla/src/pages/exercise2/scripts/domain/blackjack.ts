@@ -1,5 +1,5 @@
 import { ActivePlayerLoop } from './activePlayerLoop';
-import { Dice } from './dice';
+import { IDice } from './dice';
 import { IPlayer } from './player';
 
 /** Contain logic for game Blackjack. */
@@ -13,7 +13,7 @@ export class Blackjack {
 
 	public constructor(
 		players: IPlayer[],
-		private readonly dice: Dice) {
+		private readonly dice: IDice) {
 
 		if (players.length === 0) {
 			throw new Error('Player count can not be zero');

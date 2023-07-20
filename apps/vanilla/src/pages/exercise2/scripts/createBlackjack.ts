@@ -1,5 +1,5 @@
 import { Blackjack } from './domain/blackjack';
-import { Dice } from './domain/dice';
+import { Dice, IDice } from './domain/dice';
 import { Player, IPlayer } from './domain/player';
 import { CurrentDiceSide, CurrentDiceSidePublisher } from './publishers/currentDiceSidePublisher';
 import { PlayerPoints, PlayerPointsPublisher } from './publishers/playerPointsPublisher';
@@ -43,7 +43,7 @@ export interface BlackjackCreationResult {
  * @param parameters - Blackjack parameters.
  */
 export function createBlackjack(parameters: BlackjackParameters): BlackjackCreationResult {
-	const dice = new Dice();
+	const dice = new Dice(parameters.diceSideCount);
 
 	const currentDiceSidePublisher = new CurrentDiceSidePublisher(dice);
 	currentDiceSidePublisher.subscribe(parameters.currentDiceSideSubscriber);
