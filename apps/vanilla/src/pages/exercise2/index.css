@@ -3,6 +3,8 @@
   --tablet-font-size: 20px;
   --mobile-font-size: 15px;
   --points-list-height-coefficient: 3;
+  --winner-color: green;
+  --looser-color: red;
 }
 
 html {
@@ -30,11 +32,11 @@ html {
 }
 
 .gamer-points-container_winner {
-  background-color: green;
+  background-color: var(--winner-color);
 }
 
 .gamer-points-container_looser {
-  background-color: red;
+  background-color: var(--looser-color);
 }
 
 .points-container__points-list {
