@@ -38,6 +38,12 @@ export class Dice implements IDice {
 	}
 
 	private getRandomNumber(maxValue: number): number {
-		return Math.floor(Math.random() * maxValue) + 1;
+		// Generate random number from [0, maxValue - 1].
+		let randomNumber = Math.floor(Math.random() * maxValue);
+
+		// Make random number contains in diaposon [1, maxValue].
+		randomNumber += 1;
+
+		return randomNumber;
 	}
 }
