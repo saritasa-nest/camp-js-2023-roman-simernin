@@ -11,7 +11,7 @@ export interface IPlayer {
 	readonly totalPoints: number;
 
 	/** Status provides user won or not.. */
-	readonly winStatus: boolean | undefined;
+	readonly winStatus?: boolean;
 
 	/** Status provides user passed or not.. */
 	readonly passStatus: boolean;
@@ -39,7 +39,7 @@ export class Player implements IPlayer {
 
 	private _totalPoints = 0;
 
-	private _winStatus: boolean | undefined;
+	private _winStatus?: boolean;
 
 	private _passStatus = false;
 

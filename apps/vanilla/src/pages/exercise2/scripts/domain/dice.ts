@@ -13,7 +13,7 @@ export class Dice implements IDice {
 
 	private readonly _sidesCount: number;
 
-	private _currentSide: number | undefined;
+	private _currentSide?: number;
 
 	public constructor(sideCount: number) {
 		if (sideCount <= 0) {
