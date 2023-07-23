@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 import { AnimePreview } from "../models/animePreview";
 import { AnimePreviewDto } from './mappers/animePreviewMapper/dtos/animePreview.dto';
@@ -9,6 +10,7 @@ import { ApiUriBuilder } from './apiUriBuilder';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 
 /** Service for actions with anime. */
+@Injectable()
 export class AnimeService {
 
     public constructor(
