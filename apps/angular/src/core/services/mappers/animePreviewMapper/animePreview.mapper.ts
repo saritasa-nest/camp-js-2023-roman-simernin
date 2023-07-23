@@ -19,7 +19,7 @@ export class AnimePreviewMapper {
             japaneseTitle: dto.title_jpn,
             airedStartDate: new Date(dto.aired.start),
             type: dto.type,
-            status: dto.status
+            status: dto.status.replace(/_/g, ' ')
         });
     }
 }

@@ -14,9 +14,9 @@ export class AnimeDashboardComponent {
 
     /** Displayed columns of anime table. */
     public readonly displayedAnimeTableColumns: string[] = [
+        'imageUrl',
         'englishTitle',
         'japaneseTitle',
-        'imageUrl',
         'type',
         'airedStartDate',
         'status'
@@ -27,9 +27,5 @@ export class AnimeDashboardComponent {
 
     constructor(private readonly animeService: AnimeService) {
         this.$animePreviews = animeService.searchAnime();
-    }
-
-    public trackById(index: number, item: AnimePreview): number {
-        return item.id;
     }
 }
