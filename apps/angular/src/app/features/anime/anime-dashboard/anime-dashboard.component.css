@@ -1,3 +1,5 @@
+@import "../../../../../../../libs/theme/src/variables.css";
+
 .anime-dashboard-title {
   text-align: center;
 }
@@ -15,6 +17,6 @@
 }
 
 .anime-table-cell__image {
-  max-width: 150px;
-  max-height: 150px;
+  max-width: var(--anime-image-size);
+  max-height: var(--anime-image-size);
 }
