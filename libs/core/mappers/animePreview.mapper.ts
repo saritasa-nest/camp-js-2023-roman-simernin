@@ -1,17 +1,12 @@
-import { Injectable } from '@angular/core';
+import { AnimePreview } from "../models/animePreview";
+import { AnimePreviewDto } from "../dtos/animePreview.dto";
 
-import { AnimePreview } from "@js-camp/angular/core/models/animePreview";
-import { AnimePreviewDto } from "./dtos/animePreview.dto";
-
-//* Mapper for anime preview model.
-@Injectable()
-export class AnimePreviewMapper {
-
+export namespace AnimePreviewMapper {
     /**
      * Map dto to model for anime preview.
      * @param dto Anime preview DTO.
      */
-    public fromDto(dto: AnimePreviewDto): AnimePreview {
+    export function fromDto(dto: AnimePreviewDto): AnimePreview {
         return new AnimePreview({
             id: dto.id,
             imageUrl: dto.image,

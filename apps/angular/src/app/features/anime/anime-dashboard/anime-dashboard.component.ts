@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { AnimePreview } from '@js-camp/core/models/animePreview';
 import { AnimeService } from '@js-camp/angular/core/services/animeService';
-import { AnimePreview } from '@js-camp/angular/core/models/animePreview';
 
 /** Anime table component. */
 @Component({
