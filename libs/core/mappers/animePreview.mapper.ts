@@ -4,9 +4,9 @@ import { AnimePreviewDto } from '../dtos/animePreview.dto';
 export namespace AnimePreviewMapper {
 
 	/**
-	* Map dto to model for anime preview.
-	* @param dto Anime preview DTO.
-	*/
+	 * Map dto to model for anime preview.
+	 * @param dto Genre dto.
+	 */
 	export function fromDto(dto: AnimePreviewDto): AnimePreview {
 		return new AnimePreview({
 			id: dto.id,
