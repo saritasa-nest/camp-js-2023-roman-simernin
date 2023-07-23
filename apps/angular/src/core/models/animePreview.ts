@@ -10,7 +10,7 @@ export interface AnimePreviewConstructorData {
     readonly englishTitle: string;
 
     /** Title in Japanese */
-    readonly japanTitle: string;
+    readonly japaneseTitle: string;
 
     /** Start end date for airing. */
     readonly airedStartDate: Date;
@@ -35,10 +35,10 @@ export class AnimePreview {
     readonly englishTitle: string;
 
     /** Title in Japanese */
-    readonly japanTitle: string;
+    readonly japaneseTitle: string;
 
     /** Start end date for airing. */
-    readonly airingStartDate: Date;
+    readonly airedStartDate: Date;
 
     /** Type. */
     readonly type: string;
@@ -52,8 +52,8 @@ export class AnimePreview {
         this.id = constructorData.id;
         this.imageUrl = constructorData.imageUrl;
         this.englishTitle = constructorData.englishTitle;
-        this.japanTitle = constructorData.japanTitle;
-        this.airingStartDate = constructorData.airingStartDate;
+        this.japaneseTitle = constructorData.japaneseTitle;
+        this.airedStartDate = constructorData.airedStartDate;
         this.type = constructorData.type;
         this.status = constructorData.status;
     }
