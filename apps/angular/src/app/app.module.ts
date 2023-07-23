@@ -13,7 +13,7 @@ import { AnimeModule } from './features/anime/anime.module';
 		BrowserModule,
 		SharedModule,
 		AppRoutingModule,
-		AnimeModule
+		AnimeModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

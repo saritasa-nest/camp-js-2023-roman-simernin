@@ -5,26 +5,29 @@ import { Injectable } from '@angular/core';
 
 import { AnimePreview } from '@js-camp/core/models/animePreview';
 import { AnimePreviewDto } from '@js-camp/core/dtos/animePreview.dto';
-import { ApiUriBuilder } from './apiUriBuilder';
+
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { AnimePreviewMapper } from '@js-camp/core/mappers/animePreview.mapper';
+
+import { ApiUriBuilder } from './apiUriBuilder';
 
 /** Service for actions with anime. */
 @Injectable()
 export class AnimeService {
 
-    public constructor(
-        private readonly httpClient: HttpClient,
-        private readonly apiUriBuilder: ApiUriBuilder) { }
+	public constructor(
+		private readonly httpClient: HttpClient,
+		private readonly apiUriBuilder: ApiUriBuilder,
+	) { }
 
-    /** Search anime. */
-    public searchAnime(): Observable<AnimePreview[]> {
-        const uri = this.apiUriBuilder.buildSearchAnimeUri();
+	/** Search anime. */
+	public searchAnime(): Observable<AnimePreview[]> {
+		const uri = this.apiUriBuilder.buildSearchAnimeUri();
 
-        return this.httpClient.get<PaginationDto<AnimePreviewDto>>(uri)
-            .pipe(
-                map(paginationDto => paginationDto.results),
-                map(animePreviewDtos => animePreviewDtos.map(dto => AnimePreviewMapper.fromDto(dto)))
-            );
-    }
+		return this.httpClient.get<PaginationDto<AnimePreviewDto>>(uri)
+			.pipe(
+				map(paginationDto => paginationDto.results),
+				map(animePreviewDtos => animePreviewDtos.map(dto => AnimePreviewMapper.fromDto(dto))),
+			);
+	}
 }
