@@ -1,60 +1,61 @@
-//* Provides anime preview model constructor data. */
+/** Provides anime preview model constructor data. */
 export interface AnimePreviewConstructorData {
-    /** Identifier. */
-    readonly id: number;
 
-    /** Image URL. */
-    readonly imageUrl: string;
+	/** Identifier. */
+	readonly id: number;
 
-    /** Title in English. */
-    readonly englishTitle: string;
+	/** Image URL. */
+	readonly imageUrl: string;
 
-    /** Title in Japanese */
-    readonly japaneseTitle: string;
+	/** Title in English. */
+	readonly englishTitle: string;
 
-    /** Start end date for airing. */
-    readonly airedStartDate: Date;
+	/** Title in Japanese. */
+	readonly japaneseTitle: string;
 
-    /** Type. */
-    readonly type: string;
+	/** Start end date for airing. */
+	readonly airedStartDate: Date;
 
-    /** Status. */
-    readonly status: string;
+	/** Type. */
+	readonly type: string;
+
+	/** Status. */
+	readonly status: string;
 }
 
 /** Domain model anime for preview. */
 export class AnimePreview {
 
-    /** Identifier. */
-    readonly id: number;
+	/** Identifier. */
+	public readonly id: number;
 
-    /** Image URL. */
-    readonly imageUrl: string;
+	/** Image URL. */
+	public readonly imageUrl: string;
 
-    /** Title in English. */
-    readonly englishTitle: string;
+	/** Title in English. */
+	public readonly englishTitle: string;
 
-    /** Title in Japanese */
-    readonly japaneseTitle: string;
+	/** Title in Japanese. */
+	public readonly japaneseTitle: string;
 
-    /** Start end date for airing. */
-    readonly airedStartDate: Date;
+	/** Start end date for airing. */
+	public readonly airedStartDate: Date;
 
-    /** Type. */
-    readonly type: string;
+	/** Type. */
+	public readonly type: string;
 
-    /** Status. */
-    readonly status: string;
+	/** Status. */
+	public readonly status: string;
 
-    public constructor(
-        constructorData: AnimePreviewConstructorData
-    ) {
-        this.id = constructorData.id;
-        this.imageUrl = constructorData.imageUrl;
-        this.englishTitle = constructorData.englishTitle;
-        this.japaneseTitle = constructorData.japaneseTitle;
-        this.airedStartDate = constructorData.airedStartDate;
-        this.type = constructorData.type;
-        this.status = constructorData.status;
-    }
+	public constructor(
+		constructorData: AnimePreviewConstructorData,
+	) {
+		this.id = constructorData.id;
+		this.imageUrl = constructorData.imageUrl;
+		this.englishTitle = constructorData.englishTitle;
+		this.japaneseTitle = constructorData.japaneseTitle;
+		this.airedStartDate = constructorData.airedStartDate;
+		this.type = constructorData.type;
+		this.status = constructorData.status;
+	}
 }
