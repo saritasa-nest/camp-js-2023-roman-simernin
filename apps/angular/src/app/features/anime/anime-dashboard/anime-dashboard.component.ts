@@ -13,7 +13,7 @@ import { AnimeService } from '@js-camp/angular/core/services/animeService';
 export class AnimeDashboardComponent {
 
 	/** Displayed columns of anime table. */
-	public readonly displayedAnimeTableColumns: string[] = [
+	public readonly displayedAnimeTableColumns: readonly string[] = [
 		'imageUrl',
 		'englishTitle',
 		'japaneseTitle',
