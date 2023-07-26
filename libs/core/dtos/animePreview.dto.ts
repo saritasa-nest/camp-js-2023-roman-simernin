@@ -9,7 +9,7 @@ export interface AnimeAiringPreviewDto {
 }
 
 /** DTO of anime for preview. */
-export interface AnimePreviewDto {
+export interface AnimeDto {
 
 	/** Identifier. */
 	readonly id: number;

@@ -1,14 +1,14 @@
-import { AnimePreview } from '../models/animePreview';
-import { AnimePreviewDto } from '../dtos/animePreview.dto';
+import { Anime } from '../models/animePreview';
+import { AnimeDto } from '../dtos/animePreview.dto';
 
-export namespace AnimePreviewMapper {
+export namespace AnimeMapper {
 
 	/**
 	 * Map dto to model for anime preview.
 	 * @param dto Genre dto.
 	 */
-	export function fromDto(dto: AnimePreviewDto): AnimePreview {
-		return new AnimePreview({
+	export function fromDto(dto: AnimeDto): Anime {
+		return new Anime({
 			id: dto.id,
 			imageUrl: dto.image,
 			englishTitle: dto.title_eng,

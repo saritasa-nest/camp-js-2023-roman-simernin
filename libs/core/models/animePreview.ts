@@ -1,5 +1,5 @@
 /** Provides anime preview model constructor data. */
-export interface AnimePreviewConstructorData {
+export interface AnimeConstructorData {
 
 	/** Identifier. */
 	readonly id: number;
@@ -24,7 +24,7 @@ export interface AnimePreviewConstructorData {
 }
 
 /** Domain model anime for preview. */
-export class AnimePreview {
+export class Anime {
 
 	/** Identifier. */
 	public readonly id: number;
@@ -48,7 +48,7 @@ export class AnimePreview {
 	public readonly status: string;
 
 	public constructor(
-		constructorData: AnimePreviewConstructorData,
+		constructorData: AnimeConstructorData,
 	) {
 		this.id = constructorData.id;
 		this.imageUrl = constructorData.imageUrl;

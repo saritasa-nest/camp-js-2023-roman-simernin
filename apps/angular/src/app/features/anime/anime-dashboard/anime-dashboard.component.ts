@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AnimePreview } from '@js-camp/core/models/animePreview';
+import { Anime } from '@js-camp/core/models/animePreview';
 import { AnimeService } from '@js-camp/angular/core/services/animeService';
 
 /** Anime table component. */
@@ -23,7 +23,7 @@ export class AnimeDashboardComponent {
 	];
 
 	/** Observable for anime previews. */
-	public readonly animePreviews$: Observable<AnimePreview[]>;
+	public readonly animePreviews$: Observable<Anime[]>;
 
 	public constructor(private readonly animeService: AnimeService) {
 		this.animePreviews$ = animeService.searchAnime();
