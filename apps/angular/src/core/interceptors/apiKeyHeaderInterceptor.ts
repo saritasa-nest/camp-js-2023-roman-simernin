@@ -5,9 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@js-camp/angular/environments/environment';
 
 /** Interceptor for adding header for api key to request. */
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class ApiKeyHeaderInterceptor implements HttpInterceptor {
 
 	/** @inheritdoc */

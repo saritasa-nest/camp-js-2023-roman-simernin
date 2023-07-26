@@ -5,6 +5,7 @@ import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnimeModule } from './features/anime/anime.module';
+import { httpInterceptorProvider } from '../core/interceptors/httpInterceptorProvider';
 
 /** App module. */
 @NgModule({
@@ -15,7 +16,7 @@ import { AnimeModule } from './features/anime/anime.module';
 		AppRoutingModule,
 		AnimeModule,
 	],
-	providers: [],
+	providers: [httpInterceptorProvider],
 	bootstrap: [AppComponent],
 })
 export class AppModule { }
