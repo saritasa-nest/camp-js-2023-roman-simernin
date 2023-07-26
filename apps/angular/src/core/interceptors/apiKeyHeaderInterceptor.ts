@@ -10,8 +10,10 @@ export class ApiKeyHeaderInterceptor implements HttpInterceptor {
 
 	/** @inheritdoc */
 	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-		request.headers.append('Api-Key', environment.apiKey);
+		const requestWithApiKeyHeader = request.clone({
+			headers: request.headers.append('Api-Key', environment.apiKey)
+		});
 
-		return next.handle(request);
+		return next.handle(requestWithApiKeyHeader);
 	}
 }
