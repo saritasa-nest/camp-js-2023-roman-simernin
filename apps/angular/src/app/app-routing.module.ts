@@ -11,8 +11,8 @@ const routes: Routes = [
 	},
 	{
 		path: '**',
-		component: PageNotFoundComponent
-	}
+		component: PageNotFoundComponent,
+	},
 ];
 
 /** App routing module. */
