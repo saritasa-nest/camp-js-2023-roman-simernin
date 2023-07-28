@@ -9,7 +9,7 @@ export class ApiUriBuilder {
 	private readonly apiUrl = environment.apiUrl;
 
 	/** Build uri for search anime endpoint. */
-	public buildSearchAnimeUri(): string {
+	public buildGetAnimeListUri(): string {
 		const path = 'anime/anime/';
 
 		return this.buildAbsoluteUri(path);

@@ -9,7 +9,7 @@ import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
-import { ApiUriBuilder } from './apiUriBuilder';
+import { ApiUriBuilder } from './api-uri-builder';
 
 /** Service for actions with anime. */
 @Injectable()
@@ -22,7 +22,7 @@ export class AnimeService {
 
 	/** Get anime list. */
 	public getAnimeList(): Observable<Anime[]> {
-		const uri = this.apiUriBuilder.buildSearchAnimeUri();
+		const uri = this.apiUriBuilder.buildGetAnimeListUri();
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(uri)
 			.pipe(
