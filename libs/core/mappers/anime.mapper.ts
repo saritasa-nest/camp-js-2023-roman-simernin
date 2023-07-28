@@ -8,7 +8,7 @@ export namespace AnimeMapper {
 	 * @param dto Genre dto.
 	 */
 	export function fromDto(dto: AnimeDto): Anime {
-		return new Anime({
+		return {
 			id: dto.id,
 			imageUrl: dto.image,
 			englishTitle: dto.title_eng,
@@ -16,6 +16,6 @@ export namespace AnimeMapper {
 			airedStartDate: new Date(dto.aired.start),
 			type: dto.type,
 			status: dto.status.replace(/_/g, ' '),
-		});
+		};
 	}
 }
