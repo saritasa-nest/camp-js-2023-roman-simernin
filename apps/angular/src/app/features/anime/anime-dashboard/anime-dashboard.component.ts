@@ -25,7 +25,7 @@ export class AnimeDashboardComponent {
 	/** Observable for anime previews. */
 	public readonly animePreviews$: Observable<Anime[]>;
 
-	public constructor(private readonly animeService: AnimeService) {
+	public constructor(animeService: AnimeService) {
 		this.animePreviews$ = animeService.getAnimeList();
 	}
 }
