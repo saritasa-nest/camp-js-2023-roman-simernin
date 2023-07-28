@@ -26,6 +26,6 @@ export class AnimeDashboardComponent {
 	public readonly animePreviews$: Observable<Anime[]>;
 
 	public constructor(private readonly animeService: AnimeService) {
-		this.animePreviews$ = animeService.searchAnime();
+		this.animePreviews$ = animeService.getAnimeList();
 	}
 }

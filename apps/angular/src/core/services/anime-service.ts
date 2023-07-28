@@ -20,8 +20,8 @@ export class AnimeService {
 		private readonly apiUriBuilder: ApiUriBuilder,
 	) { }
 
-	/** Search anime. */
-	public searchAnime(): Observable<Anime[]> {
+	/** Get anime list. */
+	public getAnimeList(): Observable<Anime[]> {
 		const uri = this.apiUriBuilder.buildSearchAnimeUri();
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(uri)
