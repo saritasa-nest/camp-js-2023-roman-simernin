@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
-import { Anime } from '@js-camp/core/models/animePreview';
-import { AnimeDto } from '@js-camp/core/dtos/animePreview.dto';
+import { Anime } from '@js-camp/core/models/anime';
+import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-import { AnimeMapper } from '@js-camp/core/mappers/animePreview.mapper';
+import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
 import { ApiUriBuilder } from './apiUriBuilder';
 

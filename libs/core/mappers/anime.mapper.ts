@@ -1,5 +1,5 @@
-import { Anime } from '../models/animePreview';
-import { AnimeDto } from '../dtos/animePreview.dto';
+import { Anime } from '../models/anime';
+import { AnimeDto } from '../dtos/anime.dto';
 
 export namespace AnimeMapper {
 

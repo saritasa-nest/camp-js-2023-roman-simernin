@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { AnimeService } from '@js-camp/angular/core/services/animeService';
+import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
