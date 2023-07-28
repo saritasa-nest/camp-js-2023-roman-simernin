@@ -1,0 +1,26 @@
+.anime-dashboard-title {
+  text-align: center;
+}
+
+.anime-table-container {
+  overflow-x: scroll;
+}
+
+.anime-table-caption {
+  text-align: left;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.anime-table-header {
+  text-align: center;
+}
+
+.anime-table-cell {
+  text-align: center;
+}
+
+.anime-table-cell__image {
+  max-width: var(--anime-image-size);
+  max-height: var(--anime-image-size);
+}
