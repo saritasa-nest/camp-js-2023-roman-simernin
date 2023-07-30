@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 
@@ -17,6 +18,7 @@ import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.compo
 		MatTableModule,
 		MatPaginatorModule,
 		BrowserAnimationsModule,
+		MatSortModule,
 	],
 	declarations: [AnimeDashboardComponent],
 	exports: [AnimeDashboardComponent],

@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, switchMap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { Sort } from '@angular/material/sort';
+import { SortingParameters } from '@js-camp/core/models/sorting-parameters';
+import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 
 /** Anime table component. */
 @Component({
@@ -33,12 +36,18 @@ export class AnimeDashboardComponent {
 
 	private paginationParameters$ = new BehaviorSubject<PaginationParameters>(new PaginationParameters(this.defaultPageSize, 1));
 
+	private sortingParameters$ = new BehaviorSubject<SortingParameters<AnimeSortingField>>({
+		field: null,
+		isAscending: true,
+	});
+
 	/** Observable for anime previews. */
 	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
 	public constructor(animeService: AnimeService) {
-		this.paginatedAnime$ = this.paginationParameters$
-			.pipe(switchMap(paginationParameters => animeService.getAnimeList(paginationParameters)));
+		this.paginatedAnime$ = combineLatest([this.paginationParameters$, this.sortingParameters$])
+			.pipe(switchMap(([paginationParameters, sortingParameters]) =>
+				animeService.getAnimeList(paginationParameters, sortingParameters)));
 	}
 
 	/**
@@ -52,5 +61,24 @@ export class AnimeDashboardComponent {
 			paginationEvent.pageSize,
 			pageNumber,
 		));
+	}
+
+	/**
+	 * Handle sorting change event.
+	 * @param sortingEvent - Sorting event.
+	 */
+	public handleSortingChange(sortingEvent: Sort): void {
+		let field: AnimeSortingField | null = null;
+		let isAscending = true;
+
+		if (sortingEvent.direction !== '') {
+			field = sortingEvent.active as AnimeSortingField;
+			isAscending = sortingEvent.direction === 'asc';
+		}
+
+		this.sortingParameters$.next({
+			field,
+			isAscending,
+		});
 	}
 }
