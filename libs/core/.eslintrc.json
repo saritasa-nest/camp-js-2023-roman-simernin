@@ -8,12 +8,20 @@
     {
       "files": ["**/models/**/*.ts"],
       "rules": {
+        "linebreak-style": [
+          "error",
+          "windows"
+        ],
         "import/export": "off"
       }
     },
     {
       "files": ["**/dtos/**/*.ts"],
       "rules": {
+        "linebreak-style": [
+          "error",
+          "windows"
+        ],
         "jsdoc/require-jsdoc": "off",
         "@typescript-eslint/naming-convention": "off",
         "no-restricted-syntax": [

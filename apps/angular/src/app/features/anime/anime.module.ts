@@ -5,12 +5,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 
 /** Anime table module. */
 @NgModule({
-	imports: [HttpClientModule, CommonModule, MatTableModule, MatPaginatorModule],
+	imports: [
+		HttpClientModule,
+		CommonModule,
+		MatTableModule,
+		MatPaginatorModule,
+		BrowserAnimationsModule,
+	],
 	declarations: [AnimeDashboardComponent],
 	exports: [AnimeDashboardComponent],
 	providers: [AnimeService],

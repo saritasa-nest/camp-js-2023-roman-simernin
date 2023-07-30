@@ -5,8 +5,10 @@ import { Injectable } from '@angular/core';
 
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
-
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { Pagination } from '@js-camp/core/models/pagination';
+import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
+
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
 import { ApiUriBuilder } from './api-uri-builder';
@@ -22,17 +24,23 @@ export class AnimeService {
 
 	/**
 	 * Get anime list.
-	 * @param pageSize - Page size.
+	 * @param paginationParameters - Pagination parameters.
 	 * */
-	public getAnimeList(pageSize: number): Observable<PaginationDto<Anime>> {
+	public getAnimeList(paginationParameters: PaginationParameters): Observable<Pagination<Anime>> {
 		const uri = this.apiUriBuilder.buildGetAnimeListUri();
-		const queryParameters = new HttpParams()
-			.set('limit', pageSize);
+
+		let queryParameters = new HttpParams()
+			.set('limit', paginationParameters.pageSize);
+
+		if (paginationParameters.offset !== 0) {
+			queryParameters = queryParameters
+				.set('offset', paginationParameters.offset);
+		}
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(uri, { params: queryParameters })
 			.pipe(
 				map(paginationDto => ({
-					...paginationDto,
+					totalCount: paginationDto.count,
 					results: paginationDto.results.map(dto => AnimeMapper.fromDto(dto)),
 				})),
 			);
