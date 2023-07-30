@@ -1,30 +1,56 @@
 {
-  "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "extends": [
+    "../../.eslintrc.json"
+  ],
+  "ignorePatterns": [
+    "!**/*"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parserOptions": {
-        "project": ["apps/angular/tsconfig.*?.json"],
+        "project": [
+          "apps/angular/tsconfig.*?.json"
+        ],
         "createDefaultProgram": true
       },
-      "extends": ["plugin:@angular-eslint/recommended"],
-      "plugins": ["rxjs"],
+      "extends": [
+        "plugin:@angular-eslint/recommended"
+      ],
+      "plugins": [
+        "rxjs"
+      ],
       "rules": {
+        "linebreak-style": [
+          "error",
+          "windows"
+        ],
         "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": ["@js-camp/angular/", "@js-camp/angular/*"],
+            "allow": [
+              "@js-camp/angular/",
+              "@js-camp/angular/*"
+            ],
             "depConstraints": [
               {
                 "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
+                "onlyDependOnLibsWithTags": [
+                  "*"
+                ]
               }
             ]
           }
         ],
-        "rxjs/no-exposed-subjects": ["error", { "allowProtected": true }],
+        "rxjs/no-exposed-subjects": [
+          "error",
+          {
+            "allowProtected": true
+          }
+        ],
         "rxjs/finnish": [
           "error",
           {
@@ -63,22 +89,34 @@
         "rxjs/no-unsafe-takeuntil": [
           "error",
           {
-            "alias": ["takeUntilDestroy"]
+            "alias": [
+              "takeUntilDestroy"
+            ]
           }
         ]
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@nx/angular-template"],
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@nx/angular-template"
+      ],
       "rules": {
         "@angular-eslint/template/button-has-type": "error"
       }
     },
     {
-      "files": ["*.component.ts"],
-      "extends": ["plugin:@angular-eslint/template/process-inline-templates"],
-      "plugins": ["rxjs"],
+      "files": [
+        "*.component.ts"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "plugins": [
+        "rxjs"
+      ],
       "rules": {
         "rxjs/no-exposed-subjects": "off"
       }
