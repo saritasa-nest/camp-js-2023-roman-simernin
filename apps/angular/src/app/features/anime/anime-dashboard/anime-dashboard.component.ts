@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, Subject, first, switchMap } from 'rxjs';
+import { Component } from '@angular/core';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
@@ -13,7 +13,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
 })
-export class AnimeDashboardComponent implements OnInit {
+export class AnimeDashboardComponent {
 
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
@@ -31,10 +31,7 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Default page size. */
 	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
 
-	/** Total anime count. */
-	protected totalAnimeCount = 0;
-
-	private paginationParameters$ = new Subject<PaginationParameters>();
+	private paginationParameters$ = new BehaviorSubject<PaginationParameters>(new PaginationParameters(this.defaultPageSize, 1));
 
 	/** Observable for anime previews. */
 	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
@@ -42,12 +39,6 @@ export class AnimeDashboardComponent implements OnInit {
 	public constructor(animeService: AnimeService) {
 		this.paginatedAnime$ = this.paginationParameters$
 			.pipe(switchMap(paginationParameters => animeService.getAnimeList(paginationParameters)));
-	}
-
-	/** @inheritdoc */
-	public ngOnInit(): void {
-		this.subscribeToGetAnimeTotalCount();
-		this.setDefaultPaginationParameters();
 	}
 
 	/**
@@ -61,20 +52,5 @@ export class AnimeDashboardComponent implements OnInit {
 			paginationEvent.pageSize,
 			pageNumber,
 		));
-	}
-
-	private subscribeToGetAnimeTotalCount(): void {
-		/** Use pipe first to get anime total once because it is not depend pagination parameters. */
-		this.paginatedAnime$
-			.pipe(first())
-			.subscribe(paginatedAnime => {
-				this.totalAnimeCount = paginatedAnime.totalCount;
-			});
-	}
-
-	private setDefaultPaginationParameters(): void {
-		const defaultPageNumber = 1;
-
-		this.paginationParameters$.next(new PaginationParameters(this.defaultPageSize, defaultPageNumber));
 	}
 }
