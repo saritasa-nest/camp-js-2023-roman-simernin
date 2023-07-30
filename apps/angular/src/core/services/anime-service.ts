@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -20,14 +20,21 @@ export class AnimeService {
 		private readonly apiUriBuilder: ApiUriBuilder,
 	) { }
 
-	/** Get anime list. */
-	public getAnimeList(): Observable<Anime[]> {
+	/**
+	 * Get anime list.
+	 * @param pageSize - Page size.
+	 * */
+	public getAnimeList(pageSize: number): Observable<PaginationDto<Anime>> {
 		const uri = this.apiUriBuilder.buildGetAnimeListUri();
+		const queryParameters = new HttpParams()
+			.set('limit', pageSize);
 
-		return this.httpClient.get<PaginationDto<AnimeDto>>(uri)
+		return this.httpClient.get<PaginationDto<AnimeDto>>(uri, { params: queryParameters })
 			.pipe(
-				map(paginationDto => paginationDto.results),
-				map(animePreviewDtos => animePreviewDtos.map(dto => AnimeMapper.fromDto(dto))),
+				map(paginationDto => ({
+					...paginationDto,
+					results: paginationDto.results.map(dto => AnimeMapper.fromDto(dto)),
+				})),
 			);
 	}
 }

@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable, share } from 'rxjs';
 
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
+import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 
 /** Anime table component. */
 @Component({
@@ -10,7 +11,22 @@ import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
 })
-export class AnimeDashboardComponent {
+export class AnimeDashboardComponent implements OnInit {
+
+	/** Available page sizes for anime table. */
+	public readonly availablePageSizes: number[] = [5, 10, 25];
+
+	/**
+	 * Default page size for anime table.
+	 * Equal min from availables.
+	 * */
+	private readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
+
+	/** Current page size for anime table. */
+	protected currentPageSize = this.defaultPageSize;
+
+	/** Total anime count. */
+	protected totalAnimeCount = 0;
 
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
@@ -23,9 +39,21 @@ export class AnimeDashboardComponent {
 	];
 
 	/** Observable for anime previews. */
-	public readonly animePreviews$: Observable<Anime[]>;
+	public readonly paginatedAnime$: Observable<PaginationDto<Anime>>;
 
 	public constructor(animeService: AnimeService) {
-		this.animePreviews$ = animeService.getAnimeList();
+		this.paginatedAnime$ = animeService.getAnimeList(this.currentPageSize)
+			.pipe(share());
+	}
+
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		this.setAnimeTotalCount();
+	}
+
+	private setAnimeTotalCount(): void {
+		this.paginatedAnime$.subscribe(paginatedAnime => {
+			this.totalAnimeCount = paginatedAnime.count;
+		});
 	}
 }

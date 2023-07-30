@@ -1,7 +1,7 @@
 <div>
   <h1 class="anime-dashboard-title">Anime dashboard</h1>
   <main class="anime-table-container">
-    <table mat-table *ngIf="animePreviews$ | async as animePreviews" [dataSource]="animePreviews">
+    <table mat-table *ngIf="paginatedAnime$ | async as paginatedAnime" [dataSource]="paginatedAnime.results">
 
       <caption class="anime-table-caption">Anime table</caption>
 
@@ -52,5 +52,12 @@
       <tr mat-row *matRowDef="let row; columns: displayedAnimeTableColumns;"></tr>
 
     </table>
+
+    <mat-paginator
+      [length]="totalAnimeCount"
+      [pageSize]="currentPageSize"
+      [pageSizeOptions]="availablePageSizes">
+    </mat-paginator>
+
   </main>
 </div>
