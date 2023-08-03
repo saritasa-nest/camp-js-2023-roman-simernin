@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, switchMap, map, tap } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
@@ -9,6 +9,8 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
 import { SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
+import { FormControl } from '@angular/forms';
+import { AnimeFilterParameters } from '@js-camp/core/models/anime-filter-parameters';
 
 /** Anime table component. */
 @Component({
@@ -34,6 +36,12 @@ export class AnimeDashboardComponent {
 	/** Default page size. */
 	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
 
+	/** Types form control. */
+	public readonly animeTypesFormControl = new FormControl('');
+
+	/** Anime types. */
+	public readonly animeTypes: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
+
 	private paginationParameters$ = new BehaviorSubject<PaginationParameters>(new PaginationParameters(this.defaultPageSize, 1));
 
 	private sortingParameters$ = new BehaviorSubject<SortingParameters<AnimeSortingField>>({
@@ -45,9 +53,15 @@ export class AnimeDashboardComponent {
 	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
 	public constructor(animeService: AnimeService) {
-		this.paginatedAnime$ = combineLatest([this.paginationParameters$, this.sortingParameters$])
-			.pipe(switchMap(([paginationParameters, sortingParameters]) =>
-				animeService.getAnimeList(paginationParameters, sortingParameters)));
+
+		const filterParameters$ = this.animeTypesFormControl.valueChanges
+			.pipe(map(animeTypes => ({
+				animeTypes: animeTypes !== null ? animeTypes : null,
+			} as AnimeFilterParameters)));
+
+		this.paginatedAnime$ = combineLatest([this.paginationParameters$, this.sortingParameters$, filterParameters$])
+			.pipe(switchMap(([paginationParameters, sortingParameters, filterParameters]) =>
+				animeService.getAnimeList(paginationParameters, sortingParameters, filterParameters)));
 	}
 
 	/**

@@ -13,6 +13,7 @@ import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
 import { ApiUriBuilder } from './api-uri-builder';
+import { AnimeFilterParameters } from '@js-camp/core/models/anime-filter-parameters';
 
 /** Service for actions with anime. */
 @Injectable()
@@ -27,10 +28,12 @@ export class AnimeService {
 	 * Get anime list.
 	 * @param paginationParameters - Pagination parameters.
 	 * @param sortingParameters - Sorting parameters.
+	 * @param filterParameters - Anime filter parameters.
 	 * */
 	public getAnimeList(
 		paginationParameters: PaginationParameters,
 		sortingParameters: SortingParameters<AnimeSortingField>,
+		filterParameters: AnimeFilterParameters,
 	): Observable<Pagination<Anime>> {
 		const uri = this.apiUriBuilder.buildGetAnimeListUri();
 
@@ -38,6 +41,7 @@ export class AnimeService {
 
 		queryParameters = this.addPagination(queryParameters, paginationParameters);
 		queryParameters = this.addSorting(queryParameters, sortingParameters);
+		queryParameters = this.addFilters(queryParameters, filterParameters);
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(uri, { params: queryParameters })
 			.pipe(
@@ -87,5 +91,16 @@ export class AnimeService {
 		const httpParametersWithSorting = httpParameters.set('ordering', sortingString);
 
 		return httpParametersWithSorting;
+	}
+
+	private addFilters(httpParameters: HttpParams, filterParameters: AnimeFilterParameters): HttpParams {
+		// Anime types separated by comma.
+
+		if (filterParameters.animeTypes === null || filterParameters.animeTypes.length === 0) {
+			return httpParameters;
+		}
+
+		const animeTypesString = filterParameters.animeTypes.toString();
+		return httpParameters.set('type__in', animeTypesString);
 	}
 }

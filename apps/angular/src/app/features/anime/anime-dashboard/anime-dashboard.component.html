@@ -1,5 +1,15 @@
 <div>
   <h1 class="anime-dashboard-title">Anime dashboard</h1>
+  <div>
+    <form>
+      <mat-form-field>
+        <mat-label>Types</mat-label>
+        <mat-select [formControl]="animeTypesFormControl" multiple>
+          <mat-option *ngFor="let animeType of animeTypes" [value]="animeType">{{animeType}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
   <main class="anime-table-container">
     <ng-container *ngIf="paginatedAnime$ | async as paginatedAnime">
       <table mat-table  [dataSource]="paginatedAnime.results" matSort (matSortChange)="handleSortingChange($event)">
