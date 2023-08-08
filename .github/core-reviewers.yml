@@ -2,7 +2,8 @@ reviewers:
   # The default core reviewers.
   # Reviews may only be requested from collaborators.
   defaults:
-    - panov-aleksey-saritasa
-    - ShestakovaElena
-    - dbitkovski
-    - DaniilMaslovSaritasa
+    - SofyaKirillova
+    - irina-baleevskih-saritasa
+    - artem-sotnichenko-saritasa
+    - pavel-romanov8
+    - TienLuu-Saritasa
