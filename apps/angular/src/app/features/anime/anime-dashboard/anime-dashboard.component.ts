@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, switchMap, map, tap, startWith } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, switchMap, map, startWith } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
@@ -56,20 +56,22 @@ export class AnimeDashboardComponent {
 	/** Observable for anime previews. */
 	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
-	public constructor(animeService: AnimeService) {
+	public constructor(
+		private readonly animeService: AnimeService,
+	) {
 
 		const filterParameters$ = this.animeTypesFormControl.valueChanges
 			.pipe(
 				startWith(null),
 				map(animeTypes => ({
-					animeTypes: animeTypes !== null ? animeTypes : null,
+					animeTypes: animeTypes !== null ? animeTypes : [],
 				} as AnimeFilterParameters)),
 			);
 
 		const searchParameters$ = this.searchFormControl.valueChanges
 			.pipe(
 				startWith(null),
-				map(title => ({ title } as AnimeSearchParameters))
+				map(title => ({ title } as AnimeSearchParameters)),
 			);
 
 		this.paginatedAnime$ = combineLatest([
@@ -79,7 +81,12 @@ export class AnimeDashboardComponent {
 			searchParameters$,
 		])
 			.pipe(switchMap(([paginationParameters, sortingParameters, filterParameters, searchParameters]) =>
-				animeService.searchAnime(paginationParameters, sortingParameters, filterParameters, searchParameters)));
+				animeService.getAnimeList({
+					pagination: paginationParameters,
+					sorting: sortingParameters,
+					filters: filterParameters,
+					search: searchParameters,
+				})));
 	}
 
 	/**

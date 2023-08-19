@@ -2,6 +2,6 @@
 export interface AnimeFilterParameters {
 
 	/** Anime types.*/
-	readonly animeTypes: readonly string[] | null;
+	readonly animeTypes: readonly string[];
 
 }
