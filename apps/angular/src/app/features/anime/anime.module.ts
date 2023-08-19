@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 
@@ -26,6 +27,7 @@ import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.compo
 		MatFormFieldModule,
 		FormsModule,
 		ReactiveFormsModule,
+		MatInputModule,
 	],
 	declarations: [AnimeDashboardComponent],
 	exports: [AnimeDashboardComponent],

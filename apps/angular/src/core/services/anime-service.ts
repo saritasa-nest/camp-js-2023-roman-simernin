@@ -12,8 +12,10 @@ import { SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
-import { ApiUriBuilder } from './api-uri-builder';
 import { AnimeFilterParameters } from '@js-camp/core/models/anime-filter-parameters';
+import { AnimeSearchParameters } from '@js-camp/core/models/anime-search-parameters';
+
+import { ApiUriBuilder } from './api-uri-builder';
 
 /** Service for actions with anime. */
 @Injectable()
@@ -29,11 +31,13 @@ export class AnimeService {
 	 * @param paginationParameters - Pagination parameters.
 	 * @param sortingParameters - Sorting parameters.
 	 * @param filterParameters - Anime filter parameters.
+	 * @param searchParameters - Anime search parameters.
 	 * */
-	public getAnimeList(
+	public searchAnime(
 		paginationParameters: PaginationParameters,
 		sortingParameters: SortingParameters<AnimeSortingField>,
 		filterParameters: AnimeFilterParameters,
+		searchParameters: AnimeSearchParameters,
 	): Observable<Pagination<Anime>> {
 		const uri = this.apiUriBuilder.buildGetAnimeListUri();
 
@@ -42,6 +46,7 @@ export class AnimeService {
 		queryParameters = this.addPagination(queryParameters, paginationParameters);
 		queryParameters = this.addSorting(queryParameters, sortingParameters);
 		queryParameters = this.addFilters(queryParameters, filterParameters);
+		queryParameters = this.addSearch(queryParameters, searchParameters);
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(uri, { params: queryParameters })
 			.pipe(
@@ -94,13 +99,20 @@ export class AnimeService {
 	}
 
 	private addFilters(httpParameters: HttpParams, filterParameters: AnimeFilterParameters): HttpParams {
-		// Anime types separated by comma.
-
 		if (filterParameters.animeTypes === null || filterParameters.animeTypes.length === 0) {
 			return httpParameters;
 		}
 
+		// Anime types separated by comma.
 		const animeTypesString = filterParameters.animeTypes.toString();
 		return httpParameters.set('type__in', animeTypesString);
+	}
+
+	private addSearch(httpParameters: HttpParams, searchParameters: AnimeSearchParameters): HttpParams {
+		if (searchParameters.title === null || searchParameters.title === '') {
+			return httpParameters;
+		}
+
+		return httpParameters.set('search', searchParameters.title);
 	}
 }
