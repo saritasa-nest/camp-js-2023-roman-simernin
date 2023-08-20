@@ -1,14 +1,14 @@
-import { AnimeListParametersDto } from '../dtos/anime-list-parameters.dto';
-import { AnimeListParameters } from '../models/anime-list-parameters';
+import { AnimeParametersDto } from '../dtos/anime-parameters.dto';
+import { AnimeParameters } from '../models/anime-parameters';
 import { AnimeSortingField } from '../models/anime-sorting-field';
 
-export namespace AnimeListParametersMapper {
+export namespace AnimeParametersMapper {
 
 	/**
 	 * Map model to dto for anime list parameters.
 	 * @param model Model for anime list parameters.
 	 */
-	export function toDto(model: AnimeListParameters): AnimeListParametersDto {
+	export function toDto(model: AnimeParameters): AnimeParametersDto {
 		let sortingString: string | null = null;
 
 		if (model.sorting.field !== null) {

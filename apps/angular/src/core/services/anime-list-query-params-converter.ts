@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ParamMap, convertToParamMap } from '@angular/router';
-import { AnimeListParameters } from '@js-camp/core/models/anime-list-parameters';
+import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 
@@ -23,7 +23,7 @@ export class AnimeListQueryParamsConverter {
 	/** Convert object to query params map.
 		* @param queryParamsAsObject - Query params as object.
 		*/
-	public to(queryParamsAsObject: AnimeListParameters): ParamMap {
+	public to(queryParamsAsObject: AnimeParameters): ParamMap {
 		const queryParamsAsMap = new Map<string, string | number>();
 
 		queryParamsAsMap.set(this.pageSizeParameter, queryParamsAsObject.pagination.pageSize);
@@ -48,7 +48,7 @@ export class AnimeListQueryParamsConverter {
 	/** Convert from query params to object.
 		* @param queryParamsAsMap - Query params as map.
 	 */
-	public from(queryParamsAsMap: ParamMap): AnimeListParameters {
+	public from(queryParamsAsMap: ParamMap): AnimeParameters {
 
 		let pageSize = 1;
 

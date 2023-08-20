@@ -4,8 +4,8 @@ import { AnimeSortingField } from './anime-sorting-field';
 import { PaginationParameters } from './pagination-parameters';
 import { SortingParameters } from './sorting-parameters';
 
-/** Parameters for getting anime list. */
-export interface AnimeListParameters {
+/** Parameters for getting anime. */
+export interface AnimeParameters {
 
 	/** Pagination parameters. */
 	readonly pagination: PaginationParameters;

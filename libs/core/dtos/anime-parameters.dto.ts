@@ -1,5 +1,5 @@
-/** Parameters for getting anime list. */
-export interface AnimeListParametersDto {
+/** DTO for getting anime. */
+export interface AnimeParametersDto {
 
 	[key: string]: string | number;
 
