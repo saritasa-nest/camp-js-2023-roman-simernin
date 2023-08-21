@@ -1,25 +1,30 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, switchMap, map, startWith } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, switchMap, map, tap, merge, Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
-import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
-import { SortingParameters } from '@js-camp/core/models/sorting-parameters';
+import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl } from '@angular/forms';
-import { AnimeFilterParameters } from '@js-camp/core/models/anime-filter-parameters';
-import { AnimeSearchParameters } from '@js-camp/core/models/anime-search-parameters';
+import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
+import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
+import { AnimeParametersServiceFactory } from '@js-camp/angular/core/services/anime-parameters-service.factory';
 
 /** Anime table component. */
 @Component({
 	selector: 'anime-table',
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
+	providers: [AnimeParametersServiceFactory],
 })
-export class AnimeDashboardComponent {
+export class AnimeDashboardComponent implements OnInit, OnDestroy {
+
+	private readonly animeParametersService: AnimeParametersService;
+
+	private resetPaginationSubscription: Subscription = new Subscription();
 
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
@@ -37,56 +42,52 @@ export class AnimeDashboardComponent {
 	/** Default page size. */
 	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
 
+	/** Initial anime parameters. */
+	public readonly initialAnimeParameters: AnimeParameters;
+
 	/** Types form control. */
-	public readonly animeTypesFormControl = new FormControl('');
+	public readonly animeTypesFormControl: FormControl<readonly string[] | null>;
 
 	/** Search form control. */
-	public readonly searchFormControl = new FormControl('');
+	public readonly searchFormControl: FormControl;
 
 	/** Anime types. */
 	public readonly animeTypes: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
-
-	private paginationParameters$ = new BehaviorSubject<PaginationParameters>(new PaginationParameters(this.defaultPageSize, 1));
-
-	private sortingParameters$ = new BehaviorSubject<SortingParameters<AnimeSortingField>>({
-		field: null,
-		isAscending: true,
-	});
 
 	/** Observable for anime previews. */
 	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
 	public constructor(
-		private readonly animeService: AnimeService,
+		animeService: AnimeService,
+		animeParametersServiceFactory: AnimeParametersServiceFactory,
 	) {
 
-		const filterParameters$ = this.animeTypesFormControl.valueChanges
-			.pipe(
-				startWith(null),
-				map(animeTypes => ({
-					animeTypes: animeTypes !== null ? animeTypes : [],
-				} as AnimeFilterParameters)),
-			);
+		this.animeParametersService = animeParametersServiceFactory.create(this.defaultPageSize, this.availablePageSizes);
 
-		const searchParameters$ = this.searchFormControl.valueChanges
-			.pipe(
-				startWith(null),
-				map(title => ({ title } as AnimeSearchParameters)),
-			);
+		this.initialAnimeParameters = this.animeParametersService.animeParameters;
 
-		this.paginatedAnime$ = combineLatest([
-			this.paginationParameters$,
-			this.sortingParameters$,
-			filterParameters$,
-			searchParameters$,
-		])
-			.pipe(switchMap(([paginationParameters, sortingParameters, filterParameters, searchParameters]) =>
-				animeService.getAnimeList({
-					pagination: paginationParameters,
-					sorting: sortingParameters,
-					filters: filterParameters,
-					search: searchParameters,
-				})));
+		this.animeTypesFormControl = new FormControl<readonly string[]>(this.initialAnimeParameters.animeTypes);
+		this.searchFormControl = new FormControl(this.initialAnimeParameters.search, { updateOn: 'blur' });
+
+		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
+			switchMap(parameters => animeService.getAnimeList(parameters)),
+		);
+	}
+
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		this.resetPaginationSubscription = merge(
+			this.detectAnimeTypesParameterChange(),
+			this.detectSearchParameterChange(),
+		).pipe(
+			tap(_ => _),
+		)
+			.subscribe();
+	}
+
+	/** @inheritdoc */
+	public ngOnDestroy(): void {
+		this.resetPaginationSubscription.unsubscribe();
 	}
 
 	/**
@@ -96,10 +97,10 @@ export class AnimeDashboardComponent {
 	public handlePaginationParametersChange(paginationEvent: PageEvent): void {
 		const pageNumber: number = paginationEvent.pageIndex + 1;
 
-		this.paginationParameters$.next(new PaginationParameters(
-			paginationEvent.pageSize,
+		this.animeParametersService.appendPagination({
+			pageSize: paginationEvent.pageSize,
 			pageNumber,
-		));
+		});
 	}
 
 	/**
@@ -107,17 +108,34 @@ export class AnimeDashboardComponent {
 	 * @param sortingEvent - Sorting event.
 	 */
 	public handleSortingChange(sortingEvent: Sort): void {
-		let field: AnimeSortingField | null = null;
-		let isAscending = true;
+		let sortingField: AnimeSortingField | undefined;
+		let sortingDirection: SortingDirection | undefined;
 
 		if (sortingEvent.direction !== '') {
-			field = sortingEvent.active as AnimeSortingField;
-			isAscending = sortingEvent.direction === 'asc';
+			sortingField = sortingEvent.active as AnimeSortingField;
+			sortingDirection = sortingEvent.direction as SortingDirection;
 		}
 
-		this.sortingParameters$.next({
-			field,
-			isAscending,
+		this.animeParametersService.appendSorting({ sortingField, sortingDirection });
+	}
+
+	private detectSearchParameterChange(): Observable<string | null> {
+		return this.searchFormControl.valueChanges.pipe(
+			tap(search => this.animeParametersService.appendSearch(search)),
+		);
+	}
+
+	private detectAnimeTypesParameterChange(): Observable<readonly string[]> {
+		return this.animeTypesFormControl.valueChanges.pipe(
+			map(animeTypes => (animeTypes ?? [])),
+			tap(animeTypes => this.animeParametersService.appendFilters(animeTypes)),
+		);
+	}
+
+	private resetPagination(): void {
+		this.animeParametersService.appendPagination({
+			pageSize: this.animeParametersService.animeParameters.pageSize,
+			pageNumber: 1,
 		});
 	}
 }

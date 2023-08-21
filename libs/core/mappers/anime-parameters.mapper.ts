@@ -1,6 +1,7 @@
 import { AnimeParametersDto } from '../dtos/anime-parameters.dto';
 import { AnimeParameters } from '../models/anime-parameters';
 import { AnimeSortingField } from '../models/anime-sorting-field';
+import { SortingDirection } from '../models/sorting-parameters';
 
 export namespace AnimeParametersMapper {
 
@@ -11,8 +12,8 @@ export namespace AnimeParametersMapper {
 	export function toDto(model: AnimeParameters): AnimeParametersDto {
 		let sortingString: string | null = null;
 
-		if (model.sorting.field !== null) {
-			switch (model.sorting.field) {
+		if (model.sortingField !== null) {
+			switch (model.sortingField) {
 				case AnimeSortingField.EnglishTitle:
 					sortingString = 'title_eng';
 					break;
@@ -26,19 +27,17 @@ export namespace AnimeParametersMapper {
 					throw new Error('There is no sorting for this field.');
 			}
 	
-			if (!model.sorting.isAscending) {
+			if (model.sortingDirection === SortingDirection.Descending) {
 				sortingString = `-${sortingString}`;
 			}
 		}
 
 		return {
-			limit: model.pagination.pageSize,
-			offset: model.pagination.offset,
+			limit: model.pageSize,
+			offset: model.pageSize * (model.pageNumber - 1),
 			ordering: sortingString ?? '',
-			type__in: model.filters.animeTypes.length !== 0
-				? model.filters.animeTypes.toString()
-				: '',
-			search: model.search.title ?? '',
+			type__in: model.animeTypes.toString(),
+			search: model.search ?? '',
 		};
 	}
 }

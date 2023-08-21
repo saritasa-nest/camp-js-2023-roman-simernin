@@ -16,7 +16,12 @@
   </div>
   <main class="anime-table-container">
     <ng-container *ngIf="paginatedAnime$ | async as paginatedAnime">
-      <table mat-table  [dataSource]="paginatedAnime.results" matSort (matSortChange)="handleSortingChange($event)">
+      <table mat-table  
+        [dataSource]="paginatedAnime.results" 
+        matSort 
+        (matSortChange)="handleSortingChange($event)"
+        [matSortActive]="initialAnimeParameters.sortingField ?? '' "
+        [matSortDirection]="initialAnimeParameters.sortingDirection ?? '' ">
 
         <caption class="anime-table-caption">Anime table</caption>
   
@@ -70,9 +75,10 @@
   
       <mat-paginator
         [length]="paginatedAnime.totalCount"
-        [pageSize]="defaultPageSize"
+        [pageSize]="initialAnimeParameters.pageSize"
         [pageSizeOptions]="availablePageSizes"
-        (page)="handlePaginationParametersChange(($event))">
+        (page)="handlePaginationParametersChange(($event))"
+        [pageIndex]="initialAnimeParameters.pageNumber - 1">
       </mat-paginator>
   
     </ng-container>

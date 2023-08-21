@@ -6,7 +6,7 @@ import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
 
 const routes: Routes = [
 	{
-		path: '',
+		path: 'anime',
 		component: AnimeDashboardComponent,
 	},
 	{
