@@ -1,26 +1,43 @@
-.anime-dashboard-title {
-  text-align: center;
+.anime-filters {
+  padding-top: 20px;
+	display: flex;
+	gap: 10px;
 }
 
 .anime-table-container {
   overflow-x: scroll;
 }
 
-.anime-table-caption {
+.anime-table__caption {
   text-align: left;
   font-weight: bold;
   font-size: 24px;
 }
 
-.anime-table-header {
+.anime-table__header {
   text-align: center;
 }
 
-.anime-table-cell {
+.anime-table__cell {
   text-align: center;
 }
 
-.anime-table-cell__image {
+.anime-table__cell-image {
   max-width: var(--anime-image-size);
   max-height: var(--anime-image-size);
+}
+
+.anime-pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mat-mdc-form-field {
+  height: 50px;
+}
+
+@media (width <= 360px) {
+  .anime-filters {
+    flex-direction: column;
+  }
 }

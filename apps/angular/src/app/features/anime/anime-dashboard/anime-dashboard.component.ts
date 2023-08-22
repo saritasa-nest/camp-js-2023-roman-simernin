@@ -16,7 +16,7 @@ import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 
 /** Anime table component. */
 @Component({
-	selector: 'anime-table',
+	selector: 'anime-dashboard',
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
 	providers: [AnimeParametersServiceFactory],
