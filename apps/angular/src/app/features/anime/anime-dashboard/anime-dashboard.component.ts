@@ -1,17 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, switchMap, map, tap, merge, Subscription } from 'rxjs';
+import { Observable, switchMap, map, merge, BehaviorSubject, tap, Subscription } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
-import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
+import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
-import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeParametersServiceFactory } from '@js-camp/angular/core/services/anime-parameters-service.factory';
+import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
+import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 
 /** Anime table component. */
 @Component({
@@ -24,7 +25,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	private readonly animeParametersService: AnimeParametersService;
 
-	private animeSelectionChangeSubscription: Subscription = new Subscription();
+	private animeSelectionChangedSubscription: Subscription = new Subscription();
 
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
@@ -42,8 +43,11 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	/** Default page size. */
 	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
 
-	/** Initial anime parameters. */
-	public readonly initialAnimeParameters: AnimeParameters;
+	/** Initial anime sorting. */
+	public readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
+
+	/** Paginator settings. */
+	public readonly paginatorSettings$: BehaviorSubject<PaginationParameters>;
 
 	/** Types form control. */
 	public readonly animeTypesFormControl: FormControl<readonly string[] | null>;
@@ -64,10 +68,14 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 		this.animeParametersService = animeParametersServiceFactory.create(this.defaultPageSize, this.availablePageSizes);
 
-		this.initialAnimeParameters = this.animeParametersService.animeParameters;
+		const initialAnimeParameters = this.animeParametersService.animeParameters;
 
-		this.animeTypesFormControl = new FormControl<readonly string[]>(this.initialAnimeParameters.animeTypes);
-		this.searchFormControl = new FormControl(this.initialAnimeParameters.search, { updateOn: 'blur' });
+		this.initialSortingParameters = initialAnimeParameters;
+
+		this.animeTypesFormControl = new FormControl<readonly string[]>(initialAnimeParameters.animeTypes);
+		this.searchFormControl = new FormControl(initialAnimeParameters.search, { updateOn: 'blur' });
+
+		this.paginatorSettings$ = new BehaviorSubject<PaginationParameters>(initialAnimeParameters);
 
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
 			switchMap(parameters => animeService.getAnimeList(parameters)),
@@ -75,16 +83,19 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	/** @inheritdoc */
-	public ngOnInit(): void {
-		this.animeSelectionChangeSubscription = merge(
-			this.detectAnimeTypesParameterChange(),
-			this.detectSearchParameterChange(),
-		).subscribe();
+	public ngOnDestroy(): void {
+		this.animeSelectionChangedSubscription.unsubscribe();
 	}
 
 	/** @inheritdoc */
-	public ngOnDestroy(): void {
-		this.animeSelectionChangeSubscription.unsubscribe();
+	public ngOnInit(): void {
+		this.animeSelectionChangedSubscription = merge(
+			this.detectAnimeTypesParameterChange(),
+			this.detectSearchParameterChange(),
+		).pipe(
+			tap(parameters => this.paginatorSettings$.next(parameters)),
+		)
+			.subscribe();
 	}
 
 	/**
@@ -94,7 +105,12 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	public handlePaginationParametersChange(paginationEvent: PageEvent): void {
 		const pageNumber: number = paginationEvent.pageIndex + 1;
 
-		this.animeParametersService.appendPagination({
+		this.animeParametersService.setPagination({
+			pageSize: paginationEvent.pageSize,
+			pageNumber,
+		});
+
+		this.paginatorSettings$.next({
 			pageSize: paginationEvent.pageSize,
 			pageNumber,
 		});
@@ -113,19 +129,18 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 			sortingDirection = sortingEvent.direction as SortingDirection;
 		}
 
-		this.animeParametersService.appendSorting({ sortingField, sortingDirection });
+		this.animeParametersService.setSorting({ sortingField, sortingDirection });
 	}
 
-	private detectSearchParameterChange(): Observable<string | null> {
+	private detectSearchParameterChange(): Observable<AnimeParameters> {
 		return this.searchFormControl.valueChanges.pipe(
-			tap(search => this.animeParametersService.appendSearch(search)),
+			map(search => this.animeParametersService.setSearch(search)),
 		);
 	}
 
-	private detectAnimeTypesParameterChange(): Observable<readonly string[]> {
+	private detectAnimeTypesParameterChange(): Observable<AnimeParameters> {
 		return this.animeTypesFormControl.valueChanges.pipe(
-			map(animeTypes => (animeTypes ?? [])),
-			tap(animeTypes => this.animeParametersService.appendFilters(animeTypes)),
+			map(animeTypes => this.animeParametersService.setFilters(animeTypes ?? [])),
 		);
 	}
 }

@@ -1,4 +1,4 @@
-import { ActivatedRoute, ParamMap, Params, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
@@ -39,39 +39,62 @@ export class AnimeParametersService {
 	 * Append parameters for anime pagination.
 	 * @param pagination - Pagination parameters.
 	 */
-	public appendPagination(pagination: PaginationParameters): void {
-		this.appendParams(pagination);
+	public setPagination(pagination: PaginationParameters): AnimeParameters {
+		const newParameters: AnimeParameters = {
+			...this.animeParameters,
+			...pagination,
+		};
+
+		this.changeParams(newParameters);
+
+		return newParameters;
 	}
 
 	/**
 	 * Append parameters for anime sortings.
 	 * @param sorting - Sorting parameters.
 	 */
-	public appendSorting(sorting: SortingParameters<AnimeSortingField>): void {
-		this.appendParams(sorting);
+	public setSorting(sorting: SortingParameters<AnimeSortingField>): AnimeParameters {
+		const newParameters: AnimeParameters = {
+			...this.animeParameters,
+			...sorting,
+		};
+
+		this.changeParams(newParameters);
+
+		return newParameters;
 	}
 
 	/**
 	 * Append parameters for anime search.
 	 * @param search - New anime search value.
 	 */
-	public appendSearch(search: string | null): void {
-		this.appendParams({
+	public setSearch(search: string | null): AnimeParameters {
+		const newParameters: AnimeParameters = {
+			...this.animeParameters,
 			...this.resetedPagination,
 			search: search !== '' ? search : null,
-		});
+		};
+
+		this.changeParams(newParameters);
+
+		return newParameters;
 	}
 
 	/**
 	 * Append parameters for anime filters.
 	 * @param animeTypes - New anime types for filter.
 	 */
-	public appendFilters(animeTypes: readonly string[]): void {
-		this.appendParams({ animeTypes, ...this.resetedPagination });
-	}
+	public setFilters(animeTypes: readonly string[]): AnimeParameters {
+		const newParameters: AnimeParameters = {
+			...this.animeParameters,
+			...this.resetedPagination,
+			animeTypes,
+		};
 
-	private appendParams(params: Params): void {
-		this.router.navigate([], { queryParams: params, queryParamsHandling: 'merge' });
+		this.changeParams(newParameters);
+
+		return newParameters;
 	}
 
 	private get resetedPagination(): PaginationParameters {
@@ -79,6 +102,10 @@ export class AnimeParametersService {
 			pageSize: this.animeParameters.pageSize,
 			pageNumber: this.defaultPageNumber,
 		};
+	}
+
+	private changeParams(parameters: AnimeParameters): void {
+		this.router.navigate([], { queryParams: parameters });
 	}
 
 	private parseAnimeParameters(paramMap: ParamMap): AnimeParameters {
