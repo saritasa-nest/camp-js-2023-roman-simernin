@@ -9,6 +9,8 @@ import { Observable, map } from 'rxjs';
 /** Service for changing anime parameters. */
 export class AnimeParametersService {
 
+	private readonly defaultPageNumber = 1;
+
 	public constructor(
 		private readonly defaultPageSize: number,
 		protected readonly availablePageSizes: readonly number[],
@@ -54,7 +56,10 @@ export class AnimeParametersService {
 	 * @param search - New anime search value.
 	 */
 	public appendSearch(search: string | null): void {
-		this.appendParams({ search });
+		this.appendParams({
+			...this.resetedPagination,
+			search: search !== '' ? search : null,
+		});
 	}
 
 	/**
@@ -62,16 +67,21 @@ export class AnimeParametersService {
 	 * @param animeTypes - New anime types for filter.
 	 */
 	public appendFilters(animeTypes: readonly string[]): void {
-		this.appendParams({ animeTypes });
+		this.appendParams({ animeTypes, ...this.resetedPagination });
 	}
 
 	private appendParams(params: Params): void {
 		this.router.navigate([], { queryParams: params, queryParamsHandling: 'merge' });
 	}
 
-	private parseAnimeParameters(paramMap: ParamMap): AnimeParameters {
-		const defaultPageNumber = 1;
+	private get resetedPagination(): PaginationParameters {
+		return {
+			pageSize: this.animeParameters.pageSize,
+			pageNumber: this.defaultPageNumber,
+		};
+	}
 
+	private parseAnimeParameters(paramMap: ParamMap): AnimeParameters {
 		const nameof = nameofFactory<AnimeParameters>();
 
 		const pageSize = Number.parseInt(paramMap.get(nameof('pageSize')) ?? '', 10);
@@ -79,7 +89,7 @@ export class AnimeParametersService {
 
 		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPageSize;
 
-		const validPageNumber = pageNumber > defaultPageNumber ? pageNumber : defaultPageNumber;
+		const validPageNumber = pageNumber > this.defaultPageNumber ? pageNumber : this.defaultPageNumber;
 
 		return {
 			pageSize: validPageSize,

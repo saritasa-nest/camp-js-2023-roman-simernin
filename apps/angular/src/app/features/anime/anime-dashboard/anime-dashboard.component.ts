@@ -24,7 +24,7 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	private readonly animeParametersService: AnimeParametersService;
 
-	private resetPaginationSubscription: Subscription = new Subscription();
+	private animeSelectionChangeSubscription: Subscription = new Subscription();
 
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
@@ -76,18 +76,15 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.resetPaginationSubscription = merge(
+		this.animeSelectionChangeSubscription = merge(
 			this.detectAnimeTypesParameterChange(),
 			this.detectSearchParameterChange(),
-		).pipe(
-			tap(_ => _),
-		)
-			.subscribe();
+		).subscribe();
 	}
 
 	/** @inheritdoc */
 	public ngOnDestroy(): void {
-		this.resetPaginationSubscription.unsubscribe();
+		this.animeSelectionChangeSubscription.unsubscribe();
 	}
 
 	/**
@@ -130,12 +127,5 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 			map(animeTypes => (animeTypes ?? [])),
 			tap(animeTypes => this.animeParametersService.appendFilters(animeTypes)),
 		);
-	}
-
-	private resetPagination(): void {
-		this.animeParametersService.appendPagination({
-			pageSize: this.animeParametersService.animeParameters.pageSize,
-			pageNumber: 1,
-		});
 	}
 }
