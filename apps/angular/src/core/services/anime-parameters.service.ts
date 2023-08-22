@@ -3,6 +3,7 @@ import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
+import { nameofFactory } from '@js-camp/core/utils/nameof';
 import { Observable, map } from 'rxjs';
 
 /** Service for changing anime parameters. */
@@ -71,8 +72,10 @@ export class AnimeParametersService {
 	private parseAnimeParameters(paramMap: ParamMap): AnimeParameters {
 		const defaultPageNumber = 1;
 
-		const pageSize = Number.parseInt(paramMap.get('pageSize') ?? '', 10);
-		const pageNumber = Number.parseInt(paramMap.get('pageNumber') ?? '', 10);
+		const nameof = nameofFactory<AnimeParameters>();
+
+		const pageSize = Number.parseInt(paramMap.get(nameof('pageSize')) ?? '', 10);
+		const pageNumber = Number.parseInt(paramMap.get(nameof('pageNumber')) ?? '', 10);
 
 		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPageSize;
 
@@ -81,10 +84,10 @@ export class AnimeParametersService {
 		return {
 			pageSize: validPageSize,
 			pageNumber: validPageNumber,
-			sortingField: paramMap.get('sortingField') as AnimeSortingField,
-			sortingDirection: paramMap.get('sortingDirection') as SortingDirection,
-			animeTypes: paramMap.getAll('animeTypes'),
-			search: paramMap.get('search'),
+			sortingField: paramMap.get(nameof('sortingField')) as AnimeSortingField,
+			sortingDirection: paramMap.get(nameof('sortingDirection')) as SortingDirection,
+			animeTypes: paramMap.getAll(nameof('animeTypes')),
+			search: paramMap.get(nameof('search')),
 		};
 	}
 }
