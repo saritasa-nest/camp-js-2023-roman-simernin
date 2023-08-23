@@ -29,11 +29,7 @@
 
 .anime-pagination {
   display: flex;
-  justify-content: space-around;
-}
-
-.mat-mdc-form-field {
-  height: 50px;
+  justify-content: center;
 }
 
 @media (width <= 360px) {
