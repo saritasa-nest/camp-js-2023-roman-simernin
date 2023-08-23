@@ -23,10 +23,6 @@
         "rxjs"
       ],
       "rules": {
-        "linebreak-style": [
-          "error",
-          "windows"
-        ],
         "@nx/enforce-module-boundaries": [
           "error",
           {
