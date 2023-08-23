@@ -3,11 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AnimeDashboardComponent } from './features/anime/anime-dashboard/anime-dashboard.component';
 import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
+import { LoginComponent } from './features/auth/login/login.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: AnimeDashboardComponent,
+	},
+	{
+		path: 'login',
+		component: LoginComponent,
 	},
 	{
 		path: '**',

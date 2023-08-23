@@ -1,1 +1,11 @@
-<p>login-component works!</p>
+<form [formGroup]="formGroup" class="login-form">
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput [formControl]="formGroup.controls.email">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput [formControl]="formGroup.controls.password">      
+    </mat-form-field>
+    <button type="submit" mat-button>Sign in</button>
+</form>
