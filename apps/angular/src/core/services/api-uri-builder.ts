@@ -15,6 +15,13 @@ export class ApiUriBuilder {
 		return this.buildAbsoluteUri(path);
 	}
 
+	/** Build uri for login endpoint. */
+	public buildLoginUri(): string {
+		const path = 'auth/login/';
+
+		return this.buildAbsoluteUri(path);
+	}
+
 	private buildAbsoluteUri(path: string): string {
 		return new URL(path, this.apiUrl).toString();
 	}
