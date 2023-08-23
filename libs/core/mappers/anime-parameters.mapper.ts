@@ -26,7 +26,7 @@ export namespace AnimeParametersMapper {
 				default:
 					throw new Error('There is no sorting for this field.');
 			}
-	
+
 			if (model.sortingDirection === SortingDirection.Descending) {
 				sortingString = `-${sortingString}`;
 			}
