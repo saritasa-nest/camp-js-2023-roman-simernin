@@ -6,12 +6,7 @@ import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
 
 const routes: Routes = [
 	{
-		path: '', 
-		redirectTo: '/anime', 
-		pathMatch: 'full',
-	},
-	{
-		path: 'anime',
+		path: '',
 		component: AnimeDashboardComponent,
 	},
 	{
