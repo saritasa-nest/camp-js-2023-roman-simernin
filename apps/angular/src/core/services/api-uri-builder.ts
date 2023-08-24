@@ -22,6 +22,13 @@ export class ApiUriBuilder {
 		return this.buildAbsoluteUri(path);
 	}
 
+	/** Build uri for resfresh endpoint. */
+	public buildRefreshUri(): string {
+		const path = 'auth/token/refresh/';
+
+		return this.buildAbsoluteUri(path);
+	}
+
 	private buildAbsoluteUri(path: string): string {
 		return new URL(path, this.apiUrl).toString();
 	}

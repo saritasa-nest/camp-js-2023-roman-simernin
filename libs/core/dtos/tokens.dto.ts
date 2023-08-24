@@ -1,4 +1,4 @@
-/** Result of authentication. */
+/** Tokens as result of authentication. */
 export interface TokensDto {
 
 	/** Access token. */

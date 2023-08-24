@@ -11,6 +11,7 @@ import { TokensModel } from '@js-camp/core/models/tokens.model';
 
 import { ApiUriBuilder } from './api-uri-builder';
 import { TokensStorageService } from './tokens-storage.service';
+import { RefreshTokensDto } from '@js-camp/core/dtos/refresh-tokens.dto';
 
 /** Service for authentication. */
 @Injectable({
@@ -34,6 +35,26 @@ export class AuthService {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
 		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel))
+			.pipe(
+				map(tokensDto => TokensModelMapper.fromDto(tokensDto)),
+				tap(tokens => this.tokenStorageService.save(tokens)),
+			);
+	}
+
+	/**
+	 * Refresh access token.
+	 * @param secret Secret data.
+	 */
+	public refreshAccessToken(): Observable<TokensModel> {
+		const uri = this.apiUriBuilder.buildRefreshUri();
+
+		const currentTokens = this.tokenStorageService.get();
+
+		const refreshTokensDto: RefreshTokensDto = {
+			refresh: currentTokens?.refreshToken ?? '',
+		};
+
+		return this.httpClient.post<TokensDto>(uri, refreshTokensDto)
 			.pipe(
 				map(tokensDto => TokensModelMapper.fromDto(tokensDto)),
 				tap(tokens => this.tokenStorageService.save(tokens)),
