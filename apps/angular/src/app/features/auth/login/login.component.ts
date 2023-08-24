@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
-import { first } from 'rxjs';
+import { first, tap } from 'rxjs';
 
 /** Login component. */
 @Component({
@@ -19,6 +20,7 @@ export class LoginComponent {
 
 	public constructor(
 		private readonly authService: AuthService,
+		private readonly router: Router,
 		formBuilder: FormBuilder,
 	) {
 		this.formGroup = formBuilder.group({
@@ -40,6 +42,7 @@ export class LoginComponent {
 			password: formData.password ?? '',
 		}).pipe(
 			first(),
+			tap(_ => this.router.navigate(['anime'])),
 		)
 			.subscribe();
 	}

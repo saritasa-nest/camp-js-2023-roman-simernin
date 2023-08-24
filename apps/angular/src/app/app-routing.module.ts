@@ -7,7 +7,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 
 const routes: Routes = [
 	{
-		path: '',
+		path: 'anime',
 		component: AnimeDashboardComponent,
 	},
 	{
