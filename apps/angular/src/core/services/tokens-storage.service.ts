@@ -34,7 +34,7 @@ export class TokensStorageService {
 			return null;
 		}
 
-		return JSON.parse(this.tokensKey) as TokensModel;
+		return JSON.parse(tokensAsJson) as TokensModel;
 	}
 
 	/**
