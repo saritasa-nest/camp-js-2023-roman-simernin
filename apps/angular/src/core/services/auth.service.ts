@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 import { LoginModel } from '@js-camp/core/models/login.model';
 
 import { Observable, map } from 'rxjs';
-import { AuthResultDto } from '@js-camp/core/dtos/auth-result.dto';
+import { TokensDto } from '@js-camp/core/dtos/tokens.dto';
 import { LoginModelMapper } from '@js-camp/core/mappers/login.model.mapper';
-import { AuthResultMapper } from '@js-camp/core/mappers/auth-result.mapper';
-import { AuthResult } from '@js-camp/core/models/auth-result';
+import { TokensModelMapper } from '@js-camp/core/mappers/tokens.model.mapper';
+import { TokensModel } from '@js-camp/core/models/tokens.model';
 
 import { ApiUriBuilder } from './api-uri-builder';
 
@@ -26,12 +26,12 @@ export class AuthService {
 	 * Login.
 	 * @param loginModel - Login model.
 		**/
-	public login(loginModel: LoginModel): Observable<AuthResult> {
+	public login(loginModel: LoginModel): Observable<TokensModel> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
-		return this.httpClient.post<AuthResultDto>(uri, LoginModelMapper.ToDto(loginModel))
+		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel))
 			.pipe(
-				map(authResultDto => AuthResultMapper.fromDto(authResultDto)),
+				map(authResultDto => TokensModelMapper.fromDto(authResultDto)),
 			);
 	}
 
