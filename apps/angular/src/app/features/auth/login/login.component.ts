@@ -42,7 +42,7 @@ export class LoginComponent {
 			password: formData.password ?? '',
 		}).pipe(
 			first(),
-			tap(_ => this.router.navigate(['anime'])),
+			tap(_ => this.router.navigate([''])),
 		)
 			.subscribe();
 	}
