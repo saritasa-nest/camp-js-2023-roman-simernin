@@ -13,7 +13,9 @@ import { ApiUriBuilder } from './api-uri-builder';
 import { TokensStorageService } from './tokens-storage.service';
 
 /** Service for authentication. */
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class AuthService {
 
 	public constructor(
@@ -38,4 +40,10 @@ export class AuthService {
 			);
 	}
 
+	/**
+	 * Provides current user is authenticated.
+	 */
+	public isAuthenticated(): boolean {
+		return this.tokenStorageService.get() !== null;
+	}
 }
