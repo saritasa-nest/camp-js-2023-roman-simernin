@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
 
 import { httpInterceptorProvider } from '../core/interceptors/http-interceptor-provider';
 
@@ -18,6 +19,7 @@ import { AuthModule } from './features/auth/auth.module';
 		AppRoutingModule,
 		AnimeModule,
 		AuthModule,
+		MatButtonModule,
 	],
 	providers: [httpInterceptorProvider],
 	bootstrap: [AppComponent],

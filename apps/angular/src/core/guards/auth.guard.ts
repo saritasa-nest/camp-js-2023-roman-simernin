@@ -12,7 +12,7 @@ export function authGuardFactory(shouldBeAuthenticated: boolean) {
 		const authService = inject(AuthService);
 		const router = inject(Router);
 
-		const isAuthenticated: boolean = authService.isAuthenticated();
+		const isAuthenticated = authService.isAuthenticated();
 
 		if (isAuthenticated && !shouldBeAuthenticated) {
 			router.navigate(['']);

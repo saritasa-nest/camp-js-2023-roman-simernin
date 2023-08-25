@@ -3,15 +3,17 @@ import { Injectable } from '@angular/core';
 
 import { LoginModel } from '@js-camp/core/models/login.model';
 
-import { Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { TokensDto } from '@js-camp/core/dtos/tokens.dto';
 import { LoginModelMapper } from '@js-camp/core/mappers/login.model.mapper';
 import { TokensModelMapper } from '@js-camp/core/mappers/tokens.model.mapper';
 import { TokensModel } from '@js-camp/core/models/tokens.model';
 
-import { ApiUriBuilder } from './api-uri-builder';
-import { TokensStorageService } from './tokens-storage.service';
 import { RefreshTokensDto } from '@js-camp/core/dtos/refresh-tokens.dto';
+
+import { TokensStorageService } from './tokens-storage.service';
+
+import { ApiUriBuilder } from './api-uri-builder';
 
 /** Service for authentication. */
 @Injectable({
@@ -19,12 +21,14 @@ import { RefreshTokensDto } from '@js-camp/core/dtos/refresh-tokens.dto';
 })
 export class AuthService {
 
+	private readonly isAuthenticatedSubject$: BehaviorSubject<boolean>;
+
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly apiUriBuilder: ApiUriBuilder,
 		private readonly tokenStorageService: TokensStorageService,
 	) {
-
+		this.isAuthenticatedSubject$ = new BehaviorSubject(this.isAuthenticated());
 	}
 
 	/**
@@ -37,7 +41,7 @@ export class AuthService {
 		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel))
 			.pipe(
 				map(tokensDto => TokensModelMapper.fromDto(tokensDto)),
-				tap(tokens => this.tokenStorageService.save(tokens)),
+				tap(tokens => this.authenticate(tokens)),
 			);
 	}
 
@@ -57,8 +61,15 @@ export class AuthService {
 		return this.httpClient.post<TokensDto>(uri, refreshTokensDto)
 			.pipe(
 				map(tokensDto => TokensModelMapper.fromDto(tokensDto)),
-				tap(tokens => this.tokenStorageService.save(tokens)),
+				tap(tokens => this.authenticate(tokens)),
 			);
+	}
+
+	/** Logout. */
+	public logout(): void {
+		this.tokenStorageService.delete();
+
+		this.isAuthenticatedSubject$.next(this.isAuthenticated());
 	}
 
 	/**
@@ -66,5 +77,18 @@ export class AuthService {
 	 */
 	public isAuthenticated(): boolean {
 		return this.tokenStorageService.get() !== null;
+	}
+
+	/**
+	 * Stream for authentication flag.
+	 */
+	public get isAuthenticated$(): Observable<boolean> {
+		return this.isAuthenticatedSubject$.asObservable();
+	}
+
+	private authenticate(tokens: TokensModel): void {
+		this.tokenStorageService.save(tokens);
+
+		this.isAuthenticatedSubject$.next(this.isAuthenticated());
 	}
 }

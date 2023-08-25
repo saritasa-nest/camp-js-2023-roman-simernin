@@ -1,1 +1,7 @@
+<ng-container *ngIf="isAuthenticated$ | async">
+    <header class="app-header">
+        <button type="button" mat-button (click)="logout()">Logout</button>
+    </header>
+</ng-container>
+
 <router-outlet></router-outlet>

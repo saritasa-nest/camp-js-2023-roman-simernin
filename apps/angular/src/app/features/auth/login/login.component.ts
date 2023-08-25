@@ -42,8 +42,12 @@ export class LoginComponent {
 			password: formData.password ?? '',
 		}).pipe(
 			first(),
-			tap(_ => this.router.navigate([''])),
+			tap(_ => {
+				window.location.reload();
+				this.router.navigate(['']);
+			})
 		)
+
 			.subscribe();
 	}
 }
