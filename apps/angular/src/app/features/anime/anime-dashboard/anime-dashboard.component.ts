@@ -119,8 +119,8 @@ export class AnimeDashboardComponent implements OnInit {
 	 * @param sortingEvent - Sorting event.
 	 */
 	public handleSortingChange(sortingEvent: Sort): void {
-		let sortingField: AnimeSortingField | undefined;
-		let sortingDirection: SortingDirection | undefined;
+		let sortingField: AnimeSortingField | null = null;
+		let sortingDirection: SortingDirection | null = null;
 
 		if (sortingEvent.direction !== '') {
 			sortingField = sortingEvent.active as AnimeSortingField;
