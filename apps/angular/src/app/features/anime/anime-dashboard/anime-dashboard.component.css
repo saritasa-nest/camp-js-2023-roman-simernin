@@ -32,6 +32,10 @@
   justify-content: center;
 }
 
+::ng-deep .mat-sort-header-container {
+  justify-content: center;
+}
+
 @media (width <= 360px) {
   .anime-filters {
     flex-direction: column;
