@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, switchMap, map, merge, BehaviorSubject, tap, Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
 
 import { Anime } from '@js-camp/core/models/anime';
@@ -21,11 +22,9 @@ import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 	styleUrls: ['./anime-dashboard.component.css'],
 	providers: [AnimeParametersServiceFactory],
 })
-export class AnimeDashboardComponent implements OnInit, OnDestroy {
+export class AnimeDashboardComponent implements OnInit {
 
 	private readonly animeParametersService: AnimeParametersService;
-
-	private animeSelectionChangedSubscription: Subscription = new Subscription();
 
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
@@ -83,16 +82,12 @@ export class AnimeDashboardComponent implements OnInit, OnDestroy {
 	}
 
 	/** @inheritdoc */
-	public ngOnDestroy(): void {
-		this.animeSelectionChangedSubscription.unsubscribe();
-	}
-
-	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.animeSelectionChangedSubscription = merge(
+		merge(
 			this.detectAnimeTypesParameterChange(),
 			this.detectSearchParameterChange(),
 		).pipe(
+			takeUntilDestroyed(),
 			tap(parameters => this.paginatorSettings$.next(parameters)),
 		)
 			.subscribe();
