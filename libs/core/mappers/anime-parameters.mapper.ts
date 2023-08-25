@@ -41,5 +41,5 @@ export namespace AnimeParametersMapper {
 		}
 
 		return sortingParameters.sortingDirection === SortingDirection.Ascending ? sortingField : `-${sortingField}`;
-	} 
+	}
 }
