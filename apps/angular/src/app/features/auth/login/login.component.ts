@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
+import { AuthResult } from '@js-camp/core/models/auth-result';
 import { first, tap } from 'rxjs';
 
 /** Login component. */
@@ -40,14 +41,21 @@ export class LoginComponent {
 		this.authService.login({
 			email: formData.email ?? '',
 			password: formData.password ?? '',
-		}).pipe(
-			first(),
-			tap(_ => {
-				window.location.reload();
-				this.router.navigate(['']);
-			})
-		)
+		}).pipe(first())
+			.subscribe(authResult => this.handleLogin(authResult));
+	}
 
-			.subscribe();
+	private handleLogin(authResult: AuthResult): void {
+		if (authResult.isAuthenticated) {
+			this.router.navigate(['']);
+
+			return;
+		}
+
+		if (authResult.errorMessages !== undefined) {
+			this.formGroup.setErrors({
+				server: authResult.errorMessages.toString(),
+			});
+		}
 	}
 }

@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 /** Anime table module. */
 @NgModule({
@@ -15,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
+		CommonModule,
 	],
 	declarations: [LoginComponent],
 	exports: [LoginComponent],

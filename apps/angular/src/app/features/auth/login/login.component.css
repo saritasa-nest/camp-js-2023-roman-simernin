@@ -7,4 +7,9 @@
   display: flex;
   flex-direction: column;
   width: 300px;
+  gap: 10px;
+}
+
+.login__form-error {
+  text-align: justify;
 }
