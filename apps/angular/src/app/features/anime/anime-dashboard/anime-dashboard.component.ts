@@ -9,7 +9,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
 import { AnimeParametersServiceFactory } from '@js-camp/angular/core/services/anime-parameters-service.factory';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
@@ -54,6 +54,10 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Search form control. */
 	public readonly searchFormControl: FormControl;
 
+	public readonly animeFiltersFormGroup: FormGroup<{
+		anime
+	}>;
+
 	/** Anime types. */
 	public readonly animeTypes: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
 
@@ -71,8 +75,10 @@ export class AnimeDashboardComponent implements OnInit {
 
 		this.initialSortingParameters = initialAnimeParameters;
 
-		this.animeTypesFormControl = new FormControl<readonly string[]>(initialAnimeParameters.animeTypes);
-		this.searchFormControl = new FormControl(initialAnimeParameters.search, { updateOn: 'blur' });
+		this.animeFiltersFormGroup = new FormGroup({
+			animeTypes: new FormControl<readonly string[]>(initialAnimeParameters.animeTypes),
+			search: new FormControl(initialAnimeParameters.search, { updateOn: 'blur' }),
+		});
 
 		this.paginatorSettings$ = new BehaviorSubject<PaginationParameters>(initialAnimeParameters);
 
