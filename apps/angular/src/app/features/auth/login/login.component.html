@@ -1,11 +1,13 @@
-<form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="login-form">
-    <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput [formControl]="formGroup.controls.email">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input type="password" matInput [formControl]="formGroup.controls.password">      
-    </mat-form-field>
-    <button type="submit" mat-button>Sign in</button>
-</form>
+<div class="login">
+    <form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="login__form">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput [formControl]="formGroup.controls.email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input type="password" matInput [formControl]="formGroup.controls.password">      
+        </mat-form-field>
+        <button type="submit" mat-button>Sign in</button>
+    </form>
+</div>
