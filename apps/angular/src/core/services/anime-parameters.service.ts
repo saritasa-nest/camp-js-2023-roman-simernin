@@ -66,29 +66,15 @@ export class AnimeParametersService {
 	}
 
 	/**
-	 * Append parameters for anime search.
-	 * @param search - New anime search value.
+	 * Append parameters for anime filters.
+	 * @param animeTypes - New anime types for filter.
+	 * @param search - Search value.
 	 */
-	public setSearch(search: string | null): AnimeParameters {
+	public setFilters(search: string | null, animeTypes: readonly string[]): AnimeParameters {
 		const newParameters: AnimeParameters = {
 			...this.animeParameters,
 			...this.resetedPagination,
 			search: search !== '' ? search : null,
-		};
-
-		this.changeParams(newParameters);
-
-		return newParameters;
-	}
-
-	/**
-	 * Append parameters for anime filters.
-	 * @param animeTypes - New anime types for filter.
-	 */
-	public setFilters(animeTypes: readonly string[]): AnimeParameters {
-		const newParameters: AnimeParameters = {
-			...this.animeParameters,
-			...this.resetedPagination,
 			animeTypes,
 		};
 

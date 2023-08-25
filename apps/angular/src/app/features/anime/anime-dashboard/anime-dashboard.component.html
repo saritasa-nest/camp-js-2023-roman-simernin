@@ -1,12 +1,12 @@
 <div>
-  <form class="anime-filters">
+  <form [formGroup]="animeFiltersFormGroup" class="anime-filters">
     <mat-form-field>
       <mat-label>Search</mat-label>
-      <input matInput [formControl]="searchFormControl">
+      <input matInput [formControl]="animeFiltersFormGroup.controls.search">
     </mat-form-field>
     <mat-form-field>
 			<mat-label>Anime type</mat-label>
-			<mat-select [formControl]="animeTypesFormControl" multiple>
+			<mat-select [formControl]="animeFiltersFormGroup.controls.animeTypes" multiple>
 				<mat-option *ngFor="let animeType of animeTypes;" [value]="animeType">{{animeType}}</mat-option>
 			</mat-select>
 		</mat-form-field>

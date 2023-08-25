@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap, map, merge, BehaviorSubject, tap, Subscription } from 'rxjs';
+import { Observable, switchMap, map, BehaviorSubject, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -26,6 +26,8 @@ export class AnimeDashboardComponent implements OnInit {
 
 	private readonly animeParametersService: AnimeParametersService;
 
+	private readonly animeFilters$: Observable<AnimeParameters>;
+
 	/** Displayed columns of anime table. */
 	public readonly displayedAnimeTableColumns: readonly string[] = [
 		'imageUrl',
@@ -48,14 +50,10 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Paginator settings. */
 	public readonly paginatorSettings$: BehaviorSubject<PaginationParameters>;
 
-	/** Types form control. */
-	public readonly animeTypesFormControl: FormControl<readonly string[] | null>;
-
-	/** Search form control. */
-	public readonly searchFormControl: FormControl;
-
+	/** Anime filters form group. */
 	public readonly animeFiltersFormGroup: FormGroup<{
-		anime
+		search: FormControl<string | null>;
+		animeTypes: FormControl<readonly string[] | null>;
 	}>;
 
 	/** Anime types. */
@@ -74,13 +72,19 @@ export class AnimeDashboardComponent implements OnInit {
 		const initialAnimeParameters = this.animeParametersService.animeParameters;
 
 		this.initialSortingParameters = initialAnimeParameters;
+		this.paginatorSettings$ = new BehaviorSubject<PaginationParameters>(initialAnimeParameters);
 
 		this.animeFiltersFormGroup = new FormGroup({
-			animeTypes: new FormControl<readonly string[]>(initialAnimeParameters.animeTypes),
 			search: new FormControl(initialAnimeParameters.search, { updateOn: 'blur' }),
+			animeTypes: new FormControl<readonly string[]>(initialAnimeParameters.animeTypes),
 		});
 
-		this.paginatorSettings$ = new BehaviorSubject<PaginationParameters>(initialAnimeParameters);
+		this.animeFilters$ = this.animeFiltersFormGroup.valueChanges
+			.pipe(
+				takeUntilDestroyed(),
+				map(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
+				tap(parameters => this.paginatorSettings$.next(parameters)),
+			);
 
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
 			switchMap(parameters => animeService.getAnimeList(parameters)),
@@ -89,14 +93,7 @@ export class AnimeDashboardComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		merge(
-			this.detectAnimeTypesParameterChange(),
-			this.detectSearchParameterChange(),
-		).pipe(
-			takeUntilDestroyed(),
-			tap(parameters => this.paginatorSettings$.next(parameters)),
-		)
-			.subscribe();
+		this.animeFilters$.subscribe();
 	}
 
 	/**
@@ -131,17 +128,5 @@ export class AnimeDashboardComponent implements OnInit {
 		}
 
 		this.animeParametersService.setSorting({ sortingField, sortingDirection });
-	}
-
-	private detectSearchParameterChange(): Observable<AnimeParameters> {
-		return this.searchFormControl.valueChanges.pipe(
-			map(search => this.animeParametersService.setSearch(search)),
-		);
-	}
-
-	private detectAnimeTypesParameterChange(): Observable<AnimeParameters> {
-		return this.animeTypesFormControl.valueChanges.pipe(
-			map(animeTypes => this.animeParametersService.setFilters(animeTypes ?? [])),
-		);
 	}
 }
