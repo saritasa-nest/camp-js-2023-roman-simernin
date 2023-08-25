@@ -11,7 +11,6 @@ import { SortingDirection, SortingParameters } from '@js-camp/core/models/sortin
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
-import { AnimeParametersServiceFactory } from '@js-camp/angular/core/services/anime-parameters-service.factory';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 
@@ -20,11 +19,9 @@ import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 	selector: 'anime-dashboard',
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
-	providers: [AnimeParametersServiceFactory],
+	providers: [AnimeParametersService],
 })
 export class AnimeDashboardComponent implements OnInit {
-
-	private readonly animeParametersService: AnimeParametersService;
 
 	private readonly animeFilters$: Observable<AnimeParameters>;
 
@@ -37,12 +34,6 @@ export class AnimeDashboardComponent implements OnInit {
 		'airedStartDate',
 		'status',
 	];
-
-	/** Available page sizes for anime table. */
-	public readonly availablePageSizes: number[] = [5, 10, 25];
-
-	/** Default page size. */
-	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
 
 	/** Initial anime sorting. */
 	public readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
@@ -63,12 +54,9 @@ export class AnimeDashboardComponent implements OnInit {
 	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
 	public constructor(
+		public readonly animeParametersService: AnimeParametersService,
 		animeService: AnimeService,
-		animeParametersServiceFactory: AnimeParametersServiceFactory,
 	) {
-
-		this.animeParametersService = animeParametersServiceFactory.create(this.defaultPageSize, this.availablePageSizes);
-
 		const initialAnimeParameters = this.animeParametersService.animeParameters;
 
 		this.initialSortingParameters = initialAnimeParameters;

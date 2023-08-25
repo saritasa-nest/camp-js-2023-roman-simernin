@@ -76,7 +76,7 @@
         <mat-paginator
           [length]="paginatedAnime.totalCount"
           [pageSize]="paginatorSettings.pageSize"
-          [pageSizeOptions]="availablePageSizes"
+          [pageSizeOptions]="animeParametersService.availablePageSizes"
           (page)="handlePaginationParametersChange(($event))"
           [pageIndex]="paginatorSettings.pageNumber - 1">
         </mat-paginator>

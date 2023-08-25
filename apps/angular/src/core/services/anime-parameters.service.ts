@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
@@ -7,13 +8,18 @@ import { nameofFactory } from '@js-camp/core/utils/nameof';
 import { Observable, map } from 'rxjs';
 
 /** Service for changing anime parameters. */
+@Injectable()
 export class AnimeParametersService {
 
 	private readonly defaultPageNumber = 1;
 
+	/** Available page sizes for anime table. */
+	public readonly availablePageSizes: number[] = [5, 10, 25];
+
+	/** Default page size. */
+	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
+
 	public constructor(
-		private readonly defaultPageSize: number,
-		protected readonly availablePageSizes: readonly number[],
 		private readonly router: Router,
 		private readonly activatedRoute: ActivatedRoute,
 	) {
