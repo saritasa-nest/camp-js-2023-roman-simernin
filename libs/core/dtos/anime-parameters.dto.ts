@@ -1,8 +1,6 @@
 /** DTO for getting anime. */
 export interface AnimeParametersDto {
 
-	[key: string]: string | number;
-
 	/** Page size. */
 	readonly limit: number;
 

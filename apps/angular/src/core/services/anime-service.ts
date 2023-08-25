@@ -31,7 +31,7 @@ export class AnimeService {
 
 		return this.httpClient.get<PaginationDto<AnimeDto>>(uri, {
 			params: new HttpParams({
-				fromObject: AnimeParametersMapper.toDto(parameters),
+				fromObject: { ...AnimeParametersMapper.toDto(parameters) },
 			}),
 		})
 			.pipe(
