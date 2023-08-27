@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap, map } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -20,8 +20,6 @@ import { AnimeParametersService } from '@js-camp/angular/core/services/anime-par
 	providers: [AnimeParametersService],
 })
 export class AnimeDashboardComponent implements OnInit {
-
-	private readonly animeFiltersChange$: Observable<void>;
 
 	/** Displayed columns of anime table. */
 	protected readonly displayedAnimeTableColumns: readonly string[] = [
@@ -61,12 +59,6 @@ export class AnimeDashboardComponent implements OnInit {
 			animeTypes: new FormControl<readonly string[]>(initialAnimeParameters.animeTypes),
 		});
 
-		this.animeFiltersChange$ = this.animeFiltersFormGroup.valueChanges
-			.pipe(
-				map(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
-				takeUntilDestroyed(),
-			);
-
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
 			switchMap(parameters => animeService.getAnimeList(parameters)),
 		);
@@ -74,7 +66,7 @@ export class AnimeDashboardComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.animeFiltersChange$.subscribe();
+		this.subscribeToFiltersChanges();
 	}
 
 	/**
@@ -104,5 +96,14 @@ export class AnimeDashboardComponent implements OnInit {
 		}
 
 		this.animeParametersService.setSorting({ sortingField, sortingDirection });
+	}
+
+	private subscribeToFiltersChanges(): void {
+		this.animeFiltersFormGroup.valueChanges
+			.pipe(
+				tap(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
+				takeUntilDestroyed(),
+			)
+			.subscribe();
 	}
 }
