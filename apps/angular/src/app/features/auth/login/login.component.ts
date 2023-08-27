@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
-import { AuthResult } from '@js-camp/core/models/auth-result';
-import { first, tap } from 'rxjs';
+import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
+import { ApiError } from '@js-camp/core/models/api-error';
+import { first, of, tap } from 'rxjs';
 
 /** Login component. */
 @Component({
@@ -14,7 +15,7 @@ import { first, tap } from 'rxjs';
 export class LoginComponent {
 
 	/** Login form group. */
-	public readonly formGroup: FormGroup<{ 
+	public readonly formGroup: FormGroup<{
 		email: FormControl<string | null>;
 		password: FormControl<string | null>;
 	}>;
@@ -41,21 +42,17 @@ export class LoginComponent {
 		this.authService.login({
 			email: formData.email ?? '',
 			password: formData.password ?? '',
-		}).pipe(first())
-			.subscribe(authResult => this.handleLogin(authResult));
+		}).pipe(
+			first(),
+			tap(_ => this.router.navigate([''])),
+			catchApiError(apiError => of(this.catchLoginError(apiError))),
+		)
+			.subscribe();
 	}
 
-	private handleLogin(authResult: AuthResult): void {
-		if (authResult.isAuthenticated) {
-			this.router.navigate(['']);
-
-			return;
-		}
-
-		if (authResult.errorMessages !== undefined) {
-			this.formGroup.setErrors({
-				server: authResult.errorMessages.toString(),
-			});
-		}
+	private catchLoginError(apiError: ApiError): void {
+		this.formGroup.setErrors({
+			server: apiError.errorMessages.toString(),
+		});
 	}
 }
