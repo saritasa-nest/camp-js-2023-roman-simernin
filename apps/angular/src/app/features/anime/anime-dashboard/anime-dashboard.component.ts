@@ -26,7 +26,7 @@ export class AnimeDashboardComponent implements OnInit {
 	private readonly animeFilters$: Observable<AnimeParameters>;
 
 	/** Displayed columns of anime table. */
-	public readonly displayedAnimeTableColumns: readonly string[] = [
+	protected readonly displayedAnimeTableColumns: readonly string[] = [
 		'imageUrl',
 		'englishTitle',
 		'japaneseTitle',
@@ -36,25 +36,25 @@ export class AnimeDashboardComponent implements OnInit {
 	];
 
 	/** Initial anime sorting. */
-	public readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
+	protected readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
 
 	/** Paginator settings. */
-	public readonly paginatorSettings$: BehaviorSubject<PaginationParameters>;
+	protected readonly paginatorSettings$: BehaviorSubject<PaginationParameters>;
 
 	/** Anime filters form group. */
-	public readonly animeFiltersFormGroup: FormGroup<{
+	protected readonly animeFiltersFormGroup: FormGroup<{
 		search: FormControl<string | null>;
 		animeTypes: FormControl<readonly string[] | null>;
 	}>;
 
 	/** Anime types. */
-	public readonly animeTypes: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
+	protected readonly animeTypes: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
 
 	/** Observable for anime previews. */
-	public readonly paginatedAnime$: Observable<Pagination<Anime>>;
+	protected readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
 	public constructor(
-		public readonly animeParametersService: AnimeParametersService,
+		protected readonly animeParametersService: AnimeParametersService,
 		animeService: AnimeService,
 	) {
 		const initialAnimeParameters = this.animeParametersService.animeParameters;
@@ -88,7 +88,7 @@ export class AnimeDashboardComponent implements OnInit {
 	 * Handle pagination parameters change event.
 	 * @param paginationEvent - Pagination event.
 	 */
-	public handlePaginationParametersChange(paginationEvent: PageEvent): void {
+	protected handlePaginationParametersChange(paginationEvent: PageEvent): void {
 		const pageNumber: number = paginationEvent.pageIndex + 1;
 
 		this.animeParametersService.setPagination({
@@ -106,7 +106,7 @@ export class AnimeDashboardComponent implements OnInit {
 	 * Handle sorting change event.
 	 * @param sortingEvent - Sorting event.
 	 */
-	public handleSortingChange(sortingEvent: Sort): void {
+	protected handleSortingChange(sortingEvent: Sort): void {
 		let sortingField: AnimeSortingField | null = null;
 		let sortingDirection: SortingDirection | null = null;
 
