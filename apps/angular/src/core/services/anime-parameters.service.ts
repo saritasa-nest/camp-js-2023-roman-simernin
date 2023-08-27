@@ -52,32 +52,23 @@ export class AnimeParametersService {
 	 * Append parameters for anime pagination.
 	 * @param pagination - Pagination parameters.
 	 */
-	public setPagination(pagination: PaginationParameters): AnimeParameters {
-		const newParameters: AnimeParameters = {
+	public setPagination(pagination: PaginationParameters): void {
+		this.changeParams({
 			...this.animeParameters,
 			...pagination,
-		};
-
-		this.changeParams(newParameters);
+		});
 
 		this.paginationParametersSubject$.next(pagination);
-
-		return newParameters;
 	}
 
 	/**
 	 * Append parameters for anime sortings.
 	 * @param sorting - Sorting parameters.
 	 */
-	public setSorting(sorting: SortingParameters<AnimeSortingField>): AnimeParameters {
-		const newParameters: AnimeParameters = {
-			...this.animeParameters,
+	public setSorting(sorting: SortingParameters<AnimeSortingField>): void {
+		this.changeParams({
 			...sorting,
-		};
-
-		this.changeParams(newParameters);
-
-		return newParameters;
+		});
 	}
 
 	/**
@@ -85,21 +76,16 @@ export class AnimeParametersService {
 	 * @param animeTypes - New anime types for filter.
 	 * @param search - Search value.
 	 */
-	public setFilters(search: string | null, animeTypes: readonly string[]): AnimeParameters {
+	public setFilters(search: string | null, animeTypes: readonly string[]): void {
 		const paginationParameters = this.resetedPagination;
 
-		const newParameters: AnimeParameters = {
-			...this.animeParameters,
+		this.changeParams({
 			...paginationParameters,
 			search: search !== '' ? search : null,
 			animeTypes,
-		};
-
-		this.changeParams(newParameters);
+		});
 
 		this.paginationParametersSubject$.next(paginationParameters);
-
-		return newParameters;
 	}
 
 	private get resetedPagination(): PaginationParameters {
@@ -109,8 +95,8 @@ export class AnimeParametersService {
 		};
 	}
 
-	private changeParams(parameters: AnimeParameters): void {
-		this.router.navigate([], { queryParams: parameters });
+	private changeParams(parameters: Partial<AnimeParameters>): void {
+		this.router.navigate([], { queryParams: parameters, queryParamsHandling: 'merge' });
 	}
 
 	private parseAnimeParameters(paramMap: ParamMap): AnimeParameters {

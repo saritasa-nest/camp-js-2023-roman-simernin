@@ -11,7 +11,6 @@ import { SortingDirection, SortingParameters } from '@js-camp/core/models/sortin
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
-import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 
 /** Anime table component. */
 @Component({
@@ -22,7 +21,7 @@ import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 })
 export class AnimeDashboardComponent implements OnInit {
 
-	private readonly animeFilters$: Observable<AnimeParameters>;
+	private readonly animeFiltersChange$: Observable<void>;
 
 	/** Displayed columns of anime table. */
 	protected readonly displayedAnimeTableColumns: readonly string[] = [
@@ -62,10 +61,10 @@ export class AnimeDashboardComponent implements OnInit {
 			animeTypes: new FormControl<readonly string[]>(initialAnimeParameters.animeTypes),
 		});
 
-		this.animeFilters$ = this.animeFiltersFormGroup.valueChanges
+		this.animeFiltersChange$ = this.animeFiltersFormGroup.valueChanges
 			.pipe(
-				takeUntilDestroyed(),
 				map(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
+				takeUntilDestroyed(),
 			);
 
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
@@ -75,7 +74,7 @@ export class AnimeDashboardComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.animeFilters$.subscribe();
+		this.animeFiltersChange$.subscribe();
 	}
 
 	/**
