@@ -72,7 +72,7 @@
       </table>
     </main>
     <div class="anime-pagination">
-      <ng-container *ngIf="paginatorSettings$ | async as paginatorSettings">
+      <ng-container *ngIf="animeParametersService.paginationParameters$ | async as paginatorSettings">
         <mat-paginator
           [length]="paginatedAnime.totalCount"
           [pageSize]="paginatorSettings.pageSize"

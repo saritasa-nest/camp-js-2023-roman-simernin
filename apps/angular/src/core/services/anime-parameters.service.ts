@@ -5,23 +5,24 @@ import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { nameofFactory } from '@js-camp/core/utils/nameof';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 /** Service for changing anime parameters. */
 @Injectable()
 export class AnimeParametersService {
 
-	private readonly defaultPageNumber = 1;
-
 	/** Available page sizes for anime table. */
 	public readonly availablePageSizes: readonly number[] = [5, 10, 25];
 
-	/** Default page size. */
-	public readonly defaultPageSize = Math.min(...this.availablePageSizes);
+	/** Default pagination parameters. */
+	public readonly defaultPaginationParameters: PaginationParameters = {
+		pageNumber: 1,
+		pageSize: Math.min(...this.availablePageSizes),
+	};
 
-	/**
-	 * Anime parameters stream.
-	 */
+	private readonly paginationParametersSubject$ = new BehaviorSubject<PaginationParameters>(this.defaultPaginationParameters);
+
+	/** Anime parameters stream. */
 	public readonly animeParameters$: Observable<AnimeParameters>;
 
 	public constructor(
@@ -31,6 +32,13 @@ export class AnimeParametersService {
 		this.animeParameters$ = this.activatedRoute.queryParamMap.pipe(
 			map(params => this.parseAnimeParameters(params)),
 		);
+
+		this.paginationParametersSubject$ = new BehaviorSubject<PaginationParameters>(this.animeParameters);
+	}
+
+	/** Paginator settings. */
+	public get paginationParameters$(): Observable<PaginationParameters> {
+		return this.paginationParametersSubject$.asObservable();
 	}
 
 	/**
@@ -51,6 +59,8 @@ export class AnimeParametersService {
 		};
 
 		this.changeParams(newParameters);
+
+		this.paginationParametersSubject$.next(pagination);
 
 		return newParameters;
 	}
@@ -76,14 +86,18 @@ export class AnimeParametersService {
 	 * @param search - Search value.
 	 */
 	public setFilters(search: string | null, animeTypes: readonly string[]): AnimeParameters {
+		const paginationParameters = this.resetedPagination;
+
 		const newParameters: AnimeParameters = {
 			...this.animeParameters,
-			...this.resetedPagination,
+			...paginationParameters,
 			search: search !== '' ? search : null,
 			animeTypes,
 		};
 
 		this.changeParams(newParameters);
+
+		this.paginationParametersSubject$.next(paginationParameters);
 
 		return newParameters;
 	}
@@ -91,7 +105,7 @@ export class AnimeParametersService {
 	private get resetedPagination(): PaginationParameters {
 		return {
 			pageSize: this.animeParameters.pageSize,
-			pageNumber: this.defaultPageNumber,
+			pageNumber: this.defaultPaginationParameters.pageNumber,
 		};
 	}
 
@@ -105,9 +119,10 @@ export class AnimeParametersService {
 		const pageSize = Number.parseInt(paramMap.get(nameof('pageSize')) ?? '', 10);
 		const pageNumber = Number.parseInt(paramMap.get(nameof('pageNumber')) ?? '', 10);
 
-		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPageSize;
+		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPaginationParameters.pageSize;
 
-		const validPageNumber = pageNumber > this.defaultPageNumber ? pageNumber : this.defaultPageNumber;
+		const validPageNumber = pageNumber > this.defaultPaginationParameters.pageNumber ?
+			pageNumber : this.defaultPaginationParameters.pageNumber;
 
 		return {
 			pageSize: validPageSize,

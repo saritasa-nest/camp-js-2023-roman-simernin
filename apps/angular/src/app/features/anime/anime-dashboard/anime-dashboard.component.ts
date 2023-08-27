@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap, map, BehaviorSubject, tap } from 'rxjs';
+import { Observable, switchMap, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -11,7 +11,6 @@ import { SortingDirection, SortingParameters } from '@js-camp/core/models/sortin
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
-import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 
 /** Anime table component. */
@@ -38,9 +37,6 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Initial anime sorting. */
 	protected readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
 
-	/** Paginator settings. */
-	protected readonly paginatorSettings$: BehaviorSubject<PaginationParameters>;
-
 	/** Anime filters form group. */
 	protected readonly animeFiltersFormGroup: FormGroup<{
 		search: FormControl<string | null>;
@@ -60,7 +56,6 @@ export class AnimeDashboardComponent implements OnInit {
 		const initialAnimeParameters = this.animeParametersService.animeParameters;
 
 		this.initialSortingParameters = initialAnimeParameters;
-		this.paginatorSettings$ = new BehaviorSubject<PaginationParameters>(initialAnimeParameters);
 
 		this.animeFiltersFormGroup = new FormGroup({
 			search: new FormControl(initialAnimeParameters.search, { updateOn: 'blur' }),
@@ -71,7 +66,6 @@ export class AnimeDashboardComponent implements OnInit {
 			.pipe(
 				takeUntilDestroyed(),
 				map(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
-				tap(parameters => this.paginatorSettings$.next(parameters)),
 			);
 
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
@@ -92,11 +86,6 @@ export class AnimeDashboardComponent implements OnInit {
 		const pageNumber: number = paginationEvent.pageIndex + 1;
 
 		this.animeParametersService.setPagination({
-			pageSize: paginationEvent.pageSize,
-			pageNumber,
-		});
-
-		this.paginatorSettings$.next({
 			pageSize: paginationEvent.pageSize,
 			pageNumber,
 		});
