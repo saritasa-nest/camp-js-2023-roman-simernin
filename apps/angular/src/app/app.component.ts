@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../core/services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+
+import { AuthService } from '../core/services/auth.service';
 
 /** App component. */
 @Component({
@@ -17,15 +18,9 @@ export class AppComponent {
 	public readonly isAuthenticated$: Observable<boolean>;
 
 	public constructor(
-		private readonly authService: AuthService,
+		protected readonly authService: AuthService,
 		private readonly router: Router,
 	) {
 		this.isAuthenticated$ = authService.isAuthenticated$;
-	}
-
-	/** Lgout. */
-	public logout(): void {
-		this.authService.logout();
-		this.router.navigate(['login']);
 	}
 }

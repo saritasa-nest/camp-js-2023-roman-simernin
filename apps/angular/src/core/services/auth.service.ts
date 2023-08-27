@@ -1,18 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { LoginModel } from '@js-camp/core/models/login.model';
-
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { TokensDto } from '@js-camp/core/dtos/tokens.dto';
 import { LoginModelMapper } from '@js-camp/core/mappers/login.model.mapper';
 import { TokensModelMapper } from '@js-camp/core/mappers/tokens.model.mapper';
-import { TokensModel } from '@js-camp/core/models/tokens.model';
 
 import { RefreshTokensDto } from '@js-camp/core/dtos/refresh-tokens.dto';
 
 import { TokensStorageService } from './tokens-storage.service';
-
 import { ApiUriBuilder } from './api-uri-builder';
 
 /** Service for authentication. */
@@ -27,6 +25,7 @@ export class AuthService {
 		private readonly httpClient: HttpClient,
 		private readonly apiUriBuilder: ApiUriBuilder,
 		private readonly tokenStorageService: TokensStorageService,
+		private readonly router: Router,
 	) {
 		this.isAuthenticatedSubject$ = new BehaviorSubject(this.isAuthenticated());
 	}
@@ -38,17 +37,16 @@ export class AuthService {
 	public login(loginModel: LoginModel): Observable<void> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
-		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel))
-			.pipe(
-				map(tokens => this.authenticate(TokensModelMapper.fromDto(tokens))),
-			);
+		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel)).pipe(
+			map(tokensDto => this.authenticate(tokensDto)),
+		);
 	}
 
 	/**
 	 * Refresh access token.
 	 * @param secret Secret data.
 	 */
-	public refreshAccessToken(): Observable<TokensModel> {
+	public refreshAccessToken(): Observable<void> {
 		const uri = this.apiUriBuilder.buildRefreshUri();
 
 		const currentTokens = this.tokenStorageService.get();
@@ -57,11 +55,9 @@ export class AuthService {
 			refresh: currentTokens?.refreshToken ?? '',
 		};
 
-		return this.httpClient.post<TokensDto>(uri, refreshTokensDto)
-			.pipe(
-				map(tokensDto => TokensModelMapper.fromDto(tokensDto)),
-				tap(tokens => this.authenticate(tokens)),
-			);
+		return this.httpClient.post<TokensDto>(uri, refreshTokensDto).pipe(
+			map(tokensDto => this.authenticate(tokensDto)),
+		);
 	}
 
 	/** Logout. */
@@ -69,6 +65,8 @@ export class AuthService {
 		this.tokenStorageService.delete();
 
 		this.isAuthenticatedSubject$.next(this.isAuthenticated());
+
+		this.router.navigate(['login']);
 	}
 
 	/** Provides current user is authenticated. */
@@ -81,7 +79,9 @@ export class AuthService {
 		return this.isAuthenticatedSubject$.asObservable();
 	}
 
-	private authenticate(tokens: TokensModel): void {
+	private authenticate(tokensDto: TokensDto): void {
+		const tokens = TokensModelMapper.fromDto(tokensDto);
+
 		this.tokenStorageService.save(tokens);
 
 		this.isAuthenticatedSubject$.next(this.isAuthenticated());
