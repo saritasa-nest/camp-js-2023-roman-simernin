@@ -19,10 +19,18 @@ export class AnimeParametersService {
 	/** Default page size. */
 	public readonly defaultPageSize = Math.min(...this.availablePageSizes);
 
+	/**
+	 * Anime parameters stream.
+	 */
+	public readonly animeParameters$: Observable<AnimeParameters>;
+
 	public constructor(
 		private readonly router: Router,
 		private readonly activatedRoute: ActivatedRoute,
 	) {
+		this.animeParameters$ = this.activatedRoute.queryParamMap.pipe(
+			map(params => this.parseAnimeParameters(params)),
+		);
 	}
 
 	/**
@@ -30,15 +38,6 @@ export class AnimeParametersService {
 	 */
 	public get animeParameters(): AnimeParameters {
 		return this.parseAnimeParameters(this.activatedRoute.snapshot.queryParamMap);
-	}
-
-	/**
-	 * Anime parameters stream.
-	 */
-	public get animeParameters$(): Observable<AnimeParameters> {
-		return this.activatedRoute.queryParamMap.pipe(
-			map(params => this.parseAnimeParameters(params)),
-		);
 	}
 
 	/**
