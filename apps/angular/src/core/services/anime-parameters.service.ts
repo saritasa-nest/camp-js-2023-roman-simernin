@@ -14,10 +14,10 @@ export class AnimeParametersService {
 	private readonly defaultPageNumber = 1;
 
 	/** Available page sizes for anime table. */
-	public readonly availablePageSizes: number[] = [5, 10, 25];
+	public readonly availablePageSizes: readonly number[] = [5, 10, 25];
 
 	/** Default page size. */
-	public readonly defaultPageSize: number = Math.min(...this.availablePageSizes);
+	public readonly defaultPageSize = Math.min(...this.availablePageSizes);
 
 	public constructor(
 		private readonly router: Router,

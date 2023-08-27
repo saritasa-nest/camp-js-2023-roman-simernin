@@ -48,7 +48,7 @@ export class AnimeDashboardComponent implements OnInit {
 	}>;
 
 	/** Anime types. */
-	protected readonly animeTypes: string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
+	protected readonly animeTypes: readonly string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
 
 	/** Observable for anime previews. */
 	protected readonly paginatedAnime$: Observable<Pagination<Anime>>;
