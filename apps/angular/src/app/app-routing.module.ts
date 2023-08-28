@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { authGuardFactory } from '../core/guards/auth.guard';
+import { shouldBeAuthenticatedGuard, shouldBeNotAuthenticatedGuard } from '../core/guards/auth.guard';
 
 import { AnimeDashboardComponent } from './features/anime/anime-dashboard/anime-dashboard.component';
 import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegistrationComponent } from './features/auth/registration/registration.component';
-
-const shouldBeAuthenticatedGuard = authGuardFactory(true);
-const shouldBeNotAuthenticatedGuard = authGuardFactory(false);
 
 const routes: Routes = [
 	{
