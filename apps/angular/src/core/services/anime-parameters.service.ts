@@ -32,9 +32,7 @@ export class AnimeParametersService {
 		);
 	}
 
-	/**
-	 * Anime parameters.
-	 */
+	/** Anime parameters. */
 	public get animeParameters(): AnimeParameters {
 		return this.parseAnimeParameters(this.activatedRoute.snapshot.queryParamMap);
 	}
