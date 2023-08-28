@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
@@ -14,25 +14,27 @@ import { first, of, tap } from 'rxjs';
 })
 export class LoginComponent {
 
+	private readonly authService = inject(AuthService);
+
+	private readonly router = inject(Router);
+
+	private readonly formBuilder = inject(FormBuilder);
+
 	/** Login form group. */
-	public readonly formGroup: FormGroup<{
+	protected readonly formGroup: FormGroup<{
 		email: FormControl<string | null>;
 		password: FormControl<string | null>;
 	}>;
 
-	public constructor(
-		private readonly authService: AuthService,
-		private readonly router: Router,
-		formBuilder: FormBuilder,
-	) {
-		this.formGroup = formBuilder.group({
+	public constructor() {
+		this.formGroup = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
 			password: ['', [Validators.required]],
 		});
 	}
 
 	/** Handle login form submitting. */
-	public handleSubmit(): void {
+	protected handleSubmit(): void {
 		if (this.formGroup.invalid) {
 			return;
 		}
