@@ -3,6 +3,8 @@ import { AnimeParameters } from '../models/anime-parameters';
 import { AnimeSortingField } from '../models/anime-sorting-field';
 import { SortingDirection, SortingParameters } from '../models/sorting-parameters';
 
+import { AnimeTypeMapper } from './anime-type.mapper';
+
 export namespace AnimeParametersMapper {
 
 	/**
@@ -14,7 +16,9 @@ export namespace AnimeParametersMapper {
 			limit: model.pageSize,
 			offset: model.pageSize * (model.pageNumber - 1),
 			ordering: mapSorting(model) ?? '',
-			type__in: model.animeTypes.toString(),
+			type__in: model.animeTypes
+				.map(animeTypeModel => AnimeTypeMapper.toDto(animeTypeModel))
+				.toString(),
 			search: model.search ?? '',
 		};
 	}

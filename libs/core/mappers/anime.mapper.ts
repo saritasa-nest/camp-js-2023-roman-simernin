@@ -1,6 +1,8 @@
 import { Anime } from '../models/anime';
 import { AnimeDto } from '../dtos/anime.dto';
 
+import { AnimeTypeMapper } from './anime-type.mapper';
+
 export namespace AnimeMapper {
 
 	/**
@@ -14,7 +16,7 @@ export namespace AnimeMapper {
 			englishTitle: dto.title_eng,
 			japaneseTitle: dto.title_jpn,
 			airedStartDate: new Date(dto.aired.start),
-			type: dto.type,
+			type: AnimeTypeMapper.fromDto(dto.type),
 			status: dto.status.replace(/_/g, ' '),
 		};
 	}

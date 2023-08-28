@@ -3,7 +3,7 @@ import { Observable, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
 
-import { Anime } from '@js-camp/core/models/anime';
+import { Anime, AnimeType } from '@js-camp/core/models/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
@@ -12,6 +12,7 @@ import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
+import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
 /** Anime table component. */
 @Component({
@@ -42,7 +43,7 @@ export class AnimeDashboardComponent implements OnInit {
 	}>;
 
 	/** Anime types. */
-	protected readonly animeTypes: readonly string[] = ['TV', 'OVA', 'Movie', 'Special', 'ONA', 'Music', 'Unknown'];
+	protected readonly animeTypes: readonly string[] = EnumUtils.toArray(AnimeType);
 
 	/** Observable for anime previews. */
 	protected readonly paginatedAnime$: Observable<Pagination<Anime>>;
@@ -108,7 +109,10 @@ export class AnimeDashboardComponent implements OnInit {
 	private subscribeToFiltersChanges(): void {
 		this.animeFiltersFormGroup.valueChanges
 			.pipe(
-				tap(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
+				tap(({ search, animeTypes }) => this.animeParametersService.setFilters(
+					search ?? '',
+					(animeTypes ?? []).map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType)),
+				)),
 				takeUntilDestroyed(this.destroyRef),
 			)
 			.subscribe();

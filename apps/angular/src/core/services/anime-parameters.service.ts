@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { AnimeType } from '@js-camp/core/models/anime';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
+import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 import { nameofFactory } from '@js-camp/core/utils/nameof';
 import { Observable, map } from 'rxjs';
 
@@ -63,7 +65,7 @@ export class AnimeParametersService {
 	 * @param animeTypes - New anime types for filter.
 	 * @param search - Search value.
 	 */
-	public setFilters(search: string | null, animeTypes: readonly string[]): void {
+	public setFilters(search: string | null, animeTypes: readonly AnimeType[]): void {
 		const paginationParameters = this.resetedPagination;
 
 		this.changeParams({
@@ -100,7 +102,9 @@ export class AnimeParametersService {
 			pageNumber: validPageNumber,
 			sortingField: paramMap.get(nameof('sortingField')) as AnimeSortingField,
 			sortingDirection: paramMap.get(nameof('sortingDirection')) as SortingDirection,
-			animeTypes: paramMap.getAll(nameof('animeTypes')),
+			animeTypes: paramMap
+				.getAll(nameof('animeTypes'))
+				.map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType)),
 			search: paramMap.get(nameof('search')),
 		};
 	}

@@ -17,8 +17,19 @@ export interface Anime {
 	readonly airedStartDate: Date;
 
 	/** Type. */
-	readonly type: string;
+	readonly type: AnimeType;
 
 	/** Status. */
 	readonly status: string;
+}
+
+/** Anime type dto. */
+export enum AnimeType {
+	TV = 'TV',
+	OVA = 'OVA',
+	Movie = 'Movie',
+	Special = 'Special',
+	ONA = 'ONA',
+	Music = 'Music',
+	Unknown = 'Unknown',
 }
