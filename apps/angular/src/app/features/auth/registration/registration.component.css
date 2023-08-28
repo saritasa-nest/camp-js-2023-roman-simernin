@@ -1,0 +1,19 @@
+.registration {
+  display: flex;
+  justify-content: center;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+}
+
+.registration__form-error {
+  text-align: justify;
+}
+
+.registration__login-link {
+  text-align: center;
+}

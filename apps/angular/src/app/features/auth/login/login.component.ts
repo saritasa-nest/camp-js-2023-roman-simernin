@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
+import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { first, of, tap } from 'rxjs';
@@ -29,7 +30,7 @@ export class LoginComponent {
 	public constructor() {
 		this.formGroup = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
-			password: ['', [Validators.required]],
+			password: ['', [Validators.required, ApplicationValidators.passwordMinLength()]],
 		});
 	}
 
@@ -54,7 +55,7 @@ export class LoginComponent {
 
 	private catchLoginError(apiError: ApiError): void {
 		this.formGroup.setErrors({
-			server: apiError.errorMessages.toString(),
+			server: apiError.errorMessages.join(' '),
 		});
 	}
 }

@@ -13,6 +13,6 @@ export interface RegistrationModel {
 	/** Password. */
 	readonly password: string;
 
-	/** Confirm password. */
-	readonly confirmPassword: string;
+	/** Re-type password. */
+	readonly retypePassword: string;
 }

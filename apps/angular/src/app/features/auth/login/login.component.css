@@ -13,3 +13,7 @@
 .login__form-error {
   text-align: justify;
 }
+
+.login__registration-link {
+  text-align: center;
+}

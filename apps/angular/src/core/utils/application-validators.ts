@@ -14,15 +14,22 @@ export namespace ApplicationValidators {
 
 			return {
 				...currentControl.errors,
-				retype: 'Passwords do not match',
+				retype: 'Passwords do not match.',
 			};
 		};
 	}
 
 	/** Validator for password min length. */
 	export function passwordMinLength(): ValidatorFn {
-		const minLength = 8;
+		return (passswordControl: AbstractControl): ValidationErrors | null => {
+			const minLength = 8;
+			const validationErrors = Validators.minLength(minLength)(passswordControl);
 
-		return Validators.minLength(minLength);
+			return validationErrors === null ? null : {
+				...validationErrors,
+				minlength: 'Password cannot be less than 8 characters.',
+			};
+		};
+
 	}
 }

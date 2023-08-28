@@ -6,6 +6,7 @@ import { authGuardFactory } from '../core/guards/auth.guard';
 import { AnimeDashboardComponent } from './features/anime/anime-dashboard/anime-dashboard.component';
 import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
 import { LoginComponent } from './features/auth/login/login.component';
+import { RegistrationComponent } from './features/auth/registration/registration.component';
 
 const shouldBeAuthenticatedGuard = authGuardFactory(true);
 const shouldBeNotAuthenticatedGuard = authGuardFactory(false);
@@ -24,6 +25,11 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: LoginComponent,
+		canActivate: [shouldBeNotAuthenticatedGuard],
+	},
+	{
+		path: 'registration',
+		component: RegistrationComponent,
 		canActivate: [shouldBeNotAuthenticatedGuard],
 	},
 	{

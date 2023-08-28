@@ -1,1 +1,30 @@
-<p>registration works!</p>
+<div class="registration">
+    <form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="registration__form">
+        <mat-form-field>
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error class="registration__form-error" *ngIf="formGroup.controls.email.hasError('email')">{{'Must have an email format'}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password">
+            <mat-error *ngIf="formGroup.controls.password.hasError('minlength')">{{formGroup.controls.password.getError('minlength')}} </mat-error>      
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Re-type passoword</mat-label>
+            <input type="password" matInput formControlName="retypePassword">
+            <mat-error class="registration__form-error" *ngIf="formGroup.controls.retypePassword.hasError('retype')">{{formGroup.controls.retypePassword.getError('retype')}}</mat-error>      
+        </mat-form-field>
+        <button type="submit" mat-button>Sign up</button>
+        <mat-error class="registration__form-error" *ngIf="formGroup.hasError('server')">{{formGroup.getError('server')}}</mat-error>
+        <a class="registration__login-link" routerLink="/login">Sign in</a>
+    </form>
+</div>
