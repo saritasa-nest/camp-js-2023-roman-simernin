@@ -30,14 +30,18 @@ export class AuthService {
 
 	private readonly isAuthenticatedSubject$: BehaviorSubject<boolean>;
 
+	/** Stream for authentication flag. */
+	public readonly isAuthenticated$: Observable<boolean>;
+
 	public constructor() {
 		this.isAuthenticatedSubject$ = new BehaviorSubject(this.isAuthenticated());
+		this.isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
 	}
 
 	/**
 	 * Login.
 	 * @param loginModel - Login model.
-		**/
+	 **/
 	public login(loginModel: LoginModel): Observable<void> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
@@ -88,11 +92,6 @@ export class AuthService {
 	/** Provides current user is authenticated. */
 	public isAuthenticated(): boolean {
 		return this.tokenStorageService.get() !== null;
-	}
-
-	/** * Stream for authentication flag. */
-	public get isAuthenticated$(): Observable<boolean> {
-		return this.isAuthenticatedSubject$.asObservable();
 	}
 
 	private authenticate(tokensDto: TokensDto): void {

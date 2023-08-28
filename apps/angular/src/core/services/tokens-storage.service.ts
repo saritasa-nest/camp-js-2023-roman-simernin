@@ -20,9 +20,7 @@ export class TokensStorageService {
 		localStorage.setItem(this.tokensKey, JSON.stringify(tokens));
 	}
 
-	/**
-	 * Get data from localStorage.
-	 */
+	/** Get data from localStorage. */
 	public get(): TokensModel | null {
 		if (this.tokens !== null) {
 			return this.tokens;
@@ -37,9 +35,7 @@ export class TokensStorageService {
 		return JSON.parse(tokensAsJson) as TokensModel;
 	}
 
-	/**
-	 * Delete tokens from storage.
-	 */
+	/** Delete tokens from storage. */
 	public delete(): void {
 		this.tokens = null;
 		localStorage.removeItem(this.tokensKey);

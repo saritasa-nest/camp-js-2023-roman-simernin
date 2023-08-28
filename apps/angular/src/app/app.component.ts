@@ -13,9 +13,7 @@ export class AppComponent {
 
 	private readonly authService = inject(AuthService);
 
-	/**
-	 * Stream for authentication flag.
-	 */
+	/** Stream for authentication flag. */
 	protected readonly isAuthenticated$: Observable<boolean>;
 
 	public constructor() {

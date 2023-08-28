@@ -27,7 +27,7 @@ export namespace ApplicationValidators {
 
 			return validationErrors === null ? null : {
 				...validationErrors,
-				minlength: 'Password cannot be less than 8 characters.',
+				minlength: `Password cannot be less than ${minLength} characters.`,
 			};
 		};
 

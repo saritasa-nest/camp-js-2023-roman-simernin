@@ -4,7 +4,7 @@ import { ApiError } from '@js-camp/core/models/api-error';
 import { ApiErrorDto } from '@js-camp/core/dtos/api-error.dto';
 
 /**
- * Catch api error.
+ * Wrap catchError to catch error in api format.
  * @param errorHandler - Error handler.
  */
 export function catchApiError<TInput, TOutput>(
@@ -29,9 +29,9 @@ export function catchApiError<TInput, TOutput>(
 }
 
 /**
-	* Check this response has api error.
-	* @param response - Response.
-	*/
+ * Check this response has api error.
+ * @param response - Response.
+ */
 function isApiErrorReponse(response: HttpErrorResponse): boolean {
 	return response.error.errors instanceof Array &&
 		typeof (response.error.type) === 'string';

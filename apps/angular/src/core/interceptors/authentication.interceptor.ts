@@ -36,6 +36,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
 	private isAuthenticationRequest(request: HttpRequest<unknown>): boolean {
 		return request.url === this.apiUriBuilder.buildLoginUri() ||
+			request.url === this.apiUriBuilder.buildRegistrationUri() ||
 			request.url === this.apiUriBuilder.buildRefreshUri();
 	}
 
