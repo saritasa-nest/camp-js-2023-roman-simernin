@@ -7,7 +7,8 @@ import { LoginModel } from '@js-camp/core/models/login.model';
 import { TokensDto } from '@js-camp/core/dtos/tokens.dto';
 import { LoginModelMapper } from '@js-camp/core/mappers/login.model.mapper';
 import { TokensModelMapper } from '@js-camp/core/mappers/tokens.model.mapper';
-
+import { RegistrationModel } from '@js-camp/core/models/registration.model';
+import { RegistrationModelMapper } from '@js-camp/core/mappers/registration.model.mapper';
 import { RefreshTokensDto } from '@js-camp/core/dtos/refresh-tokens.dto';
 
 import { TokensStorageService } from './tokens-storage.service';
@@ -41,6 +42,18 @@ export class AuthService {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
 		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel)).pipe(
+			map(tokensDto => this.authenticate(tokensDto)),
+		);
+	}
+
+	/**
+	 * Register new user.
+	 * @param registrationModel - Registration model.
+	 **/
+	public register(registrationModel: RegistrationModel): Observable<void> {
+		const uri = this.apiUriBuilder.buildRegistrationUri();
+
+		return this.httpClient.post<TokensDto>(uri, RegistrationModelMapper.ToDto(registrationModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 		);
 	}
