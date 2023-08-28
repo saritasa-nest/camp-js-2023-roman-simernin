@@ -1,5 +1,5 @@
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpStatusCode } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, map, switchMap } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
@@ -11,13 +11,11 @@ import { ApiUriBuilder } from '../services/api-uri-builder';
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
-	public constructor(
-		private readonly authService: AuthService,
-		private readonly tokensStorageService: TokensStorageService,
-		private readonly apiUriBuilder: ApiUriBuilder,
-	) {
+	private readonly authService = inject(AuthService);
 
-	}
+	private readonly tokensStorageService = inject(TokensStorageService);
+
+	private readonly apiUriBuilder = inject(ApiUriBuilder);
 
 	/** @inheritdoc */
 	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
