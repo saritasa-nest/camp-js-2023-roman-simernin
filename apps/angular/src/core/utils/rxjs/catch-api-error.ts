@@ -8,10 +8,10 @@ import { ApiErrorDto } from '@js-camp/core/dtos/api-error.dto';
  * @param errorHandler - Error handler.
  */
 export function catchApiError<TInput, TOutput>(
-	errorHandler: (error: ApiError, throwApiError: Observable<never>, caugth$: Observable<TInput>) => Observable<TOutput>,
+	errorHandler: (error: ApiError, throwApiError$: Observable<never>, caugth$: Observable<TInput>) => Observable<TOutput>,
 ): OperatorFunction<TInput, TInput | TOutput> {
 	return catchError((response: unknown, caugth$) => {
-		const throwApiError = throwError(() => response);
+		const throwApiError$ = throwError(() => response);
 
 		if (response instanceof HttpErrorResponse && isApiErrorReponse(response)) {
 			const apiErrorDto = response.error as ApiErrorDto;
@@ -21,10 +21,10 @@ export function catchApiError<TInput, TOutput>(
 				errorMessages: apiErrorDto.errors.map(error => error.detail),
 			};
 
-			return errorHandler(apiError, throwApiError, caugth$);
+			return errorHandler(apiError, throwApiError$, caugth$);
 		}
 
-		return throwApiError;
+		return throwApiError$;
 	});
 }
 

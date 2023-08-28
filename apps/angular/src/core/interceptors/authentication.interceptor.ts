@@ -26,8 +26,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 		const authenticatedRequest = this.addAuthentication(request);
 
 		return next.handle(authenticatedRequest).pipe(
-			catchApiError((apiError, throwApiError)=> apiError.statusCode !== HttpStatusCode.Unauthorized ?
-				throwApiError :
+			catchApiError((apiError, throwApiError$) => apiError.statusCode !== HttpStatusCode.Unauthorized ?
+				throwApiError$ :
 				this.refreshToken(request).pipe(
 					switchMap(refreshedRequest => next.handle(refreshedRequest)),
 				)),
@@ -50,10 +50,10 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 	private refreshToken(request: HttpRequest<unknown>): Observable<HttpRequest<unknown>> {
 		return this.authService.refreshAccessToken().pipe(
 			map(_ => this.addAuthentication(request)),
-			catchApiError((_, throwApiError) => {
+			catchApiError((_, throwApiError$) => {
 				this.authService.logout();
 
-				return throwApiError;
+				return throwApiError$;
 			}),
 		);
 	}
