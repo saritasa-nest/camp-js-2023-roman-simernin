@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
@@ -19,14 +19,17 @@ import { ApiUriBuilder } from './api-uri-builder';
 })
 export class AuthService {
 
+	private readonly httpClient = inject(HttpClient);
+
+	private readonly apiUriBuilder = inject(ApiUriBuilder);
+
+	private readonly tokenStorageService = inject(TokensStorageService);
+
+	private readonly router = inject(Router);
+
 	private readonly isAuthenticatedSubject$: BehaviorSubject<boolean>;
 
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly apiUriBuilder: ApiUriBuilder,
-		private readonly tokenStorageService: TokensStorageService,
-		private readonly router: Router,
-	) {
+	public constructor() {
 		this.isAuthenticatedSubject$ = new BehaviorSubject(this.isAuthenticated());
 	}
 
