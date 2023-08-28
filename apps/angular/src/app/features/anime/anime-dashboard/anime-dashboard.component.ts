@@ -11,6 +11,7 @@ import { SortingDirection, SortingParameters } from '@js-camp/core/models/sortin
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
+import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 
 /** Anime table component. */
 @Component({
@@ -46,6 +47,9 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Observable for anime previews. */
 	protected readonly paginatedAnime$: Observable<Pagination<Anime>>;
 
+	/** Paginator settings. */
+	protected readonly paginatorSettings$: Observable<PaginationParameters>;
+
 	public constructor(
 		protected readonly animeParametersService: AnimeParametersService,
 		private readonly destroyRef: DestroyRef,
@@ -63,6 +67,8 @@ export class AnimeDashboardComponent implements OnInit {
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
 			switchMap(parameters => animeService.getAnimeList(parameters)),
 		);
+
+		this.paginatorSettings$ = this.animeParametersService.animeParameters$;
 	}
 
 	/** @inheritdoc */

@@ -5,7 +5,7 @@ import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { nameofFactory } from '@js-camp/core/utils/nameof';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 /** Service for changing anime parameters. */
 @Injectable()
@@ -20,8 +20,6 @@ export class AnimeParametersService {
 		pageSize: Math.min(...this.availablePageSizes),
 	};
 
-	private readonly paginationParametersSubject$ = new BehaviorSubject<PaginationParameters>(this.defaultPaginationParameters);
-
 	/** Anime parameters stream. */
 	public readonly animeParameters$: Observable<AnimeParameters>;
 
@@ -32,13 +30,6 @@ export class AnimeParametersService {
 		this.animeParameters$ = this.activatedRoute.queryParamMap.pipe(
 			map(params => this.parseAnimeParameters(params)),
 		);
-
-		this.paginationParametersSubject$ = new BehaviorSubject<PaginationParameters>(this.animeParameters);
-	}
-
-	/** Paginator settings. */
-	public get paginationParameters$(): Observable<PaginationParameters> {
-		return this.paginationParametersSubject$.asObservable();
 	}
 
 	/**
@@ -57,8 +48,6 @@ export class AnimeParametersService {
 			...this.animeParameters,
 			...pagination,
 		});
-
-		this.paginationParametersSubject$.next(pagination);
 	}
 
 	/**
@@ -84,8 +73,6 @@ export class AnimeParametersService {
 			search: search !== '' ? search : null,
 			animeTypes,
 		});
-
-		this.paginationParametersSubject$.next(paginationParameters);
 	}
 
 	private get resetedPagination(): PaginationParameters {
