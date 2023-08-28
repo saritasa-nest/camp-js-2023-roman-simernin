@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
@@ -48,6 +48,7 @@ export class AnimeDashboardComponent implements OnInit {
 
 	public constructor(
 		protected readonly animeParametersService: AnimeParametersService,
+		private readonly destroyRef: DestroyRef,
 		animeService: AnimeService,
 	) {
 		const initialAnimeParameters = this.animeParametersService.animeParameters;
@@ -102,7 +103,7 @@ export class AnimeDashboardComponent implements OnInit {
 		this.animeFiltersFormGroup.valueChanges
 			.pipe(
 				tap(({ search, animeTypes }) => this.animeParametersService.setFilters(search ?? '', animeTypes ?? [])),
-				takeUntilDestroyed(),
+				takeUntilDestroyed(this.destroyRef),
 			)
 			.subscribe();
 	}
