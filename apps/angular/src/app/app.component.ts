@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { AuthService } from '../core/services/auth.service';
 
@@ -12,15 +11,19 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class AppComponent {
 
+	private readonly authService = inject(AuthService);
+
 	/**
 	 * Stream for authentication flag.
 	 */
-	public readonly isAuthenticated$: Observable<boolean>;
+	protected readonly isAuthenticated$: Observable<boolean>;
 
-	public constructor(
-		protected readonly authService: AuthService,
-		private readonly router: Router,
-	) {
-		this.isAuthenticated$ = authService.isAuthenticated$;
+	public constructor() {
+		this.isAuthenticated$ = this.authService.isAuthenticated$;
+	}
+
+	/** Handle logout. */
+	protected handleLogout(): void {
+		this.authService.logout();
 	}
 }
