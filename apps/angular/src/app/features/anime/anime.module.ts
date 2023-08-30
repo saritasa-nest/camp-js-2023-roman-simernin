@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
+import { AnimeDetailsComponent } from './anime-details/anime-details.component';
+
 import { AnimeRoutingModule } from './anime-routing.module';
 
 /** Anime module. */
@@ -28,7 +30,7 @@ import { AnimeRoutingModule } from './anime-routing.module';
 		MatInputModule,
 		AnimeRoutingModule,
 	],
-	declarations: [AnimeDashboardComponent],
+	declarations: [AnimeDashboardComponent, AnimeDetailsComponent],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })
-export class AnimeModule { }
+export class AnimeModule {}
