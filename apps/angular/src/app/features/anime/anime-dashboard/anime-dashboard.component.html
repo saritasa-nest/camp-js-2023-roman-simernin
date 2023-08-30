@@ -76,7 +76,7 @@
           [length]="paginatedAnime.totalCount"
           [pageSize]="paginatorSettings.pageSize"
           [pageSizeOptions]="animeParametersService.availablePageSizes"
-          (page)="handlePaginationParametersChange(($event))"
+          (page)="handlePaginationParametersChange($event)"
           [pageIndex]="paginatorSettings.pageNumber - 1">
         </mat-paginator>
       </ng-container>
