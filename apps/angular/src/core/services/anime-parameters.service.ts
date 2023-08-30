@@ -66,20 +66,11 @@ export class AnimeParametersService {
 	 * @param search - Search value.
 	 */
 	public setFilters(search: string | null, animeTypes: readonly AnimeType[]): void {
-		const paginationParameters = this.resetedPagination;
-
 		this.changeParams({
-			...paginationParameters,
+			pageNumber: this.defaultPaginationParameters.pageNumber,
 			search: search !== '' ? search : null,
 			animeTypes,
 		});
-	}
-
-	private get resetedPagination(): PaginationParameters {
-		return {
-			pageSize: this.animeParameters.pageSize,
-			pageNumber: this.defaultPaginationParameters.pageNumber,
-		};
 	}
 
 	private changeParams(parameters: Partial<AnimeParameters>): void {
