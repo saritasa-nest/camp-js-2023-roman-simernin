@@ -1,1 +1,5 @@
-<p>anime-details works!</p>
+<ng-container *ngIf="animeDetails$ | async as animeDetails">
+    <ng-container *ngIf="animeDetails !== null">
+        {{animeDetails.englishTitle}}
+    </ng-container>
+</ng-container>
