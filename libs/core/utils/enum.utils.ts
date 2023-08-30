@@ -4,7 +4,7 @@ export namespace EnumUtils {
 		* Convert enum to string array.
   * @param enumeration - Enumeration.
   */
-	export function toArray<TKey extends string, TValue extends string>(enumeration: { [key in TKey]: TValue }): readonly string[] {
+	export function toArray<TKey extends string, TValue>(enumeration: { [key in TKey]: TValue }): readonly TValue[] {
 		return Object.values(enumeration);
 	}
 

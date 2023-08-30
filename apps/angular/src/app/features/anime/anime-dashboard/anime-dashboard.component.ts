@@ -40,11 +40,11 @@ export class AnimeDashboardComponent implements OnInit {
 	/** Anime filters form group. */
 	protected readonly animeFiltersFormGroup: FormGroup<{
 		search: FormControl<string | null>;
-		animeTypes: FormControl<readonly string[] | null>;
+		animeTypes: FormControl<AnimeType[] | null>;
 	}>;
 
 	/** Anime types. */
-	protected readonly animeTypes: readonly string[] = EnumUtils.toArray(AnimeType);
+	protected readonly animeTypes: readonly AnimeType[] = EnumUtils.toArray(AnimeType);
 
 	/** Observable for anime previews. */
 	protected readonly paginatedAnime$: Observable<Pagination<Anime>>;
@@ -63,7 +63,7 @@ export class AnimeDashboardComponent implements OnInit {
 
 		this.animeFiltersFormGroup = new FormGroup({
 			search: new FormControl(initialAnimeParameters.search, { updateOn: 'blur' }),
-			animeTypes: new FormControl<readonly string[]>(initialAnimeParameters.animeTypes),
+			animeTypes: new FormControl<AnimeType[]>([...initialAnimeParameters.animeTypes]),
 		});
 
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
@@ -121,7 +121,7 @@ export class AnimeDashboardComponent implements OnInit {
 			.pipe(
 				tap(({ search, animeTypes }) => this.animeParametersService.setFilters(
 					search ?? '',
-					(animeTypes ?? []).map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType)),
+					animeTypes ?? [],
 				)),
 				takeUntilDestroyed(this.destroyRef),
 			)
