@@ -100,8 +100,8 @@ export class AnimeParametersService {
 		return {
 			pageSize: validPageSize,
 			pageNumber: validPageNumber,
-			sortingField: paramMap.get(nameof('sortingField')) as AnimeSortingField,
-			sortingDirection: paramMap.get(nameof('sortingDirection')) as SortingDirection,
+			field: paramMap.get(nameof('field')) as AnimeSortingField,
+			direction: paramMap.get(nameof('direction')) as SortingDirection,
 			animeTypes: paramMap
 				.getAll(nameof('animeTypes'))
 				.map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType)),

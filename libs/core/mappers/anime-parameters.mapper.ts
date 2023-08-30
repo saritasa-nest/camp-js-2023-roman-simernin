@@ -28,7 +28,7 @@ export namespace AnimeParametersMapper {
 	 * @param sortingParameters Sorting parameters.
 	 */
 	function mapSorting(sortingParameters: SortingParameters<AnimeSortingField>): string | null {
-		if (sortingParameters.sortingField === null || sortingParameters.sortingDirection === null) {
+		if (sortingParameters.field === null || sortingParameters.direction === null) {
 			return null;
 		}
 
@@ -38,12 +38,12 @@ export namespace AnimeParametersMapper {
 			[AnimeSortingField.Status, 'status'],
 		]);
 
-		const sortingField = sortingFieldMap.get(sortingParameters.sortingField);
+		const sortingField = sortingFieldMap.get(sortingParameters.field);
 
 		if (sortingField === undefined) {
 			throw new Error('There is no sorting for this field.');
 		}
 
-		return sortingParameters.sortingDirection === SortingDirection.Ascending ? sortingField : `-${sortingField}`;
+		return sortingParameters.direction === SortingDirection.Ascending ? sortingField : `-${sortingField}`;
 	}
 }
