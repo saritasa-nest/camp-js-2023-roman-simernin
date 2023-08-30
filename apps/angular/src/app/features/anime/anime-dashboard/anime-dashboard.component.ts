@@ -107,6 +107,15 @@ export class AnimeDashboardComponent implements OnInit {
 		this.animeParametersService.setSorting({ sortingField, sortingDirection });
 	}
 
+	/**
+	 * Track anime type.
+	 * @param index Index.
+	 * @param type Anime type.
+	 */
+	protected trackAnimeType(index: number, type: string): string {
+		return type;
+	}
+
 	private subscribeToFiltersChanges(): void {
 		this.animeFiltersFormGroup.valueChanges
 			.pipe(
