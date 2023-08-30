@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit } from '@angular/core';
 import { Observable, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
@@ -20,6 +20,7 @@ import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
 	providers: [AnimeParametersService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeDashboardComponent implements OnInit {
 
