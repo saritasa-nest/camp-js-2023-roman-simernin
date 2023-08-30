@@ -1,8 +1,10 @@
+import { GenreDto } from './genre.dto';
 import { AnimeAiringDto } from './anime-airing.dto';
 import { AnimeTypeDto } from './anime-type.dto';
+import { StudioDto } from './studio.dto';
 
 /** DTO of anime for preview. */
-export interface AnimeDto {
+export interface AnimeDetailsDto {
 
 	/** Identifier. */
 	readonly id: number;
@@ -36,4 +38,25 @@ export interface AnimeDto {
 
 	/** Amine rating specified by the user. */
 	readonly user_score: number;
+
+	/** Age rating. */
+	readonly rating: string;
+
+	/** Source. */
+	readonly source: string;
+
+	/** Season. */
+	readonly season: string;
+
+	/** Description. */
+	readonly synopsis: string;
+
+	/** Airing status. */
+	readonly airing: boolean;
+
+	/** Studios. */
+	readonly studios_data: readonly StudioDto[];
+
+	/** Genres. */
+	readonly genres_data: readonly GenreDto[];
 }

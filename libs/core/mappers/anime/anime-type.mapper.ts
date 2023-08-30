@@ -1,4 +1,4 @@
-import { AnimeTypeDto } from '../../dtos/anime/anime.dto';
+import { AnimeTypeDto } from '../../dtos/anime/anime-type.dto';
 import { AnimeType } from '../../models/anime/anime';
 
 export namespace AnimeTypeMapper {

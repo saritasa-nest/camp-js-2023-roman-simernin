@@ -15,6 +15,16 @@ export class ApiUriBuilder {
 		return this.buildAbsoluteUri(path);
 	}
 
+	/**
+	 * Build uri for getting anime by id endpoint.
+	 * @param id - Anime id.
+	 * */
+	public buildGetAnimeByIdUri(id: number): string {
+		const path = `anime/anime/${id}/`;
+
+		return this.buildAbsoluteUri(path);
+	}
+
 	/** Get base uri for authentication endpoints. */
 	public getAuthBaseUri(): string {
 		return 'auth';
