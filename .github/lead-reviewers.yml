@@ -2,5 +2,4 @@ reviewers:
   # The default lead reviewers.
   # Reviews may only be requested from collaborators.
   defaults:
-    - dbitkovski
     - pavelzadorin-saritasa
