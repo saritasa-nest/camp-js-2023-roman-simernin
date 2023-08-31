@@ -15,7 +15,6 @@ import { RegistrationComponent } from './registration/registration.component';
 @NgModule({
 	imports: [
 		MatInputModule,
-		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
 		CommonModule,
