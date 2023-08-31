@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
@@ -12,6 +12,7 @@ import { first, of, tap } from 'rxjs';
 	selector: 'registration',
 	templateUrl: './registration.component.html',
 	styleUrls: ['./registration.component.css'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent {
 
