@@ -16,7 +16,7 @@ import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
 /** Anime table component. */
 @Component({
-	selector: 'anime-dashboard',
+	selector: 'camp-anime-dashboard',
 	templateUrl: './anime-dashboard.component.html',
 	styleUrls: ['./anime-dashboard.component.css'],
 	providers: [AnimeParametersService],
@@ -44,7 +44,7 @@ export class AnimeDashboardComponent implements OnInit {
 	}>;
 
 	/** Anime types. */
-	protected readonly animeTypes: readonly AnimeType[] = EnumUtils.toArray(AnimeType);
+	protected readonly animeTypes = EnumUtils.toArray(AnimeType);
 
 	/** Observable for anime previews. */
 	protected readonly paginatedAnime$: Observable<Pagination<Anime>>;
@@ -121,7 +121,7 @@ export class AnimeDashboardComponent implements OnInit {
 	 * @param index Index.
 	 * @param type Anime type.
 	 */
-	protected trackAnimeType(index: number, type: string): string {
+	protected trackAnimeType(index: number, type: AnimeType): AnimeType {
 		return type;
 	}
 

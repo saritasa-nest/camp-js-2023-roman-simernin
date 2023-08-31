@@ -77,8 +77,8 @@
           [pageSize]="paginatorSettings.pageSize"
           [pageSizeOptions]="animeParametersService.availablePageSizes"
           (page)="handlePaginationParametersChange($event)"
-          [pageIndex]="paginatorSettings.pageNumber - 1">
-        </mat-paginator>
+          [pageIndex]="paginatorSettings.pageNumber - 1"
+        />
       </ng-container>
     </div>
   </ng-container>
