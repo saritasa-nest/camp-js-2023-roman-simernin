@@ -1,56 +1,86 @@
 <div>
-  <h1 class="anime-dashboard-title">Anime dashboard</h1>
-  <main class="anime-table-container">
-    <table mat-table *ngIf="animePreviews$ | async as animePreviews" [dataSource]="animePreviews">
+  <form [formGroup]="animeFiltersFormGroup" class="anime-filters">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="search">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Anime type</mat-label>
+      <mat-select formControlName="animeTypes" multiple>
+        <mat-option *ngFor="let animeType of animeTypes; trackBy: trackAnimeType" [value]="animeType">{{animeType}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <ng-container *ngIf="paginatedAnime$ | async as paginatedAnime">
+    <main class="anime-table-container">
+      <table
+        class="anime-table" 
+        mat-table
+        matSort  
+        [dataSource]="paginatedAnime.results" 
+        (matSortChange)="handleSortingChange($event)"
+        [matSortActive]="initialSortingParameters.field ?? '' "
+        [matSortDirection]="initialSortingParameters.direction ?? '' ">
 
-      <caption class="anime-table-caption">Anime table</caption>
+        <caption class="anime-table__caption">Anime table</caption>
+  
+        <ng-container matColumnDef="imageUrl">
+          <th mat-header-cell *matHeaderCellDef class="anime-table__header">Image</th>
+          <td mat-cell *matCellDef="let animePreview">
+            <img alt="" [src]="animePreview.imageUrl" class="anime-table__cell-image"/>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="englishTitle">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="englishTitle" class="anime-table__header">Title (English)</th>
+          <td mat-cell *matCellDef="let animePreview" class="anime-table__cell">
+            {{ (animePreview.englishTitle | titlecase) || 'No' }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="japaneseTitle">
+          <th mat-header-cell *matHeaderCellDef class="anime-table__header">Title (Japanese)</th>
+          <td mat-cell *matCellDef="let animePreview" class="anime-table__cell">
+            {{ (animePreview.japaneseTitle | titlecase) || 'No' }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef class="anime-table__header">Type</th>
+          <td mat-cell *matCellDef="let animePreview" class="anime-table__cell">
+            {{ animePreview.type | titlecase }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="airedStartDate">
+          <th mat-header-cell *matHeaderCellDef class="anime-table__header" mat-sort-header="airedStartDate">Aired Start date</th>
+          <td mat-cell *matCellDef="let animePreview" class="anime-table__cell">
+            {{ animePreview.airedStartDate | date }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="anime-table__header" mat-sort-header="status">Status</th>
+          <td mat-cell *matCellDef="let animePreview" class="anime-table__cell">
+            {{ animePreview.status | titlecase }}
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="imageUrl" class="anime-table-column">
-        <th mat-header-cell *matHeaderCellDef class="anime-table-header">Image</th>
-        <td mat-cell *matCellDef="let animePreview" class="anime-table-cell">
-          <img src="{{ animePreview.imageUrl }}" class="anime-table-cell__image"
-            alt="{{ animePreview.englishTitle }}" />
-        </td>
+        <tr mat-header-row *matHeaderRowDef="displayedAnimeTableColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedAnimeTableColumns;"></tr>
+      </table>
+    </main>
+    <div class="anime-pagination">
+      <ng-container *ngIf="paginatorSettings$ | async as paginatorSettings">
+        <mat-paginator
+          [length]="paginatedAnime.totalCount"
+          [pageSize]="paginatorSettings.pageSize"
+          [pageSizeOptions]="animeParametersService.availablePageSizes"
+          (page)="handlePaginationParametersChange($event)"
+          [pageIndex]="paginatorSettings.pageNumber - 1"
+        />
       </ng-container>
+    </div>
+  </ng-container>
 
-      <ng-container matColumnDef="englishTitle">
-        <th mat-header-cell *matHeaderCellDef>Title (English)</th>
-        <td mat-cell *matCellDef="let animePreview" class="anime-table-cell">
-          {{ (animePreview.englishTitle | titlecase) || 'No' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="japaneseTitle">
-        <th mat-header-cell *matHeaderCellDef class="anime-table-header">Title (Japanese)</th>
-        <td mat-cell *matCellDef="let animePreview" class="anime-table-cell">
-          {{ (animePreview.japaneseTitle | titlecase) || 'No' }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef class="anime-table-header">Type</th>
-        <td mat-cell *matCellDef="let animePreview" class="anime-table-cell">
-          {{ animePreview.type | titlecase }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="airedStartDate">
-        <th mat-header-cell *matHeaderCellDef class="anime-table-header">Aired Start date</th>
-        <td mat-cell *matCellDef="let animePreview" class="anime-table-cell">
-          {{ animePreview.airedStartDate | date }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="anime-table-header">Status</th>
-        <td mat-cell *matCellDef="let animePreview" class="anime-table-cell">
-          {{ animePreview.status | titlecase }}
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedAnimeTableColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedAnimeTableColumns;"></tr>
-
-    </table>
-  </main>
 </div>
