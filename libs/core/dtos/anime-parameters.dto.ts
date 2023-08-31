@@ -1,14 +1,8 @@
+import { PaginationParametersDto } from './pagination.paramters.dto';
+import { SortingParametersDto } from './sorting-parameters.dto';
+
 /** DTO for getting anime. */
-export interface AnimeParametersDto {
-
-	/** Page size. */
-	readonly limit: number;
-
-	/** Offset. Multiples of limit.*/
-	readonly offset: number;
-
-	/** Sorting. */
-	readonly ordering: string;
+export interface AnimeParametersDto extends PaginationParametersDto, SortingParametersDto {
 
 	/** Filter by types. Types are separated by comma. */
 	readonly type__in: string;
