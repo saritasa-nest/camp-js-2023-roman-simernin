@@ -85,8 +85,7 @@ export class AnimeParametersService {
 
 		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPaginationParameters.pageSize;
 
-		const validPageNumber = pageNumber > this.defaultPaginationParameters.pageNumber ?
-			pageNumber : this.defaultPaginationParameters.pageNumber;
+		const validPageNumber = Math.max(pageNumber, this.defaultPaginationParameters.pageNumber);
 
 		return {
 			pageSize: validPageSize,
