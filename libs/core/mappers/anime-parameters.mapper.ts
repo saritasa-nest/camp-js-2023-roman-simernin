@@ -18,7 +18,7 @@ export namespace AnimeParametersMapper {
 			ordering: mapSorting(model) ?? '',
 			type__in: model.animeTypes
 				.map(animeTypeModel => AnimeTypeMapper.toDto(animeTypeModel))
-				.toString(),
+				.join(','),
 			search: model.search ?? '',
 		};
 	}
