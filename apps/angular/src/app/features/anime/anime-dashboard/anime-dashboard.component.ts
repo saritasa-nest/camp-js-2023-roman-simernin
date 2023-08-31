@@ -9,15 +9,20 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
-type FiltersFormGroup = FormGroup<{
-	readonly search: FormControl<string | null>;
-	readonly animeTypes: FormControl<AnimeType[] | null>;
-}>;
+/** Filters form controls. */
+interface FiltersFormControls {
+
+	/** Search control. */
+	readonly search: FormControl<string>;
+
+	/** Anime types control. */
+	readonly animeTypes: FormControl<AnimeType[]>;
+}
 
 /** Anime table component. */
 @Component({
@@ -43,7 +48,7 @@ export class AnimeDashboardComponent implements OnInit {
 	protected readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
 
 	/** Anime filters form group. */
-	protected readonly animeFiltersFormGroup: FiltersFormGroup;
+	protected readonly animeFiltersFormGroup: FormGroup<FiltersFormControls>;
 
 	/** Anime types. */
 	protected readonly animeTypes = EnumUtils.toArray(AnimeType);
@@ -58,14 +63,15 @@ export class AnimeDashboardComponent implements OnInit {
 		protected readonly animeParametersService: AnimeParametersService,
 		private readonly destroyRef: DestroyRef,
 		animeService: AnimeService,
+		formBuilder: NonNullableFormBuilder,
 	) {
 		const initialAnimeParameters = this.animeParametersService.animeParameters;
 
 		this.initialSortingParameters = initialAnimeParameters;
 
-		this.animeFiltersFormGroup = new FormGroup({
-			search: new FormControl(initialAnimeParameters.search, { updateOn: 'blur' }),
-			animeTypes: new FormControl<AnimeType[]>([...initialAnimeParameters.animeTypes]),
+		this.animeFiltersFormGroup = formBuilder.group<FiltersFormControls>({
+			search: formBuilder.control(initialAnimeParameters.search ?? '', { updateOn: 'blur' }),
+			animeTypes: formBuilder.control([...initialAnimeParameters.animeTypes]),
 		});
 
 		this.paginatedAnime$ = this.animeParametersService.animeParameters$.pipe(
