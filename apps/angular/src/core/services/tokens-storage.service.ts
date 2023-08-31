@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TokensModel } from '@js-camp/core/models/tokens.model';
+import { TokensModel } from '@js-camp/core/models/auth/tokens.model';
 
 /** Tokens storage service. */
 @Injectable({

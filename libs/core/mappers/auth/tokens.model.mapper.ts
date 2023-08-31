@@ -1,5 +1,5 @@
-import { TokensDto } from '../dtos/tokens.dto';
-import { TokensModel } from '../models/tokens.model';
+import { TokensDto } from '../../dtos/auth/tokens.dto';
+import { TokensModel } from '../../models/auth/tokens.model';
 
 export namespace TokensModelMapper {
 

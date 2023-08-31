@@ -3,13 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
-import { LoginModel } from '@js-camp/core/models/login.model';
-import { TokensDto } from '@js-camp/core/dtos/tokens.dto';
-import { LoginModelMapper } from '@js-camp/core/mappers/login.model.mapper';
-import { TokensModelMapper } from '@js-camp/core/mappers/tokens.model.mapper';
-import { RegistrationModel } from '@js-camp/core/models/registration.model';
-import { RegistrationModelMapper } from '@js-camp/core/mappers/registration.model.mapper';
-import { RefreshTokensDto } from '@js-camp/core/dtos/refresh-tokens.dto';
+import { LoginModel } from '@js-camp/core/models/auth/login.model';
+import { TokensDto } from '@js-camp/core/dtos/auth/tokens.dto';
+import { LoginModelMapper } from '@js-camp/core/mappers/auth/login.model.mapper';
+import { TokensModelMapper } from '@js-camp/core/mappers/auth/tokens.model.mapper';
+import { RegistrationModel } from '@js-camp/core/models/auth/registration.model';
+import { RegistrationModelMapper } from '@js-camp/core/mappers/auth/registration.model.mapper';
+import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
 
 import { TokensStorageService } from './tokens-storage.service';
 import { ApiUriBuilder } from './api-uri-builder';

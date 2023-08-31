@@ -1,5 +1,5 @@
-import { RegistrationDto } from '../dtos/registration.dto';
-import { RegistrationModel } from '../models/registration.model';
+import { RegistrationDto } from '../../dtos/auth/registration.dto';
+import { RegistrationModel } from '../../models/auth/registration.model';
 
 export namespace RegistrationModelMapper {
 
