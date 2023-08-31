@@ -5,5 +5,5 @@ export interface Pagination<T> {
 	readonly totalCount: number;
 
 	/** Array of items requested. */
-	readonly results: T[];
+	readonly results: readonly T[];
 }

@@ -12,6 +12,7 @@ import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeParametersMapper } from '@js-camp/core/mappers/anime-parameters.mapper';
 
 import { ApiUriBuilder } from './api-uri-builder';
+import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 
 /** Service for actions with anime. */
 @Injectable()
@@ -35,10 +36,7 @@ export class AnimeService {
 			}),
 		})
 			.pipe(
-				map(paginationDto => ({
-					totalCount: paginationDto.count,
-					results: paginationDto.results.map(dto => AnimeMapper.fromDto(dto)),
-				})),
+				map(paginationDto => PaginationMapper.fromDto(paginationDto, AnimeMapper.fromDto)),
 			);
 	}
 }
