@@ -14,6 +14,11 @@ import { AnimeParametersService } from '@js-camp/angular/core/services/anime-par
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
+type FiltersFormGroup = FormGroup<{
+	readonly search: FormControl<string | null>;
+	readonly animeTypes: FormControl<AnimeType[] | null>;
+}>;
+
 /** Anime table component. */
 @Component({
 	selector: 'camp-anime-dashboard',
@@ -38,10 +43,7 @@ export class AnimeDashboardComponent implements OnInit {
 	protected readonly initialSortingParameters: SortingParameters<AnimeSortingField>;
 
 	/** Anime filters form group. */
-	protected readonly animeFiltersFormGroup: FormGroup<{
-		search: FormControl<string | null>;
-		animeTypes: FormControl<AnimeType[] | null>;
-	}>;
+	protected readonly animeFiltersFormGroup: FiltersFormGroup;
 
 	/** Anime types. */
 	protected readonly animeTypes = EnumUtils.toArray(AnimeType);
