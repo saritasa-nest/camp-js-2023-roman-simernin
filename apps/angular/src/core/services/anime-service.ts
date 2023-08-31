@@ -11,8 +11,9 @@ import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeParametersMapper } from '@js-camp/core/mappers/anime-parameters.mapper';
 
-import { ApiUriBuilder } from './api-uri-builder';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
+
+import { ApiUriBuilder } from './api-uri-builder';
 
 /** Service for actions with anime. */
 @Injectable()

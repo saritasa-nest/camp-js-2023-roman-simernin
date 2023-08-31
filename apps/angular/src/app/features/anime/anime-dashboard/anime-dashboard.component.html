@@ -5,11 +5,11 @@
       <input matInput formControlName="search">
     </mat-form-field>
     <mat-form-field>
-			<mat-label>Anime type</mat-label>
-			<mat-select formControlName="animeTypes" multiple>
-				<mat-option *ngFor="let animeType of animeTypes; trackBy: trackAnimeType" [value]="animeType">{{animeType}}</mat-option>
-			</mat-select>
-		</mat-form-field>
+      <mat-label>Anime type</mat-label>
+      <mat-select formControlName="animeTypes" multiple>
+        <mat-option *ngFor="let animeType of animeTypes; trackBy: trackAnimeType" [value]="animeType">{{animeType}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
   <ng-container *ngIf="paginatedAnime$ | async as paginatedAnime">
     <main class="anime-table-container">
