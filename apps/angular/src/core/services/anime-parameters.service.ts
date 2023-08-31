@@ -16,8 +16,7 @@ export class AnimeParametersService {
 	/** Available page sizes for anime table. */
 	public readonly availablePageSizes: readonly number[] = [5, 10, 25];
 
-	/** Default pagination parameters. */
-	public readonly defaultPaginationParameters: PaginationParameters = {
+	private readonly defaultPaginationParameters: PaginationParameters = {
 		pageNumber: 1,
 		pageSize: Math.min(...this.availablePageSizes),
 	};
@@ -44,10 +43,7 @@ export class AnimeParametersService {
 	 * @param pagination - Pagination parameters.
 	 */
 	public setPagination(pagination: PaginationParameters): void {
-		this.changeParams({
-			...this.animeParameters,
-			...pagination,
-		});
+		this.changeParams(pagination);
 	}
 
 	/**
@@ -55,9 +51,7 @@ export class AnimeParametersService {
 	 * @param sorting - Sorting parameters.
 	 */
 	public setSorting(sorting: SortingParameters<AnimeSortingField>): void {
-		this.changeParams({
-			...sorting,
-		});
+		this.changeParams(sorting);
 	}
 
 	/**
