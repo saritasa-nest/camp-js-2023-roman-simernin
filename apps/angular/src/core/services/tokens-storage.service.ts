@@ -32,7 +32,9 @@ export class TokensStorageService {
 			return null;
 		}
 
-		return JSON.parse(tokensAsJson) as TokensModel;
+		this.tokens = JSON.parse(tokensAsJson) as TokensModel;
+
+		return this.tokens;
 	}
 
 	/** Delete tokens from storage. */
