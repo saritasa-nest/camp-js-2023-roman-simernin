@@ -10,5 +10,5 @@ export interface AnimeParameters extends PaginationParameters, SortingParameters
 	readonly animeTypes: readonly AnimeType[];
 
 	/** Search by title (English or Japanese). */
-	readonly search: string | null;
+	readonly search: string;
 }

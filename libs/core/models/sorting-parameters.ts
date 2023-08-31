@@ -2,10 +2,10 @@
 export interface SortingParameters<T> {
 
 	/** Field to sort by. */
-	readonly field: T | null;
+	readonly field: T;
 
 	/** Sorting direction. */
-	readonly direction: SortingDirection | null;
+	readonly direction: SortingDirection;
 }
 
 /** Sorting direction. */

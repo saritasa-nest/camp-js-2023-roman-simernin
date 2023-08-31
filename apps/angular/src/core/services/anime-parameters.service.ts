@@ -8,7 +8,7 @@ import { SortingDirection, SortingParameters } from '@js-camp/core/models/sortin
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 import { Observable, map } from 'rxjs';
 
-type AnimePageQueryParams = Partial<Record<keyof AnimeParameters, string | null>>;
+type AnimePageQueryParams = Partial<Record<keyof AnimeParameters, string>>;
 
 /** Service for changing anime parameters. */
 @Injectable()
@@ -55,7 +55,11 @@ export class AnimeParametersService {
 	 * @param sorting - Sorting parameters.
 	 */
 	public setSorting(sorting: SortingParameters<AnimeSortingField>): void {
-		this.changeParams(sorting);
+		const hasSorting = sorting.field !== AnimeSortingField.None;
+		this.changeParams({
+			field: hasSorting ? sorting.field : undefined,
+			direction: hasSorting ? sorting.direction : undefined,
+		});
 	}
 
 	/**
@@ -63,11 +67,11 @@ export class AnimeParametersService {
 	 * @param animeTypes - New anime types for filter.
 	 * @param search - Search value.
 	 */
-	public setFilters(search: string | null, animeTypes: readonly AnimeType[]): void {
+	public setFilters(search: string, animeTypes: readonly AnimeType[]): void {
 		this.changeParams({
 			pageNumber: this.defaultPaginationParameters.pageNumber.toString(),
-			search: search !== '' ? search : null,
-			animeTypes: animeTypes.length !== 0 ? animeTypes.join(',') : null,
+			search: search !== '' ? search : undefined,
+			animeTypes: animeTypes.length !== 0 ? animeTypes.join(',') : undefined,
 		});
 	}
 
@@ -81,14 +85,16 @@ export class AnimeParametersService {
 
 		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPaginationParameters.pageSize;
 
-		const validPageNumber = Math.max(pageNumber, this.defaultPaginationParameters.pageNumber);
+		const validPageNumber = isNaN(pageNumber) ?
+			this.defaultPaginationParameters.pageNumber :
+			Math.max(pageNumber, this.defaultPaginationParameters.pageNumber);
 
 		return {
 			pageSize: validPageSize,
 			pageNumber: validPageNumber,
-			field: EnumUtils.fromString(queryParams.field ?? '', AnimeSortingField),
-			direction: EnumUtils.fromString(queryParams.direction ?? '', SortingDirection),
-			search: queryParams.search ?? null,
+			field: EnumUtils.fromString(queryParams.field ?? '', AnimeSortingField) ?? AnimeSortingField.None,
+			direction: EnumUtils.fromString(queryParams.direction ?? '', SortingDirection) ?? SortingDirection.Ascending,
+			search: queryParams.search ?? '',
 			animeTypes: queryParams.animeTypes
 				?.split(',')
 				?.map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType))

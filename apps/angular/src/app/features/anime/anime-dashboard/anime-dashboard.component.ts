@@ -107,10 +107,8 @@ export class AnimeDashboardComponent implements OnInit {
 		let field: AnimeSortingField | null = null;
 		let direction: SortingDirection | null = null;
 
-		if (sortingEvent.direction !== '') {
-			field = sortingEvent.active as AnimeSortingField;
-			direction = sortingEvent.direction === 'asc' ? SortingDirection.Ascending : SortingDirection.Descending;
-		}
+		field = sortingEvent.active as AnimeSortingField;
+		direction = sortingEvent.direction === 'asc' ? SortingDirection.Ascending : SortingDirection.Descending;
 
 		this.animeParametersService.setSorting({ field, direction });
 	}
