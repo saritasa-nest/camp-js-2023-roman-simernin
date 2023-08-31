@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { AuthService } from '@js-camp/angular/core/services/auth.service';
-
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
