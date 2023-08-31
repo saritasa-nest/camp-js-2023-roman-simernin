@@ -108,6 +108,15 @@ export class AnimeDashboardComponent implements OnInit {
 	}
 
 	/**
+	 * Track anime.
+	 * @param index Index.
+	 * @param anime Anime.
+	 */
+	protected trackAnime(index: number, anime: Anime): number {
+		return anime.id;
+	}
+
+	/**
 	 * Track anime type.
 	 * @param index Index.
 	 * @param type Anime type.
