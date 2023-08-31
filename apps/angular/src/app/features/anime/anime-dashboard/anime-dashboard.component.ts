@@ -83,7 +83,7 @@ export class AnimeDashboardComponent implements OnInit {
 	 * @param paginationEvent - Pagination event.
 	 */
 	protected handlePaginationParametersChange(paginationEvent: PageEvent): void {
-		const pageNumber: number = paginationEvent.pageIndex + 1;
+		const pageNumber = paginationEvent.pageIndex + 1;
 
 		this.animeParametersService.setPagination({
 			pageSize: paginationEvent.pageSize,

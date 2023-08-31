@@ -23,7 +23,7 @@ export interface Anime {
 	readonly status: string;
 }
 
-/** Anime type dto. */
+/** Anime type. */
 export enum AnimeType {
 	TV = 'TV',
 	OVA = 'OVA',
