@@ -1,11 +1,30 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { first, of, tap } from 'rxjs';
+
+/** Registration form controls. */
+interface RegistrationFormControls {
+
+	/** First name form control. */
+	firstName: FormControl<string>;
+
+	/** Last name form control. */
+	lastName: FormControl<string>;
+
+	/** Email form control. */
+	email: FormControl<string>;
+
+	/** Password form control. */
+	password: FormControl<string>;
+
+	/** Retype password control. */
+	retypePassword: FormControl<string>;
+}
 
 /** Component for registration. */
 @Component({
@@ -20,19 +39,13 @@ export class RegistrationComponent {
 
 	private readonly router = inject(Router);
 
-	private readonly formBuilder = inject(FormBuilder);
+	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	/** Login form group. */
-	protected readonly formGroup: FormGroup<{
-		firstName: FormControl<string | null>;
-		lastName: FormControl<string | null>;
-		email: FormControl<string | null>;
-		password: FormControl<string | null>;
-		retypePassword: FormControl<string | null>;
-	}>;
+	protected readonly formGroup: FormGroup<RegistrationFormControls>;
 
 	public constructor() {
-		const passwordControl = new FormControl('', [Validators.required, ApplicationValidators.passwordMinLength()]);
+		const passwordControl = this.formBuilder.control('', [Validators.required, ApplicationValidators.passwordMinLength()]);
 
 		this.formGroup = this.formBuilder.group({
 			firstName: ['', [Validators.required]],
@@ -52,11 +65,11 @@ export class RegistrationComponent {
 		const formData = this.formGroup.getRawValue();
 
 		this.authService.register({
-			firstName: formData.firstName ?? '',
-			lastName: formData.lastName ?? '',
-			email: formData.email ?? '',
-			password: formData.password ?? '',
-			retypePassword: formData.retypePassword ?? '',
+			firstName: formData.firstName,
+			lastName: formData.lastName,
+			email: formData.email,
+			password: formData.password,
+			retypePassword: formData.retypePassword,
 		}).pipe(
 			first(),
 			tap(_ => this.router.navigate([''])),

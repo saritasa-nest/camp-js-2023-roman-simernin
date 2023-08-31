@@ -1,11 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { first, of, tap } from 'rxjs';
+
+/** Login form controls. */
+interface LoginFormControls {
+
+	/** Email control. */
+	readonly email: FormControl<string>;
+
+	/** Password control. */
+	readonly password: FormControl<string>;
+}
 
 /** Login component. */
 @Component({
@@ -20,13 +30,10 @@ export class LoginComponent {
 
 	private readonly router = inject(Router);
 
-	private readonly formBuilder = inject(FormBuilder);
+	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	/** Login form group. */
-	protected readonly formGroup: FormGroup<{
-		email: FormControl<string | null>;
-		password: FormControl<string | null>;
-	}>;
+	protected readonly formGroup: FormGroup<LoginFormControls>;
 
 	public constructor() {
 		this.formGroup = this.formBuilder.group({
@@ -44,8 +51,8 @@ export class LoginComponent {
 		const formData = this.formGroup.getRawValue();
 
 		this.authService.login({
-			email: formData.email ?? '',
-			password: formData.password ?? '',
+			email: formData.email,
+			password: formData.password,
 		}).pipe(
 			first(),
 			tap(_ => this.router.navigate([''])),
