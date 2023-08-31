@@ -22,11 +22,17 @@ export namespace EnumUtils {
 	export function fromString<TKey extends string, TValue extends string>(
 		enumValueAsString: string,
 		enumeration: { [key in TKey]: TValue },
-	): TValue {
-		const enumValue = enumeration[enumValueAsString as keyof typeof enumeration];
+	): TValue | null {
+		if (enumValueAsString === '') {
+			return null;
+		}
+
+		const enumValue = Object.values(enumeration).find((value): value is TValue => value === enumValueAsString);
 
 		if (enumValue === undefined) {
-			throw new Error(`There is no this enum value ${enumValueAsString}`);
+			console.warn(`There is no this enum value ${enumValueAsString}`);
+
+			return null;
 		}
 
 		return enumValue;

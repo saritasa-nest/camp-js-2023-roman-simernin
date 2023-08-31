@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeType } from '@js-camp/core/models/anime';
 import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
 import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
-import { nameofFactory } from '@js-camp/core/utils/nameof';
 import { Observable, map } from 'rxjs';
+
+type AnimePageQueryParams = Partial<Record<keyof AnimeParameters, string | null>>;
 
 /** Service for changing anime parameters. */
 @Injectable()
@@ -28,14 +29,14 @@ export class AnimeParametersService {
 		private readonly router: Router,
 		private readonly activatedRoute: ActivatedRoute,
 	) {
-		this.animeParameters$ = this.activatedRoute.queryParamMap.pipe(
+		this.animeParameters$ = this.activatedRoute.queryParams.pipe(
 			map(params => this.parseAnimeParameters(params)),
 		);
 	}
 
 	/** Anime parameters. */
 	public get animeParameters(): AnimeParameters {
-		return this.parseAnimeParameters(this.activatedRoute.snapshot.queryParamMap);
+		return this.parseAnimeParameters(this.activatedRoute.snapshot.queryParams);
 	}
 
 	/**
@@ -43,7 +44,10 @@ export class AnimeParametersService {
 	 * @param pagination - Pagination parameters.
 	 */
 	public setPagination(pagination: PaginationParameters): void {
-		this.changeParams(pagination);
+		this.changeParams({
+			pageSize: pagination.pageSize.toString(),
+			pageNumber: pagination.pageNumber.toString(),
+		});
 	}
 
 	/**
@@ -61,21 +65,19 @@ export class AnimeParametersService {
 	 */
 	public setFilters(search: string | null, animeTypes: readonly AnimeType[]): void {
 		this.changeParams({
-			pageNumber: this.defaultPaginationParameters.pageNumber,
+			pageNumber: this.defaultPaginationParameters.pageNumber.toString(),
 			search: search !== '' ? search : null,
-			animeTypes,
+			animeTypes: animeTypes.length !== 0 ? animeTypes.join(',') : null,
 		});
 	}
 
-	private changeParams(parameters: Partial<AnimeParameters>): void {
+	private changeParams(parameters: AnimePageQueryParams): void {
 		this.router.navigate([], { queryParams: parameters, queryParamsHandling: 'merge' });
 	}
 
-	private parseAnimeParameters(paramMap: ParamMap): AnimeParameters {
-		const nameof = nameofFactory<AnimeParameters>();
-
-		const pageSize = Number.parseInt(paramMap.get(nameof('pageSize')) ?? '', 10);
-		const pageNumber = Number.parseInt(paramMap.get(nameof('pageNumber')) ?? '', 10);
+	private parseAnimeParameters(queryParams: AnimePageQueryParams): AnimeParameters {
+		const pageSize = Number.parseInt(queryParams.pageSize ?? '', 10);
+		const pageNumber = Number.parseInt(queryParams.pageNumber ?? '', 10);
 
 		const validPageSize = this.availablePageSizes.includes(pageSize) ? pageSize : this.defaultPaginationParameters.pageSize;
 
@@ -84,12 +86,13 @@ export class AnimeParametersService {
 		return {
 			pageSize: validPageSize,
 			pageNumber: validPageNumber,
-			field: paramMap.get(nameof('field')) as AnimeSortingField,
-			direction: paramMap.get(nameof('direction')) as SortingDirection,
-			animeTypes: paramMap
-				.getAll(nameof('animeTypes'))
-				.map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType)),
-			search: paramMap.get(nameof('search')),
+			field: EnumUtils.fromString(queryParams.field ?? '', AnimeSortingField),
+			direction: EnumUtils.fromString(queryParams.direction ?? '', SortingDirection),
+			search: queryParams.search ?? null,
+			animeTypes: queryParams.animeTypes
+				?.split(',')
+				?.map(animeTypeAsString => EnumUtils.fromString(animeTypeAsString, AnimeType))
+				?.filter((animeType): animeType is AnimeType => animeType !== null) ?? [],
 		};
 	}
 }
