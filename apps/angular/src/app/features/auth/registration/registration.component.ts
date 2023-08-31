@@ -73,12 +73,12 @@ export class RegistrationComponent {
 		}).pipe(
 			first(),
 			tap(_ => this.router.navigate([''])),
-			catchApiError(apiError => of(this.catchLoginError(apiError))),
+			catchApiError(apiError => of(this.catchRegistrationError(apiError))),
 		)
 			.subscribe();
 	}
 
-	private catchLoginError(apiError: ApiError): void {
+	private catchRegistrationError(apiError: ApiError): void {
 		this.formGroup.setErrors({
 			server: apiError.errorMessages.join(' '),
 		});
