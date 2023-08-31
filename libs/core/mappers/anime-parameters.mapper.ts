@@ -41,7 +41,9 @@ export namespace AnimeParametersMapper {
 		const sortingField = sortingFieldMap.get(sortingParameters.field);
 
 		if (sortingField === undefined) {
-			throw new Error('There is no sorting for this field.');
+			console.warn('There is no sorting for this field.');
+
+			return null;
 		}
 
 		return sortingParameters.direction === SortingDirection.Ascending ? sortingField : `-${sortingField}`;
