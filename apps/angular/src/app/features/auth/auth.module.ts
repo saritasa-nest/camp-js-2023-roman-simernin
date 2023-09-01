@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AuthRoutingModule } from './auth-routing.module';
 
 /** Anime table module. */
 @NgModule({
@@ -17,6 +18,7 @@ import { RegistrationComponent } from './registration/registration.component';
 		MatButtonModule,
 		CommonModule,
 		RouterModule,
+		AuthRoutingModule,
 	],
 	declarations: [LoginComponent, RegistrationComponent],
 })

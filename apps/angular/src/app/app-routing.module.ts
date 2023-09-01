@@ -5,8 +5,6 @@ import { shouldBeAuthenticatedGuard, shouldBeNotAuthenticatedGuard } from '../co
 
 import { AnimeDashboardComponent } from './features/anime/anime-dashboard/anime-dashboard.component';
 import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
-import { LoginComponent } from './features/auth/login/login.component';
-import { RegistrationComponent } from './features/auth/registration/registration.component';
 
 const routes: Routes = [
 	{
@@ -20,14 +18,9 @@ const routes: Routes = [
 		canActivate: [shouldBeAuthenticatedGuard],
 	},
 	{
-		path: 'login',
-		component: LoginComponent,
-		canActivate: [shouldBeNotAuthenticatedGuard],
-	},
-	{
-		path: 'registration',
-		component: RegistrationComponent,
-		canActivate: [shouldBeNotAuthenticatedGuard],
+		path: 'auth',
+		canActivateChild: [shouldBeNotAuthenticatedGuard],
+		loadChildren: () => import('./features/auth/auth.module').then(module => module.AuthModule),
 	},
 	{
 		path: '**',
