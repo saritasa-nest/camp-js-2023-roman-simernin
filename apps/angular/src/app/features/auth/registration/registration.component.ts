@@ -6,6 +6,7 @@ import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
+import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 import { first, of, tap } from 'rxjs';
 
 /** Registration form controls. */
@@ -48,7 +49,10 @@ export class RegistrationComponent {
 	protected readonly formGroup: FormGroup<RegistrationFormControls>;
 
 	public constructor() {
-		const passwordControl = this.formBuilder.control('', [Validators.required, ApplicationValidators.passwordMinLength()]);
+		const passwordControl = this.formBuilder.control('', [
+			Validators.required,
+			Validators.minLength(AuthenticationConstants.minPasswordLength),
+		]);
 
 		this.formGroup = this.formBuilder.group({
 			firstName: ['', [Validators.required]],

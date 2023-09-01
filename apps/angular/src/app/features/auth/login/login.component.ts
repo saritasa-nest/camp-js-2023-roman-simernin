@@ -6,6 +6,7 @@ import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
+import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 import { first, of, tap } from 'rxjs';
 
 /** Login form controls. */
@@ -41,7 +42,7 @@ export class LoginComponent {
 	public constructor() {
 		this.formGroup = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.email]],
-			password: ['', [Validators.required, ApplicationValidators.passwordMinLength()]],
+			password: ['', [Validators.required, Validators.minLength(AuthenticationConstants.minPasswordLength)]],
 		});
 	}
 

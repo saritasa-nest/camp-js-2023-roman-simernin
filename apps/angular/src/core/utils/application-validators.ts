@@ -18,18 +18,4 @@ export namespace ApplicationValidators {
 			};
 		};
 	}
-
-	/** Validator for password min length. */
-	export function passwordMinLength(): ValidatorFn {
-		return (passswordControl: AbstractControl): ValidationErrors | null => {
-			const minLength = 8;
-			const validationErrors = Validators.minLength(minLength)(passswordControl);
-
-			return validationErrors === null ? null : {
-				...validationErrors,
-				minlength: `Password cannot be less than ${minLength} characters.`,
-			};
-		};
-
-	}
 }
