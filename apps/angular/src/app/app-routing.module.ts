@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { shouldBeAuthenticatedGuard, shouldBeNotAuthenticatedGuard } from '../core/guards/auth.guard';
 
-import { AnimeDashboardComponent } from './features/anime/anime-dashboard/anime-dashboard.component';
 import { PageNotFoundComponent } from './pageNotFound/page-not-found.component';
 
 const routes: Routes = [
@@ -14,8 +13,8 @@ const routes: Routes = [
 	},
 	{
 		path: 'anime',
-		component: AnimeDashboardComponent,
-		canActivate: [shouldBeAuthenticatedGuard],
+		canActivateChild: [shouldBeAuthenticatedGuard],
+		loadChildren: () => import('./features/anime/anime.module').then(module => module.AnimeModule),
 	},
 	{
 		path: 'auth',

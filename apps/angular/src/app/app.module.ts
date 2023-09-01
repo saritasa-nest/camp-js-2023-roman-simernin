@@ -2,22 +2,28 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { httpInterceptorProvider } from '../core/interceptors/http-interceptor-provider';
 
-import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './../shared/shared.module';
+
 import { AppComponent } from './app.component';
-import { AnimeModule } from './features/anime/anime.module';
 
 /** App module. */
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
-		BrowserModule,
+		CommonModule,
 		SharedModule,
 		AppRoutingModule,
-		AnimeModule,
 		MatButtonModule,
+		HttpClientModule,
+		BrowserModule,
+		BrowserAnimationsModule,
 	],
 	providers: [httpInterceptorProvider],
 	bootstrap: [AppComponent],
