@@ -19,6 +19,5 @@ import { RegistrationComponent } from './registration/registration.component';
 		RouterModule,
 	],
 	declarations: [LoginComponent, RegistrationComponent],
-	exports: [LoginComponent, RegistrationComponent],
 })
 export class AuthModule {}

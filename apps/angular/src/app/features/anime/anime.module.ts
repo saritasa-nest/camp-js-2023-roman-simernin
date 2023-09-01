@@ -29,7 +29,6 @@ import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.compo
 		MatInputModule,
 	],
 	declarations: [AnimeDashboardComponent],
-	exports: [AnimeDashboardComponent],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })
 export class AnimeModule { }
