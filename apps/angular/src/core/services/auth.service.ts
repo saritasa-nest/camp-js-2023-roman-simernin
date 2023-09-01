@@ -86,7 +86,7 @@ export class AuthService {
 
 		this.isAuthenticatedSubject$.next(this.isAuthenticated());
 
-		this.router.navigate(['login']);
+		this.router.navigate(['auth']);
 	}
 
 	/** Provides current user is authenticated. */

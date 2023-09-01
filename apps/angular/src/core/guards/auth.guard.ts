@@ -11,7 +11,7 @@ export function shouldBeAuthenticatedGuard(): CanActivateFn {
 	const isAuthenticated = authService.isAuthenticated();
 
 	if (!isAuthenticated) {
-		router.navigate(['login']);
+		router.navigate(['auth']);
 	}
 
 	return () => isAuthenticated;
