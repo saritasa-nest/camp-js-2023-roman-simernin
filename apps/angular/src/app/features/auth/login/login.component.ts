@@ -3,11 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
-import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { first, of, tap } from 'rxjs';
+import { of, tap } from 'rxjs';
 
 /** Login form controls. */
 interface LoginFormControls {
@@ -67,7 +66,7 @@ export class LoginComponent {
 
 	private catchLoginError(apiError: ApiError): void {
 		this.formGroup.setErrors({
-			server: apiError.errorMessages.join(' '),
+			login: apiError.errorMessages.join(' '),
 		});
 	}
 }

@@ -7,7 +7,7 @@ import { ApplicationValidators } from '@js-camp/angular/core/utils/application-v
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { first, of, tap } from 'rxjs';
+import { of, tap } from 'rxjs';
 
 /** Registration form controls. */
 interface RegistrationFormControls {
@@ -87,7 +87,7 @@ export class RegistrationComponent {
 
 	private catchRegistrationError(apiError: ApiError): void {
 		this.formGroup.setErrors({
-			server: apiError.errorMessages.join(' '),
+			registration: apiError.errorMessages.join(' '),
 		});
 	}
 }

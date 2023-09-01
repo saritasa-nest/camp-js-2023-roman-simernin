@@ -24,7 +24,7 @@
             <mat-error class="registration__form-error" *ngIf="formGroup.controls.retypePassword.hasError('retype')">{{formGroup.controls.retypePassword.getError('retype')}}</mat-error>      
         </mat-form-field>
         <button type="submit" mat-button>Sign up</button>
-        <mat-error class="registration__form-error" *ngIf="formGroup.hasError('server')">{{formGroup.getError('server')}}</mat-error>
+        <mat-error class="registration__form-error" *ngIf="formGroup.hasError('registration')">{{formGroup.getError('registration')}}</mat-error>
         <a class="registration__login-link" routerLink="/login">Sign in</a>
     </form>
 </div>
