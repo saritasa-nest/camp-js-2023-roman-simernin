@@ -33,6 +33,6 @@ export function catchApiError<TInput, TOutput>(
  * @param response - Response.
  */
 function isApiErrorReponse(response: HttpErrorResponse): boolean {
-	return response.error.errors instanceof Array &&
+	return Array.isArray(response.error.errors) &&
 		typeof (response.error.type) === 'string';
 }
