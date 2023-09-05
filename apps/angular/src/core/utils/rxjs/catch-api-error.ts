@@ -13,15 +13,17 @@ export function catchApiError<TInput, TOutput>(
 	return catchError((response: unknown, caugth$) => {
 		const throwApiError$ = throwError(() => response);
 
-		if (response instanceof HttpErrorResponse && isApiErrorReponse(response)) {
-			const apiErrorDto = response.error as ApiErrorDto;
+		if (response instanceof HttpErrorResponse) {
+			const responseError = response.error;
 
-			const apiError: ApiError = {
-				statusCode: response.status,
-				errorMessages: apiErrorDto.errors.map(error => error.detail),
-			};
+			if (isApiError(responseError)) {
+				const apiError: ApiError = {
+					statusCode: response.status,
+					errorMessages: responseError.errors.map(error => error.detail),
+				};
 
-			return errorHandler(apiError, throwApiError$, caugth$);
+				return errorHandler(apiError, throwApiError$, caugth$);
+			}
 		}
 
 		return throwApiError$;
@@ -30,9 +32,10 @@ export function catchApiError<TInput, TOutput>(
 
 /**
  * Check this response has api error.
- * @param response - Response.
+ * @param error - Possible api error.
  */
-function isApiErrorReponse(response: HttpErrorResponse): boolean {
-	return Array.isArray(response.error.errors) &&
-		typeof (response.error.type) === 'string';
+function isApiError(error: unknown): error is ApiErrorDto {
+	const apiError = error as ApiErrorDto;
+
+	return apiError.type !== undefined && apiError.errors !== undefined;
 }
