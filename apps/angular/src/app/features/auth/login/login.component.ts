@@ -57,7 +57,7 @@ export class LoginComponent {
 			email: formData.email,
 			password: formData.password,
 		}).pipe(
-			tap(_ => this.router.navigate([''])),
+			tap(() => this.router.navigate([''])),
 			catchApiError(apiError => of(this.catchLoginError(apiError))),
 			takeUntilDestroyed(this.destroyRef),
 		)

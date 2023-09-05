@@ -3,12 +3,12 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
-import { LoginModel } from '@js-camp/core/models/auth/login.model';
+import { Login } from '@js-camp/core/models/auth/login';
 import { TokensDto } from '@js-camp/core/dtos/auth/tokens.dto';
-import { LoginModelMapper } from '@js-camp/core/mappers/auth/login.model.mapper';
-import { TokensModelMapper } from '@js-camp/core/mappers/auth/tokens.model.mapper';
-import { RegistrationModel } from '@js-camp/core/models/auth/registration.model';
-import { RegistrationModelMapper } from '@js-camp/core/mappers/auth/registration.model.mapper';
+import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
+import { TokensMapper } from '@js-camp/core/mappers/auth/tokens.mapper';
+import { Registration } from '@js-camp/core/models/auth/registration';
+import { RegistrationMapper } from '@js-camp/core/mappers/auth/registration.mapper';
 import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
 
 import { TokensStorageService } from './tokens-storage.service';
@@ -42,10 +42,10 @@ export class AuthService {
 	 * Login.
 	 * @param loginModel - Login model.
 	 **/
-	public login(loginModel: LoginModel): Observable<void> {
+	public login(loginModel: Login): Observable<void> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
-		return this.httpClient.post<TokensDto>(uri, LoginModelMapper.ToDto(loginModel)).pipe(
+		return this.httpClient.post<TokensDto>(uri, LoginMapper.toDto(loginModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 		);
 	}
@@ -54,10 +54,10 @@ export class AuthService {
 	 * Register new user.
 	 * @param registrationModel - Registration model.
 	 **/
-	public register(registrationModel: RegistrationModel): Observable<void> {
+	public register(registrationModel: Registration): Observable<void> {
 		const uri = this.apiUriBuilder.buildRegistrationUri();
 
-		return this.httpClient.post<TokensDto>(uri, RegistrationModelMapper.ToDto(registrationModel)).pipe(
+		return this.httpClient.post<TokensDto>(uri, RegistrationMapper.toDto(registrationModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 		);
 	}
@@ -95,7 +95,7 @@ export class AuthService {
 	}
 
 	private authenticate(tokensDto: TokensDto): void {
-		const tokens = TokensModelMapper.fromDto(tokensDto);
+		const tokens = TokensMapper.fromDto(tokensDto);
 
 		this.tokenStorageService.save(tokens);
 

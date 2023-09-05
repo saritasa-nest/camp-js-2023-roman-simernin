@@ -1,5 +1,5 @@
 /** Model for login. */
-export interface LoginModel {
+export interface Login {
 
 	/** Email. */
 	readonly email: string;

@@ -1,13 +1,13 @@
 import { TokensDto } from '../../dtos/auth/tokens.dto';
-import { TokensModel } from '../../models/auth/tokens.model';
+import { Tokens } from '../../models/auth/tokens';
 
-export namespace TokensModelMapper {
+export namespace TokensMapper {
 
 	/**
 	 * Maps dto to model.
 	 * @param dto Auth result dto.
 	 */
-	export function fromDto(dto: TokensDto): TokensModel {
+	export function fromDto(dto: TokensDto): Tokens {
 		return {
 			accessToken: dto.access,
 			refreshToken: dto.refresh,

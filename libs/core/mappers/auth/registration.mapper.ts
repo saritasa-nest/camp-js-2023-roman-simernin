@@ -1,13 +1,13 @@
 import { RegistrationDto } from '../../dtos/auth/registration.dto';
-import { RegistrationModel } from '../../models/auth/registration.model';
+import { Registration } from '../../models/auth/registration';
 
-export namespace RegistrationModelMapper {
+export namespace RegistrationMapper {
 
 	/**
 	 * Maps dto to model.
 	 * @param model Registration model.
 	 */
-	export function ToDto(model: RegistrationModel): RegistrationDto {
+	export function toDto(model: Registration): RegistrationDto {
 		return {
 			first_name: model.firstName,
 			last_name: model.lastName,

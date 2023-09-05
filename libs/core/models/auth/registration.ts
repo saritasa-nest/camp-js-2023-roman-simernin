@@ -1,5 +1,5 @@
 /** Model for registration. */
-export interface RegistrationModel {
+export interface Registration {
 
 	/** First name. */
 	readonly firstName: string;

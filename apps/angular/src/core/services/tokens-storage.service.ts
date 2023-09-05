@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TokensModel } from '@js-camp/core/models/auth/tokens.model';
+import { Tokens } from '@js-camp/core/models/auth/tokens';
 
 /** Tokens storage service. */
 @Injectable({
@@ -13,19 +13,19 @@ export class TokensStorageService {
 	 * Save tokens in storage.
 	 * @param tokens Tokens.
 	 */
-	public save(tokens: TokensModel): void {
+	public save(tokens: Tokens): void {
 		localStorage.setItem(this.tokensKey, JSON.stringify(tokens));
 	}
 
 	/** Get data from localStorage. */
-	public get(): TokensModel | null {
+	public get(): Tokens | null {
 		const tokensAsJson = localStorage.getItem(this.tokensKey);
 
 		if (tokensAsJson === null) {
 			return null;
 		}
 
-		return JSON.parse(tokensAsJson) as TokensModel;
+		return JSON.parse(tokensAsJson) as Tokens;
 	}
 
 	/** Delete tokens from storage. */

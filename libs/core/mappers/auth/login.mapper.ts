@@ -1,13 +1,13 @@
 import { LoginDto } from '../../dtos/auth/login.dto';
-import { LoginModel } from '../../models/auth/login.model';
+import { Login } from '../../models/auth/login';
 
-export namespace LoginModelMapper {
+export namespace LoginMapper {
 
 	/**
 	 * Maps dto to model.
 	 * @param model Login model.
 	 */
-	export function ToDto(model: LoginModel): LoginDto {
+	export function toDto(model: Login): LoginDto {
 		return {
 			email: model.email,
 			password: model.password,

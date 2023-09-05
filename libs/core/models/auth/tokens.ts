@@ -1,5 +1,5 @@
 /** Result of authentication. */
-export interface TokensModel {
+export interface Tokens {
 
 	/** Access token. */
 	readonly accessToken: string;
