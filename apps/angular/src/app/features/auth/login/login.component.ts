@@ -6,7 +6,7 @@ import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { of, tap } from 'rxjs';
+import { EMPTY, Observable, tap } from 'rxjs';
 
 /** Login form controls. */
 interface LoginFormControls {
@@ -60,15 +60,17 @@ export class LoginComponent {
 			password: formData.password,
 		}).pipe(
 			tap(() => this.router.navigate([''])),
-			catchApiError(apiError => of(this.catchLoginError(apiError))),
+			catchApiError(apiError => this.catchLoginError(apiError)),
 			takeUntilDestroyed(this.destroyRef),
 		)
 			.subscribe();
 	}
 
-	private catchLoginError(apiError: ApiError): void {
+	private catchLoginError(apiError: ApiError): Observable<void> {
 		this.formGroup.setErrors({
 			login: apiError.errorMessages.join(' '),
 		});
+
+		return EMPTY;
 	}
 }

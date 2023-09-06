@@ -7,7 +7,7 @@ import { ApplicationValidators } from '@js-camp/angular/core/utils/application-v
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { of, tap } from 'rxjs';
+import { EMPTY, Observable, tap } from 'rxjs';
 
 /** Registration form controls. */
 interface RegistrationFormControls {
@@ -81,15 +81,17 @@ export class RegistrationComponent {
 			retypePassword: formData.retypePassword,
 		}).pipe(
 			tap(() => this.router.navigate([''])),
-			catchApiError(apiError => of(this.catchRegistrationError(apiError))),
+			catchApiError(apiError => this.catchRegistrationError(apiError)),
 			takeUntilDestroyed(this.destroyRef),
 		)
 			.subscribe();
 	}
 
-	private catchRegistrationError(apiError: ApiError): void {
+	private catchRegistrationError(apiError: ApiError): Observable<void> {
 		this.formGroup.setErrors({
 			registration: apiError.errorMessages.join(' '),
 		});
+
+		return EMPTY;
 	}
 }
