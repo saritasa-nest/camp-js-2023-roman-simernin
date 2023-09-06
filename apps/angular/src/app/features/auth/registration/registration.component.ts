@@ -13,19 +13,19 @@ import { of, tap } from 'rxjs';
 interface RegistrationFormControls {
 
 	/** First name form control. */
-	firstName: FormControl<string>;
+	readonly firstName: FormControl<string>;
 
 	/** Last name form control. */
-	lastName: FormControl<string>;
+	readonly lastName: FormControl<string>;
 
 	/** Email form control. */
-	email: FormControl<string>;
+	readonly email: FormControl<string>;
 
 	/** Password form control. */
-	password: FormControl<string>;
+	readonly password: FormControl<string>;
 
 	/** Retype password control. */
-	retypePassword: FormControl<string>;
+	readonly retypePassword: FormControl<string>;
 }
 
 /** Component for registration. */
@@ -45,7 +45,7 @@ export class RegistrationComponent {
 
 	private readonly destroyRef = inject(DestroyRef);
 
-	/** Login form group. */
+	/** Registration form group. */
 	protected readonly formGroup: FormGroup<RegistrationFormControls>;
 
 	public constructor() {
