@@ -1,7 +1,9 @@
-import { Observable, OperatorFunction, catchError, throwError } from 'rxjs';
+import { Observable, OperatorFunction, catchError, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiError } from '@js-camp/core/models/api-error';
 import { ApiErrorDto } from '@js-camp/core/dtos/api-error.dto';
+import { AppError } from '@js-camp/core/models/app-error';
+import { AppErrorMapper } from '@js-camp/core/mappers/app-error.mapper';
 
 /**
  * Wrap catchError to catch error in api format.
@@ -28,6 +30,16 @@ export function catchApiError<TInput, TOutput>(
 
 		return throwApiError$;
 	});
+}
+
+/**
+ * Api error handler for application.
+ * @param apiError - Api error.
+ * */
+export function applicationApiErrorHandler(apiError: ApiError): Observable<AppError> {
+	const appError = AppErrorMapper.fromApiError(apiError);
+
+	return of(appError);
 }
 
 /**

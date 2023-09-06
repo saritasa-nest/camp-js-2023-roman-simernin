@@ -6,6 +6,7 @@ import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
+import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 import { EMPTY, Observable, tap } from 'rxjs';
 
@@ -80,18 +81,20 @@ export class RegistrationComponent {
 			password: formData.password,
 			retypePassword: formData.retypePassword,
 		}).pipe(
-			tap(() => this.router.navigate([''])),
-			catchApiError(apiError => this.catchRegistrationError(apiError)),
 			takeUntilDestroyed(this.destroyRef),
 		)
-			.subscribe();
+			.subscribe(result => this.handleRegistrationResult(result));
 	}
 
-	private catchRegistrationError(apiError: ApiError): Observable<void> {
-		this.formGroup.setErrors({
-			registration: apiError.errorMessages.join(' '),
-		});
+	private handleRegistrationResult(result: void | AppError): void {
+		if (result instanceof AppError) {
+			this.formGroup.setErrors({
+				login: result.errorMessages.join(' '),
+			});
 
-		return EMPTY;
+			return;
+		}
+
+		this.router.navigate(['']);
 	}
 }

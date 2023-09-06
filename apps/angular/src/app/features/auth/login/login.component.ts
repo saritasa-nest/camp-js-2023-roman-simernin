@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { ApiError } from '@js-camp/core/models/api-error';
+import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 import { EMPTY, Observable, tap } from 'rxjs';
 
@@ -59,18 +60,20 @@ export class LoginComponent {
 			email: formData.email,
 			password: formData.password,
 		}).pipe(
-			tap(() => this.router.navigate([''])),
-			catchApiError(apiError => this.catchLoginError(apiError)),
 			takeUntilDestroyed(this.destroyRef),
 		)
-			.subscribe();
+			.subscribe(result => this.handleLoginResult(result));
 	}
 
-	private catchLoginError(apiError: ApiError): Observable<void> {
-		this.formGroup.setErrors({
-			login: apiError.errorMessages.join(' '),
-		});
+	private handleLoginResult(result: void | AppError): void {
+		if (result instanceof AppError) {
+			this.formGroup.setErrors({
+				login: result.errorMessages.join(' '),
+			});
 
-		return EMPTY;
+			return;
+		}
+
+		this.router.navigate(['']);
 	}
 }

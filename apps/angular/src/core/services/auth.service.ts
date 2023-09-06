@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, throwError } from 'rxjs';
 
 import { Login } from '@js-camp/core/models/auth/login';
 import { TokensDto } from '@js-camp/core/dtos/auth/tokens.dto';
@@ -11,8 +11,14 @@ import { Registration } from '@js-camp/core/models/auth/registration';
 import { RegistrationMapper } from '@js-camp/core/mappers/auth/registration.mapper';
 import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
 
-import { TokensStorageService } from './tokens-storage.service';
+import { AppErrorMapper } from '@js-camp/core/mappers/app-error.mapper';
+import { ApiError } from '@js-camp/core/models/api-error';
+import { AppError } from '@js-camp/core/models/app-error';
+
+import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
+
 import { ApiUriBuilder } from './api-uri-builder';
+import { TokensStorageService } from './tokens-storage.service';
 
 /** Service for authentication. */
 @Injectable({
@@ -42,11 +48,12 @@ export class AuthService {
 	 * Login.
 	 * @param loginModel - Login model.
 	 **/
-	public login(loginModel: Login): Observable<void> {
+	public login(loginModel: Login): Observable<void | AppError> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
 		return this.httpClient.post<TokensDto>(uri, LoginMapper.toDto(loginModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
+			catchApiError(apiError => applicationApiErrorHandler(apiError)),
 		);
 	}
 
@@ -54,11 +61,12 @@ export class AuthService {
 	 * Register new user.
 	 * @param registrationModel - Registration model.
 	 **/
-	public register(registrationModel: Registration): Observable<void> {
+	public register(registrationModel: Registration): Observable<void | AppError> {
 		const uri = this.apiUriBuilder.buildRegistrationUri();
 
 		return this.httpClient.post<TokensDto>(uri, RegistrationMapper.toDto(registrationModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
+			catchApiError(apiError => applicationApiErrorHandler(apiError)),
 		);
 	}
 
