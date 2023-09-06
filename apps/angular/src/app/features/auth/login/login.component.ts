@@ -20,7 +20,7 @@ interface LoginFormControls {
 
 /** Login component. */
 @Component({
-	selector: 'login',
+	selector: 'camp-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

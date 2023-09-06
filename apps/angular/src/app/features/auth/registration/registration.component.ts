@@ -30,7 +30,7 @@ interface RegistrationFormControls {
 
 /** Component for registration. */
 @Component({
-	selector: 'registration',
+	selector: 'camp-registration',
 	templateUrl: './registration.component.html',
 	styleUrls: ['./registration.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
