@@ -9,7 +9,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email">
+        <input type="email" matInput formControlName="email">
         <mat-error class="registration-form__error" *ngIf="formGroup.controls.email.hasError('email')">{{'Must have an email format'}}</mat-error>
     </mat-form-field>
     <mat-form-field>
