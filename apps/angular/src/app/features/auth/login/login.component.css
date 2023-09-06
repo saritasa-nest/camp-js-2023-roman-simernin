@@ -1,19 +1,19 @@
-.login {
+:host {
   display: flex;
   justify-content: center;
 }
 
-.login__form {
+.login-form {
   display: flex;
   flex-direction: column;
   width: 300px;
   gap: 10px;
 }
 
-.login__form-error {
+.login-form__error {
   text-align: justify;
 }
 
-.login__registration-link {
+.login-form__registration-link {
   text-align: center;
 }

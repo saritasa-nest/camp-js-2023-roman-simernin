@@ -1,17 +1,16 @@
-<div class="login">
-    <form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="login__form">
-        <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email">
-            <mat-error class="login__form-error" *ngIf="formGroup.controls.email.hasError('email')">{{'Must have an email format'}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input type="password" matInput formControlName="password">
-            <mat-error *ngIf="formGroup.controls.password.hasError('minlength')">{{'Password is too short'}} </mat-error>            
-        </mat-form-field>
-        <mat-error class="login__form-error" *ngIf="formGroup.hasError('login')">{{formGroup.getError('login')}}</mat-error>
-        <button type="submit" mat-button>Sign in</button>
-        <a class="login__registration-link" routerLink="/auth/registration">Sign up</a>
-    </form>
-</div>
+<form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="login-form">
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+        <mat-error class="login-form__error" *ngIf="formGroup.controls.email.hasError('email')">{{'Must have an email format'}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error class="login-form__error" *ngIf="formGroup.controls.password.hasError('minlength')">{{'Password is too short'}} </mat-error>            
+    </mat-form-field>
+    <mat-error class="login-form__error" *ngIf="formGroup.hasError('login')">{{formGroup.getError('login')}}</mat-error>
+    <button type="submit" mat-button>Sign in</button>
+    <a class="login-form__registration-link" routerLink="/auth/registration">Sign up</a>
+</form>
+
