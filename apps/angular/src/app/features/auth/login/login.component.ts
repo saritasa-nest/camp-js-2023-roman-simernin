@@ -3,11 +3,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
-import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
-import { ApiError } from '@js-camp/core/models/api-error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { EMPTY, Observable, tap } from 'rxjs';
 
 /** Login form controls. */
 interface LoginFormControls {

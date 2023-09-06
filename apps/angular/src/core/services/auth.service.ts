@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, map, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { Login } from '@js-camp/core/models/auth/login';
 import { TokensDto } from '@js-camp/core/dtos/auth/tokens.dto';
@@ -11,8 +11,6 @@ import { Registration } from '@js-camp/core/models/auth/registration';
 import { RegistrationMapper } from '@js-camp/core/mappers/auth/registration.mapper';
 import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
 
-import { AppErrorMapper } from '@js-camp/core/mappers/app-error.mapper';
-import { ApiError } from '@js-camp/core/models/api-error';
 import { AppError } from '@js-camp/core/models/app-error';
 
 import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';

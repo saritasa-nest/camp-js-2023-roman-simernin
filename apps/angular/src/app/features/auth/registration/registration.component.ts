@@ -4,11 +4,8 @@ import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@ang
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
-import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
-import { ApiError } from '@js-camp/core/models/api-error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { EMPTY, Observable, tap } from 'rxjs';
 
 /** Registration form controls. */
 interface RegistrationFormControls {
