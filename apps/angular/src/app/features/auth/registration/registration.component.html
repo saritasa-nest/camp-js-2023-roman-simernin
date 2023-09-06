@@ -25,6 +25,6 @@
         </mat-form-field>
         <button type="submit" mat-button>Sign up</button>
         <mat-error class="registration__form-error" *ngIf="formGroup.hasError('registration')">{{formGroup.getError('registration')}}</mat-error>
-        <a class="registration__login-link" routerLink="/login">Sign in</a>
+        <a class="registration__login-link" routerLink="/auth/login">Sign in</a>
     </form>
 </div>
