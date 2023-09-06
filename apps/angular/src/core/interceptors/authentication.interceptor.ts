@@ -50,7 +50,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
 	private refreshToken(request: HttpRequest<unknown>): Observable<HttpRequest<unknown>> {
 		return this.authService.refreshAccessToken().pipe(
-			map(_ => this.addAuthentication(request)),
+			map(() => this.addAuthentication(request)),
 			catchApiError((_, throwApiError$) => {
 				this.authService.logout();
 

@@ -47,6 +47,8 @@ export class LoginComponent {
 
 	/** Handle login form submitting. */
 	protected handleSubmit(): void {
+		this.formGroup.markAllAsTouched();
+
 		if (this.formGroup.invalid) {
 			return;
 		}
