@@ -4,29 +4,29 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 /** Guard provides user should be authenticated . */
-export function shouldBeAuthenticatedGuard(): CanActivateFn {
+export const shouldBeAuthenticatedGuard: CanActivateFn = () => {
 	const authService = inject(AuthService);
 	const router = inject(Router);
 
 	const isAuthenticated = authService.isAuthenticated();
 
 	if (!isAuthenticated) {
-		router.navigate(['auth']);
+		return router.parseUrl('auth');
 	}
 
-	return () => isAuthenticated;
-}
+	return isAuthenticated;
+};
 
 /** Guard provides user should be not authenticated . */
-export function shouldBeNotAuthenticatedGuard(): CanActivateFn {
+export const shouldBeNotAuthenticatedGuard: CanActivateFn = () => {
 	const authService = inject(AuthService);
 	const router = inject(Router);
 
 	const isAuthenticated = authService.isAuthenticated();
 
 	if (isAuthenticated) {
-		router.navigate(['']);
+		router.parseUrl('');
 	}
 
-	return () => !isAuthenticated;
-}
+	return !isAuthenticated;
+};
