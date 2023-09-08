@@ -4,17 +4,19 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 
 import { Login } from '@js-camp/core/models/auth/login';
-import { TokensDto } from '@js-camp/core/dtos/auth/tokens.dto';
 import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
-import { TokensMapper } from '@js-camp/core/mappers/auth/tokens.mapper';
 import { Registration } from '@js-camp/core/models/auth/registration';
 import { RegistrationMapper } from '@js-camp/core/mappers/auth/registration.mapper';
 import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
 
+import { UserAccessTokenDto } from '@js-camp/core/dtos/auth/tokens.dto';
+
+import { UserAccessTokenMapper } from '@js-camp/core/mappers/auth/tokens.mapper';
+
 import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
-import { TokensStorageService } from './tokens-storage.service';
+import { UserAccessTokenStorageService } from './user-access-token-storage.service';
 
 /** Service for authentication. */
 @Injectable({
@@ -26,7 +28,7 @@ export class AuthService {
 
 	private readonly apiUriBuilder = inject(ApiUriBuilder);
 
-	private readonly tokenStorageService = inject(TokensStorageService);
+	private readonly tokenStorageService = inject(UserAccessTokenStorageService);
 
 	private readonly router = inject(Router);
 
@@ -47,7 +49,7 @@ export class AuthService {
 	public login(loginModel: Login): Observable<void> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
-		return this.httpClient.post<TokensDto>(uri, LoginMapper.toDto(loginModel)).pipe(
+		return this.httpClient.post<UserAccessTokenDto>(uri, LoginMapper.toDto(loginModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 			catchApiError(apiError => applicationApiErrorHandler(apiError)),
 		);
@@ -60,7 +62,7 @@ export class AuthService {
 	public register(registrationModel: Registration): Observable<void> {
 		const uri = this.apiUriBuilder.buildRegistrationUri();
 
-		return this.httpClient.post<TokensDto>(uri, RegistrationMapper.toDto(registrationModel)).pipe(
+		return this.httpClient.post<UserAccessTokenDto>(uri, RegistrationMapper.toDto(registrationModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 			catchApiError(apiError => applicationApiErrorHandler(apiError)),
 		);
@@ -79,7 +81,7 @@ export class AuthService {
 			refresh: currentTokens?.refreshToken ?? '',
 		};
 
-		return this.httpClient.post<TokensDto>(uri, refreshTokensDto).pipe(
+		return this.httpClient.post<UserAccessTokenDto>(uri, refreshTokensDto).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 		);
 	}
@@ -98,8 +100,8 @@ export class AuthService {
 		return this.tokenStorageService.get() !== null;
 	}
 
-	private authenticate(tokensDto: TokensDto): void {
-		const tokens = TokensMapper.fromDto(tokensDto);
+	private authenticate(tokensDto: UserAccessTokenDto): void {
+		const tokens = UserAccessTokenMapper.fromDto(tokensDto);
 
 		this.tokenStorageService.save(tokens);
 

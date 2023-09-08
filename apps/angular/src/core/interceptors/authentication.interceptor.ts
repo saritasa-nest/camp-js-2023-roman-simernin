@@ -4,7 +4,7 @@ import { Observable, map, switchMap } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 import { catchApiError } from '../utils/rxjs/catch-api-error';
-import { TokensStorageService } from '../services/tokens-storage.service';
+import { UserAccessTokenStorageService } from '../services/user-access-token-storage.service';
 import { ApiUriBuilder } from '../services/api-uri-builder';
 
 /** Interceptor for request authentication. */
@@ -13,7 +13,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
 	private readonly authService = inject(AuthService);
 
-	private readonly tokensStorageService = inject(TokensStorageService);
+	private readonly tokensStorageService = inject(UserAccessTokenStorageService);
 
 	private readonly apiUriBuilder = inject(ApiUriBuilder);
 
