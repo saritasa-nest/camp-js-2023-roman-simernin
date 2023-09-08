@@ -3,9 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
-import { isAppError } from '@js-camp/core/models/app-error';
+import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
+import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { EMPTY, Observable, catchError, tap } from 'rxjs';
+import { EMPTY, Observable, tap } from 'rxjs';
 
 /** Login form controls. */
 interface LoginFormControls {
@@ -59,18 +60,16 @@ export class LoginComponent {
 			password: formData.password,
 		}).pipe(
 			tap(() => this.router.navigate([''])),
-			catchError((error: unknown) => this.catchLoginError(error)),
+			catchAppError(appError => this.catchLoginError(appError)),
 			takeUntilDestroyed(this.destroyRef),
 		)
 			.subscribe();
 	}
 
-	private catchLoginError(error: unknown): Observable<void> {
-		if (isAppError(error)) {
-			this.formGroup.setErrors({
-				login: error.errorMessages.join(' '),
-			});
-		}
+	private catchLoginError(appError: AppError): Observable<void> {
+		this.formGroup.setErrors({
+			login: appError.errorMessages.join(' '),
+		});
 
 		return EMPTY;
 	}
