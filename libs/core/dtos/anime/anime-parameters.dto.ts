@@ -1,5 +1,5 @@
-import { PaginationParametersDto } from './pagination.paramters.dto';
-import { SortingParametersDto } from './sorting-parameters.dto';
+import { PaginationParametersDto } from '../pagination.paramters.dto';
+import { SortingParametersDto } from '../sorting-parameters.dto';
 
 /** DTO for getting anime. */
 export interface AnimeParametersDto extends PaginationParametersDto, SortingParametersDto {

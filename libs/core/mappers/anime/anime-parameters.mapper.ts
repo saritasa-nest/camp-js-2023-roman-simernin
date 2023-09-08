@@ -1,7 +1,7 @@
-import { AnimeParametersDto } from '../dtos/anime-parameters.dto';
-import { AnimeParameters } from '../models/anime-parameters';
-import { AnimeSortingField } from '../models/anime-sorting-field';
-import { SortingDirection, SortingParameters } from '../models/sorting-parameters';
+import { AnimeParametersDto } from '../../dtos/anime/anime-parameters.dto';
+import { AnimeParameters } from '../../models/anime/anime-parameters';
+import { AnimeSortingField } from '../../models/anime/anime-sorting-field';
+import { SortingDirection, SortingParameters } from '../../models/sorting-parameters';
 
 import { AnimeTypeMapper } from './anime-type.mapper';
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AnimeType } from '@js-camp/core/models/anime';
-import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
-import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
+import { AnimeType } from '@js-camp/core/models/anime/anime';
+import { AnimeParameters } from '@js-camp/core/models/anime/anime-parameters';
+import { AnimeSortingField } from '@js-camp/core/models/anime/anime-sorting-field';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';

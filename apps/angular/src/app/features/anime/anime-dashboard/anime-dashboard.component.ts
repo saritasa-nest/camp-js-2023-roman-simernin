@@ -3,12 +3,12 @@ import { Observable, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PageEvent } from '@angular/material/paginator';
 
-import { Anime, AnimeType } from '@js-camp/core/models/anime';
+import { Anime, AnimeType } from '@js-camp/core/models/anime/anime';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Sort } from '@angular/material/sort';
 import { SortingDirection, SortingParameters } from '@js-camp/core/models/sorting-parameters';
-import { AnimeSortingField } from '@js-camp/core/models/anime-sorting-field';
+import { AnimeSortingField } from '@js-camp/core/models/anime/anime-sorting-field';
 import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { AnimeParametersService } from '@js-camp/angular/core/services/anime-parameters.service';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
