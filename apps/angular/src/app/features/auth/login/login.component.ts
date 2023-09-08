@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
-import { AppError } from '@js-camp/core/models/app-error';
+import { AppError, isAppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 
 /** Login form controls. */
@@ -63,7 +63,7 @@ export class LoginComponent {
 	}
 
 	private handleLoginResult(result: void | AppError): void {
-		if (result instanceof AppError) {
+		if (isAppError(result)) {
 			this.formGroup.setErrors({
 				login: result.errorMessages.join(' '),
 			});

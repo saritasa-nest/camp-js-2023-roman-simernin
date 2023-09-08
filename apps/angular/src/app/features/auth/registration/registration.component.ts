@@ -4,7 +4,7 @@ import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@ang
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
-import { AppError } from '@js-camp/core/models/app-error';
+import { AppError, isAppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 
 /** Registration form controls. */
@@ -84,9 +84,9 @@ export class RegistrationComponent {
 	}
 
 	private handleRegistrationResult(result: void | AppError): void {
-		if (result instanceof AppError) {
+		if (isAppError(result)) {
 			this.formGroup.setErrors({
-				login: result.errorMessages.join(' '),
+				registration: result.errorMessages.join(' '),
 			});
 
 			return;
