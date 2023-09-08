@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeRoutingModule } from './anime-routing.module';
 
-/** Anime table module. */
+/** Anime module. */
 @NgModule({
 	imports: [
 		HttpClientModule,

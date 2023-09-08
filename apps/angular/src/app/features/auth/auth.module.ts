@@ -10,7 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AuthRoutingModule } from './auth-routing.module';
 
-/** Anime table module. */
+/** Authentication module. */
 @NgModule({
 	imports: [
 		MatInputModule,
