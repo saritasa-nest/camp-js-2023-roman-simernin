@@ -12,7 +12,4 @@ export interface Registration {
 
 	/** Password. */
 	readonly password: string;
-
-	/** Re-type password. */
-	readonly retypePassword: string;
 }

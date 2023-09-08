@@ -11,8 +11,6 @@ import { Registration } from '@js-camp/core/models/auth/registration';
 import { RegistrationMapper } from '@js-camp/core/mappers/auth/registration.mapper';
 import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
 
-import { AppError } from '@js-camp/core/models/app-error';
-
 import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';

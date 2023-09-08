@@ -77,7 +77,6 @@ export class RegistrationComponent {
 			lastName: formData.lastName,
 			email: formData.email,
 			password: formData.password,
-			retypePassword: formData.retypePassword,
 		}).pipe(
 			tap(() => this.router.navigate([''])),
 			catchError((error: unknown) => this.catchRegistrationError(error)),
