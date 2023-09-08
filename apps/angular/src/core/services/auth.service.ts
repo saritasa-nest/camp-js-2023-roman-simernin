@@ -46,7 +46,7 @@ export class AuthService {
 	 * Login.
 	 * @param loginModel - Login model.
 	 **/
-	public login(loginModel: Login): Observable<void | AppError> {
+	public login(loginModel: Login): Observable<void> {
 		const uri = this.apiUriBuilder.buildLoginUri();
 
 		return this.httpClient.post<TokensDto>(uri, LoginMapper.toDto(loginModel)).pipe(
@@ -59,7 +59,7 @@ export class AuthService {
 	 * Register new user.
 	 * @param registrationModel - Registration model.
 	 **/
-	public register(registrationModel: Registration): Observable<void | AppError> {
+	public register(registrationModel: Registration): Observable<void> {
 		const uri = this.apiUriBuilder.buildRegistrationUri();
 
 		return this.httpClient.post<TokensDto>(uri, RegistrationMapper.toDto(registrationModel)).pipe(

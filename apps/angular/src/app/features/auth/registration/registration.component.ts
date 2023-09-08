@@ -4,8 +4,9 @@ import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@ang
 import { Router } from '@angular/router';
 import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { ApplicationValidators } from '@js-camp/angular/core/utils/application-validators';
-import { AppError, isAppError } from '@js-camp/core/models/app-error';
+import { isAppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
+import { EMPTY, Observable, catchError, tap } from 'rxjs';
 
 /** Registration form controls. */
 interface RegistrationFormControls {
@@ -78,20 +79,20 @@ export class RegistrationComponent {
 			password: formData.password,
 			retypePassword: formData.retypePassword,
 		}).pipe(
+			tap(() => this.router.navigate([''])),
+			catchError((error: unknown) => this.catchRegistrationError(error)),
 			takeUntilDestroyed(this.destroyRef),
 		)
-			.subscribe(result => this.handleRegistrationResult(result));
+			.subscribe();
 	}
 
-	private handleRegistrationResult(result: void | AppError): void {
-		if (isAppError(result)) {
+	private catchRegistrationError(error: unknown): Observable<void> {
+		if (isAppError(error)) {
 			this.formGroup.setErrors({
-				registration: result.errorMessages.join(' '),
+				registration: error.errorMessages.join(' '),
 			});
-
-			return;
 		}
 
-		this.router.navigate(['']);
+		return EMPTY;
 	}
 }
