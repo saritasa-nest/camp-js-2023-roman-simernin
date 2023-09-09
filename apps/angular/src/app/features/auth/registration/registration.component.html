@@ -22,7 +22,7 @@
         <input type="password" matInput formControlName="retypePassword">
         <mat-error class="registration-form__error" *ngIf="formGroup.controls.retypePassword.hasError('retype')">{{formGroup.controls.retypePassword.getError('retype')}}</mat-error>      
     </mat-form-field>
-    <mat-error class="registration-form__error" *ngIf="formGroup.hasError('registration')">{{formGroup.getError('registration')}}</mat-error>
+    <mat-error class="registration-form__error" *ngIf="(registrationError$ | async) as registrationError">{{registrationError}}</mat-error>
     <button type="submit" mat-button>Sign up</button>
     <a class="registration-form__login-link" routerLink="/auth/login">Sign in</a>
 </form>

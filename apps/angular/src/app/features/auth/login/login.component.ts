@@ -6,7 +6,7 @@ import { AuthService } from '@js-camp/angular/core/services/auth.service';
 import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { EMPTY, Observable, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, tap } from 'rxjs';
 
 /** Login form controls. */
 interface LoginFormControls {
@@ -34,6 +34,9 @@ export class LoginComponent {
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	private readonly destroyRef = inject(DestroyRef);
+
+	/** Login error subject. */
+	protected readonly loginError$ = new BehaviorSubject<string | null>(null);
 
 	/** Login form group. */
 	protected readonly formGroup: FormGroup<LoginFormControls>;
@@ -67,9 +70,9 @@ export class LoginComponent {
 	}
 
 	private catchLoginError(appError: AppError): Observable<void> {
-		this.formGroup.setErrors({
-			login: appError.errorMessages.join(' '),
-		});
+		const loginError = appError.errorMessages.join(' ');
+
+		this.loginError$.next(loginError);
 
 		return EMPTY;
 	}

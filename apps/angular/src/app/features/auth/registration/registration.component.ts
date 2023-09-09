@@ -7,7 +7,7 @@ import { ApplicationValidators } from '@js-camp/angular/core/utils/application-v
 import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
-import { EMPTY, Observable, tap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, tap } from 'rxjs';
 
 /** Registration form controls. */
 interface RegistrationFormControls {
@@ -44,6 +44,9 @@ export class RegistrationComponent {
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	private readonly destroyRef = inject(DestroyRef);
+
+	/** Login error subject. */
+	protected readonly registrationError$ = new BehaviorSubject<string | null>(null);
 
 	/** Registration form group. */
 	protected readonly formGroup: FormGroup<RegistrationFormControls>;
@@ -87,9 +90,9 @@ export class RegistrationComponent {
 	}
 
 	private catchRegistrationError(appError: AppError): Observable<void> {
-		this.formGroup.setErrors({
-			registration: appError.errorMessages.join(' '),
-		});
+		const registrationError = appError.errorMessages.join(' ');
+
+		this.registrationError$.next(registrationError);
 
 		return EMPTY;
 	}

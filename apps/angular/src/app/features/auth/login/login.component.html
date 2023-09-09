@@ -9,7 +9,7 @@
         <input type="password" matInput formControlName="password">
         <mat-error class="login-form__error" *ngIf="formGroup.controls.password.hasError('minlength')">Password is too short</mat-error>            
     </mat-form-field>
-    <mat-error class="login-form__error" *ngIf="formGroup.hasError('login')">{{formGroup.getError('login')}}</mat-error>
+    <mat-error class="login-form__error" *ngIf="(loginError$ | async) as loginError">{{loginError}}</mat-error>
     <button type="submit" mat-button>Sign in</button>
     <a class="login-form__registration-link" routerLink="/auth/registration">Sign up</a>
 </form>
