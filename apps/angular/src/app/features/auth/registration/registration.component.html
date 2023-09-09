@@ -1,0 +1,28 @@
+<form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="registration-form">
+    <mat-form-field>
+        <mat-label>First name</mat-label>
+        <input matInput formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Last name</mat-label>
+        <input matInput formControlName="lastName">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email">
+        <mat-error class="registration-form__error" *ngIf="formGroup.controls.email.hasError('email')">Must have an email format</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password">
+        <mat-error class="registration-form__error" *ngIf="formGroup.controls.password.hasError('minlength')">Password is too short</mat-error>      
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Re-type passoword</mat-label>
+        <input type="password" matInput formControlName="retypePassword">
+        <mat-error class="registration-form__error" *ngIf="formGroup.controls.retypePassword.hasError('retype')">{{formGroup.controls.retypePassword.getError('retype')}}</mat-error>      
+    </mat-form-field>
+    <mat-error class="registration-form__error" *ngIf="(registrationError$ | async) as registrationError">{{registrationError}}</mat-error>
+    <button type="submit" mat-button>Sign up</button>
+    <a class="registration-form__login-link" routerLink="/auth/login">Sign in</a>
+</form>

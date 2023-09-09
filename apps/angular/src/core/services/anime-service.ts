@@ -3,13 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
-import { Anime } from '@js-camp/core/models/anime';
-import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
+import { Anime } from '@js-camp/core/models/anime/anime';
+import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
-import { AnimeParameters } from '@js-camp/core/models/anime-parameters';
-import { AnimeParametersMapper } from '@js-camp/core/mappers/anime-parameters.mapper';
+import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
+import { AnimeParameters } from '@js-camp/core/models/anime/anime-parameters';
+import { AnimeParametersMapper } from '@js-camp/core/mappers/anime/anime-parameters.mapper';
 
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 

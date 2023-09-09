@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+}
+
+.registration-form__error {
+  text-align: justify;
+}
+
+.registration-form__login-link {
+  text-align: center;
+}

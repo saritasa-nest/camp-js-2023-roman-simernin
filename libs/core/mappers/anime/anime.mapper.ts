@@ -1,5 +1,5 @@
-import { Anime } from '../models/anime';
-import { AnimeDto } from '../dtos/anime.dto';
+import { Anime } from '../../models/anime/anime';
+import { AnimeDto } from '../../dtos/anime/anime.dto';
 
 import { AnimeTypeMapper } from './anime-type.mapper';
 
