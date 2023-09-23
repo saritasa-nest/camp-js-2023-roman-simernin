@@ -6,7 +6,7 @@ import { Observable, map, switchMap, tap } from 'rxjs';
 
 /** Anime details component. */
 @Component({
-	selector: 'anime-details',
+	selector: 'camp-anime-details',
 	templateUrl: './anime-details.component.html',
 	styleUrls: ['./anime-details.component.css'],
 })
