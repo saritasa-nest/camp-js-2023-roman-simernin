@@ -67,7 +67,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedAnimeTableColumns;"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedAnimeTableColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedAnimeTableColumns;" [routerLink]="row.id"></tr>
       </table>
     </main>
     <div class="anime-pagination">

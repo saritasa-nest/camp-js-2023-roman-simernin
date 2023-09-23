@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
-import { catchApiError } from '@js-camp/angular/core/utils/rxjs/catch-api-error';
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
-import { HttpStatusCode } from 'axios';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { Observable, map, switchMap, tap } from 'rxjs';
 
 /** Anime details component. */
 @Component({
@@ -27,15 +25,15 @@ export class AnimeDetailsComponent {
 		this.animeDetails$ = this.activatedRoute.params.pipe(
 			map(({ id }) => Number(id)),
 			switchMap(id => this.animeService.getAnimeById(id)),
-			catchApiError((apiError, throwApiError$) => apiError.statusCode === HttpStatusCode.NotFound ?
-				of(this.catchAnimeNotFound()) :
-				throwApiError$),
+			tap(animeDetails => this.excludeAnimeNotFound(animeDetails)),
 		);
 	}
 
-	private catchAnimeNotFound(): null {
-		this.router.navigate(['not-found']);
+	private excludeAnimeNotFound(animeDetails: AnimeDetails | null): void {
+		const isAnimeNotFound = animeDetails === null;
 
-		return null;
+		if (isAnimeNotFound) {
+			this.router.navigate(['not-found']);
+		}
 	}
 }

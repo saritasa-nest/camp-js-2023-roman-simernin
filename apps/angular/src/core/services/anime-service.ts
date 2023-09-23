@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -16,6 +16,8 @@ import { AnimeDetailsMapper } from '@js-camp/core/mappers/anime/anime-details.ma
 
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { AnimeDetailsDto } from '@js-camp/core/dtos/anime/anime-details.dto';
+
+import { catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
 
@@ -49,12 +51,15 @@ export class AnimeService {
 	 * Get anime by id..
 	 * @param id - Anime id.
 	 * */
-	public getAnimeById(id: number): Observable<AnimeDetails> {
+	public getAnimeById(id: number): Observable<AnimeDetails | null> {
 		const uri = this.apiUriBuilder.buildGetAnimeByIdUri(id);
 
 		return this.httpClient.get<AnimeDetailsDto>(uri)
 			.pipe(
 				map(animeDetailsDto => AnimeDetailsMapper.fromDto(animeDetailsDto)),
+				catchApiError((apiError, throwApiError$) => apiError.statusCode === HttpStatusCode.NotFound ?
+					of(null) :
+					throwApiError$),
 			);
 	}
 }
