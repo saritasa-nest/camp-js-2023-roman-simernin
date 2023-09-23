@@ -1,5 +1,59 @@
 <ng-container *ngIf="animeDetails$ | async as animeDetails">
-    <ng-container *ngIf="animeDetails !== null">
-        {{animeDetails.englishTitle}}
-    </ng-container>
+    <main class="anime-details" *ngIf="animeDetails !== null">
+        <div class="anime-info">
+            <span class="anime-info__title">English title:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ (animeDetails.englishTitle | titlecase) || 'No' }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Japanese title:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ (animeDetails.japaneseTitle | titlecase) || 'No' }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Aired start date:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.airedStartDate | date }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Type:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.type | titlecase}}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Status:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.status | titlecase }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Age rating:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.ageRating}}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Source:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.source }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Season:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.season }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Airing status:</span>
+            <span class="anime-info__space"></span>
+            <span>{{ animeDetails.airingStatus === true ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Studios:</span>
+            <span class="anime-info__space"></span>
+            <span class="anime-info__data_list">{{ animeDetails.studioNames.join(', ') }}</span>
+        </div>
+        <div class="anime-info">
+            <span class="anime-info__title">Genres:</span>
+            <span class="anime-info__space"></span>
+            <span class="anime-info__data_list">{{ animeDetails.genreNames.join(', ') }}</span>
+        </div>
+    </main>
 </ng-container>
