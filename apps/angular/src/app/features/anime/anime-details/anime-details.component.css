@@ -4,13 +4,20 @@
 }
 
 .anime-details {
-  width: calc(var(--anime-image-size) * 2);
+  width: 50%;
 }
 
-.anime-details__image {
-  width: var(--anime-image-size);
-  height: var(--anime-image-size);
-  float: left;
+.anime-card {
+  display: flex;
+}
+
+.anime-card__image {
+  max-width: var(--anime-image-size);
+  max-height: var(--anime-image-size);
+}
+
+.anime-card__info {
+  width: 100%;
 }
 
 .anime-info-item {
@@ -37,4 +44,37 @@
 .anime-details__description {
   text-align: justify;
   margin-top: 20px;
+}
+
+.anime-details__trailer {
+  margin-top: 30px;
+}
+
+.anime-trailer {
+  display: flex;
+  justify-content: center;
+}
+
+.anime-trailer__player {
+  width: 75%;
+  height: 300px;
+}
+
+@media (width < 800px) {
+  .anime-details {
+    width: 75%;
+  }
+
+  .anime-card {
+    flex-direction: column;
+  }
+
+  .anime-card__image {
+    max-width: 100%;
+  }
+
+  .anime-trailer__player {
+    width: 100%;
+    height: 200px;
+  }
 }
