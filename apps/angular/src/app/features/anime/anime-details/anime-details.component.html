@@ -1,59 +1,63 @@
 <ng-container *ngIf="animeDetails$ | async as animeDetails">
     <main class="anime-details" *ngIf="animeDetails !== null">
-        <div class="anime-info">
-            <span class="anime-info__title">English title:</span>
-            <span class="anime-info__space"></span>
+        <img class="anime-details__image"
+            [src]="animeDetails.imageUrl" 
+            [alt]="animeDetails.englishTitle + ' image'">        
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">English title:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.englishTitle | titlecase | empty }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Japanese title:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Japanese title:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.japaneseTitle | titlecase | empty }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Aired start date:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Aired start date:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.airedStartDate | date }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Type:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Type:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.type | titlecase}}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Status:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Status:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.status | titlecase }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Age rating:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Age rating:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.ageRating}}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Source:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Source:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.source }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Season:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Season:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.season }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Airing status:</span>
-            <span class="anime-info__space"></span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Airing status:</span>
+            <span class="anime-info-item__space"></span>
             <span>{{ animeDetails.airingStatus ? 'Yes' : 'No' }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Studios:</span>
-            <span class="anime-info__space"></span>
-            <span class="anime-info__data_list">{{ animeDetails.studioNames.join(', ') | empty }}</span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Studios:</span>
+            <span class="anime-info-item__space"></span>
+            <span class="anime-info-item__data_list">{{ animeDetails.studioNames.join(', ') | empty }}</span>
         </div>
-        <div class="anime-info">
-            <span class="anime-info__title">Genres:</span>
-            <span class="anime-info__space"></span>
-            <span class="anime-info__data_list">{{ animeDetails.genreNames.join(', ') | empty }}</span>
+        <div class="anime-info-item">
+            <span class="anime-info-item__title">Genres:</span>
+            <span class="anime-info-item__space"></span>
+            <span class="anime-info-item__data_list">{{ animeDetails.genreNames.join(', ') | empty }}</span>
         </div>
+        <div class="anime-details__description">{{ animeDetails.description }}</div>
     </main>
 </ng-container>
