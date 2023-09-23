@@ -1,5 +1,5 @@
-<ng-container *ngIf="animeDetails$ | async as animeDetails">
-    <main class="anime-details" *ngIf="animeDetails !== null">
+<div *ngIf="animeDetails$ | async as animeDetails">
+    <main class="anime-details">
         <img class="anime-details__image"
             [src]="animeDetails.imageUrl" 
             alt="Open dialog with full size anime cover"
@@ -61,4 +61,7 @@
         </div>
         <div class="anime-details__description">{{ animeDetails.description }}</div>
     </main>
-</ng-container>
+    <section *ngIf="animeDetails.youtubeTrailerId !== null">
+        <iframe [src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"></iframe>
+    </section>
+</div>

@@ -44,4 +44,7 @@ export interface AnimeDetails {
 
 	/** Genres names. */
 	readonly genreNames: readonly string[];
+
+	/** Youtube trailer id. */
+	readonly youtubeTrailerId: string | null;
 }

@@ -25,6 +25,7 @@ export namespace AnimeDetailsMapper {
 			airingStatus: dto.airing,
 			studioNames: dto.studios_data.map(studioDto => studioDto.name),
 			genreNames: dto.genres_data.map(genreDto => genreDto.name),
+			youtubeTrailerId: dto.trailer_youtube_id,
 		};
 	}
 }

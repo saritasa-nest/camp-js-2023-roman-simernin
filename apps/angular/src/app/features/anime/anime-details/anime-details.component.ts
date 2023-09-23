@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { Observable, map, switchMap, tap } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { ImageModalComponent, ImageModalParameters } from './image-modal/image-modal.component';
 
@@ -24,6 +25,8 @@ export class AnimeDetailsComponent {
 
 	private readonly dialog = inject(MatDialog);
 
+	private readonly sanitizer = inject(DomSanitizer);
+
 	/** Anime details stream. */
 	protected readonly animeDetails$: Observable<AnimeDetails | null>;
 
@@ -43,6 +46,16 @@ export class AnimeDetailsComponent {
 		const imageModalParameters: ImageModalParameters = { imageUrl };
 
 		this.dialog.open(ImageModalComponent, { data: imageModalParameters });
+	}
+
+	/**
+	 * Make youtube trailer url.
+	 * @param youtubeTrailerId - Youtube trailer id.
+	 */
+	protected makeYoutubeTrailerUrl(youtubeTrailerId: string): SafeResourceUrl {
+		const youtubeTrailerUrl = `https://www.youtube.com/embed/${youtubeTrailerId}`;
+
+		return this.sanitizer.bypassSecurityTrustResourceUrl(youtubeTrailerUrl);
 	}
 
 	private excludeAnimeNotFound(animeDetails: AnimeDetails | null): void {
