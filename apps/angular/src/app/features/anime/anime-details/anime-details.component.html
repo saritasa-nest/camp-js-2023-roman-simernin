@@ -64,6 +64,6 @@
     </main>
     <section class="anime-details__description">{{ animeDetails.description }}</section>
     <section class="anime-trailer anime-details__trailer" *ngIf="animeDetails.youtubeTrailerId !== null">
-        <iframe class="anime-trailer__player" [src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"></iframe>
+        <iframe title="Youtube trailer" class="anime-trailer__player" [src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"></iframe>
     </section>
 </div>
