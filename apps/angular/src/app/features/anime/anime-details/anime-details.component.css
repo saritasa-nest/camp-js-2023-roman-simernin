@@ -4,7 +4,7 @@
 }
 
 .anime-details {
-  max-width: calc(var(--anime-image-size) * 2);
+  width: calc(var(--anime-image-size) * 2);
 }
 
 .anime-details__image {

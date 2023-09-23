@@ -2,7 +2,8 @@
     <main class="anime-details" *ngIf="animeDetails !== null">
         <img class="anime-details__image"
             [src]="animeDetails.imageUrl" 
-            [alt]="animeDetails.englishTitle + ' image'">        
+            alt="Open dialog with full size anime cover"
+            (click)="openFullSizeImage(animeDetails.imageUrl)">        
         <div class="anime-info-item">
             <span class="anime-info-item__title">English title:</span>
             <span class="anime-info-item__space"></span>
