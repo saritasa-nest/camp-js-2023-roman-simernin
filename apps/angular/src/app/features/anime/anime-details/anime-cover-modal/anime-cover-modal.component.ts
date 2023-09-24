@@ -16,6 +16,6 @@ export interface AnimeCoverModalParameters {
 })
 export class AnimeCoverModalComponent {
 
-	/** Modal data. */
-	protected readonly animeCoverModalParameters = inject<AnimeCoverModalParameters>(MAT_DIALOG_DATA);
+	/** Anime cover modal parameters. */
+	protected readonly modalParameters = inject<AnimeCoverModalParameters>(MAT_DIALOG_DATA);
 }
