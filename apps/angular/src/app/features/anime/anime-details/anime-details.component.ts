@@ -54,7 +54,6 @@ export class AnimeDetailsComponent {
 	 */
 	protected makeYoutubeTrailerUrl(youtubeTrailerId: string): SafeResourceUrl {
 		const youtubeTrailerUrl = `https://www.youtube.com/embed/${youtubeTrailerId}`;
-
 		return this.sanitizer.bypassSecurityTrustResourceUrl(youtubeTrailerUrl);
 	}
 
