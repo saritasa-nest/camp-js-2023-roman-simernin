@@ -7,8 +7,10 @@ import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
+import { ConfirmationModalComponent, ConfirmationModalParameters } from '@js-camp/angular/shared/components/confirmation-modal/confirmation-modal.component';
 
 import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
+
 
 /** Anime details component. */
 @Component({
@@ -47,6 +49,18 @@ export class AnimeDetailsComponent {
 			AnimeCoverModalComponent,
 			{ data: { imageUrl } },
 		);
+	}
+
+	/**
+	 * Delete anime with confirmaion.
+	 * @param id - Anime id.
+	*/
+	protected deleteAnime(id: number): void {
+		const confirmationModalParameters: ConfirmationModalParameters = {
+			confirmationText: 'Are you sure you want to delete this anime?',
+		};
+
+		this.dialog.open(ConfirmationModalComponent, { data: confirmationModalParameters });
 	}
 
 	private catchAnimeGettingError(appError: AppError): Observable<never> {
