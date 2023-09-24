@@ -16,7 +16,7 @@ import { SharedModule } from '@js-camp/angular/shared/shared.module';
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
-import { ImageModalComponent } from './anime-details/image-modal/image-modal.component';
+import { AnimeCoverModalComponent } from './anime-details/anime-cover-modal/anime-cover-modal.component';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 
@@ -36,7 +36,7 @@ import { AnimeRoutingModule } from './anime-routing.module';
 		SharedModule,
 		MatDialogModule,
 	],
-	declarations: [AnimeDashboardComponent, AnimeDetailsComponent, ImageModalComponent],
+	declarations: [AnimeDashboardComponent, AnimeDetailsComponent, AnimeCoverModalComponent],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })
 export class AnimeModule {}

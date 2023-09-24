@@ -6,7 +6,7 @@ import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { Observable, map, switchMap, tap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-import { ImageModalComponent, ImageModalParameters } from './image-modal/image-modal.component';
+import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
 
 /** Anime details component. */
 @Component({
@@ -43,9 +43,9 @@ export class AnimeDetailsComponent {
 	 * @param imageUrl Image url.
 	 */
 	protected openFullSizeImage(imageUrl: string): void {
-		const imageModalParameters: ImageModalParameters = { imageUrl };
+		const imageModalParameters: AnimeCoverModalParameters = { imageUrl };
 
-		this.dialog.open(ImageModalComponent, { data: imageModalParameters });
+		this.dialog.open(AnimeCoverModalComponent, { data: imageModalParameters });
 	}
 
 	/**
