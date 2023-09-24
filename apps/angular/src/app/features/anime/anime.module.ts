@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 import { SharedModule } from '@js-camp/angular/shared/shared.module';
 
@@ -38,6 +39,7 @@ import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-in
 		SharedModule,
 		MatDialogModule,
 		MatIconModule,
+		MatButtonModule,
 	],
 	declarations: [AnimeDashboardComponent, AnimeDetailsComponent, AnimeCoverModalComponent, AnimeInfoItemComponent],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],

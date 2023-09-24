@@ -36,7 +36,7 @@
 		<camp-youtube-player class="anime-trailer__player" [videoId]="animeDetails.youtubeTrailerId"></camp-youtube-player>
 	</section>
     <div class="anime-management anime-details__management">
-        <button class="anime-management__action" type="button">Edit</button>
-        <button class="anime-management__action" type="button" (click)="openDeletionConfirmation(animeDetails.id)">Delete</button>
+        <button mat-button class="anime-management__action" type="button">Edit</button>
+        <button mat-button class="anime-management__action" type="button" (click)="openDeletionConfirmation(animeDetails.id)">Delete</button>
     </div>
 </main>
