@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -13,14 +12,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-
 import { SharedModule } from '@js-camp/angular/shared/shared.module';
 
+import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 import { AnimeCoverModalComponent } from './anime-details/anime-cover-modal/anime-cover-modal.component';
-
-import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-info-item.component';
 
 /** Anime module. */

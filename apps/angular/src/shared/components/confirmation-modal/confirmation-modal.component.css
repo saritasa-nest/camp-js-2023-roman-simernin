@@ -1,8 +1,8 @@
 .confirmation-text {
-    text-align: center;
+  text-align: center;
 }
 
 .confirmation-actions {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }

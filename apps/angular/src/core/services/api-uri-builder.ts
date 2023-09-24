@@ -26,7 +26,7 @@ export class ApiUriBuilder {
 	}
 
 	/**
-	 * Build uri for anime deleting by id endpoint. 
+	 * Build uri for anime deleting by id endpoint.
 	 * @param id - Anime id.
 	 */
 	public buildDeleteAnimeUri(id: number): string {

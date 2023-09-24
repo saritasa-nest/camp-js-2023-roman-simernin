@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 /** Confirmation modal parameters. */
@@ -13,13 +13,14 @@ export interface ConfirmationModalParameters {
 	selector: 'camp-confirmation-modal',
 	templateUrl: './confirmation-modal.component.html',
 	styleUrls: ['./confirmation-modal.component.css'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationModalComponent {
 
 	private readonly dialogRef = inject(MatDialogRef<ConfirmationModalComponent>);
 
 	/** Modal data. */
-	protected readonly confirmationModalParameters = inject<ConfirmationModalParameters>(MAT_DIALOG_DATA);
+	protected readonly modalParameters = inject<ConfirmationModalParameters>(MAT_DIALOG_DATA);
 
 	/** Close dialog. */
 	protected closeDialog(): void {
