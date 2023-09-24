@@ -61,4 +61,14 @@ export class AnimeService {
 					throwApiError$),
 			);
 	}
+
+	/**
+	 * Delete anime by id.
+	 * @param id - Anime id.
+	 */
+	public deleteAnime(id: number): Observable<void> {
+		const uri = this.apiUriBuilder.buildDeleteAnimeUri(id);
+
+		return this.httpClient.delete<void>(uri);
+	}
 }
