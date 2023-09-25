@@ -9,61 +9,17 @@
 		/>
 		<div class="anime-card__info">
 			<h2 class="anime-details-title">About anime</h2>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">English title:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.englishTitle | titlecase | empty }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Japanese title:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.japaneseTitle | titlecase | empty }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Aired start date:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.airedStartDate | date }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Type:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.type | titlecase }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Status:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.status | titlecase }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Age rating:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.ageRating }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Source:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.source }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Season:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.season }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Airing status:</span>
-				<span class="anime-info-item__separator"></span>
-				<span>{{ animeDetails.airingStatus ? "Yes" : "No" }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Studios:</span>
-				<span class="anime-info-item__separator"></span>
-				<span class="anime-info-item__data_list">{{ animeDetails.studioNames.join(", ") | empty }}</span>
-			</div>
-			<div class="anime-info-item">
-				<span class="anime-info-item__title">Genres:</span>
-				<span class="anime-info-item__separator"></span>
-				<span class="anime-info-item__data_list">{{ animeDetails.genreNames.join(", ") | empty }}</span>
-			</div>
+			<camp-anime-info-item title="English title" [value]="animeDetails.englishTitle | titlecase | empty" />
+			<camp-anime-info-item title="Japanese title" [value]="animeDetails.japaneseTitle | titlecase | empty" />
+			<camp-anime-info-item title="Aired start date" [value]="animeDetails.airedStartDate | date | empty" />
+			<camp-anime-info-item title="Type" [value]="animeDetails.type | titlecase" />
+			<camp-anime-info-item title="Status" [value]="animeDetails.status | titlecase" />
+			<camp-anime-info-item title="Age rating" [value]="animeDetails.ageRating" />
+			<camp-anime-info-item title="Source" [value]="animeDetails.source" />
+			<camp-anime-info-item title="Season" [value]="animeDetails.season" />
+			<camp-anime-info-item title="Airing status" [value]="animeDetails.airingStatus ? 'Yes' : 'No'" />
+			<camp-anime-info-item title="Studios" [value]="animeDetails.studioNames.join(', ') | empty" />
+			<camp-anime-info-item title="Genres" [value]="animeDetails.genreNames.join(', ') | empty" />
 		</div>
 	</section>
 	<section class="anime-details__description" *ngIf="animeDetails.description !== ''" >

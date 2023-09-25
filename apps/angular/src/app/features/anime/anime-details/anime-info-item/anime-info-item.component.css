@@ -1,0 +1,20 @@
+.anime-info-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.anime-info-item__title {
+  font-weight: bold;
+}
+
+.anime-info-item__separator {
+  flex: 1 0;
+  border-bottom: 1px dotted #000;
+  height: 1em;
+  margin: 0 0.4em;
+}
+
+.anime-info-item__data {
+  overflow-wrap: break-word;
+  text-align: right;
+}
