@@ -1,4 +1,5 @@
 import { AnimeType } from './anime';
+import { AnimeStatus } from './anime-status';
 
 /** DTO of anime for preview. */
 export interface AnimeDetails {
@@ -22,7 +23,7 @@ export interface AnimeDetails {
 	readonly type: AnimeType;
 
 	/** Status. */
-	readonly status: string;
+	readonly status: AnimeStatus;
 
 	/** Age rating. */
 	readonly ageRating: string;

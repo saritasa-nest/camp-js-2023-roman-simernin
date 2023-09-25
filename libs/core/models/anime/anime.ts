@@ -1,3 +1,5 @@
+import { AnimeStatus } from './anime-status';
+
 /** Domain model anime for preview. */
 export interface Anime {
 
@@ -20,7 +22,7 @@ export interface Anime {
 	readonly type: AnimeType;
 
 	/** Status. */
-	readonly status: string;
+	readonly status: AnimeStatus;
 }
 
 /** Anime type. */

@@ -2,6 +2,7 @@ import { AnimeDetails } from '../../models/anime/anime-details';
 import { AnimeDetailsDto } from '../../dtos/anime/anime-details.dto';
 
 import { AnimeTypeMapper } from './anime-type.mapper';
+import { AnimeStatusMapper } from './anime-status.mapper';
 
 export namespace AnimeDetailsMapper {
 
@@ -17,7 +18,7 @@ export namespace AnimeDetailsMapper {
 			japaneseTitle: dto.title_jpn,
 			airedStartDate: new Date(dto.aired.start),
 			type: AnimeTypeMapper.fromDto(dto.type),
-			status: dto.status.replace(/_/g, ' '),
+			status: AnimeStatusMapper.fromDto(dto.status),
 			ageRating: dto.rating,
 			source: dto.source,
 			season: dto.season,

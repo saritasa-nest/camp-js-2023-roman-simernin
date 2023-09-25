@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-/** Anime info item component */
+/** Anime info item component. */
 @Component({
 	selector: 'camp-anime-info-item',
 	templateUrl: './anime-info-item.component.html',

@@ -1,4 +1,5 @@
 import { AnimeAiringDto } from './anime-airing.dto';
+import { AnimeStatusDto } from './anime-status.dto';
 import { AnimeTypeDto } from './anime-type.dto';
 
 /** DTO of anime for preview. */
@@ -29,7 +30,7 @@ export interface AnimeDto {
 	readonly type: AnimeTypeDto;
 
 	/** Status. */
-	readonly status: string;
+	readonly status: AnimeStatusDto;
 
 	/** General anime rating. */
 	readonly score: number;
