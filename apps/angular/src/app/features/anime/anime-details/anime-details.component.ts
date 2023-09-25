@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { EMPTY, Observable, map, switchMap } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
@@ -31,7 +31,7 @@ export class AnimeDetailsComponent {
 	private readonly sanitizer = inject(DomSanitizer);
 
 	/** Anime details stream. */
-	protected readonly animeDetails$: Observable<AnimeDetails | null>;
+	protected readonly animeDetails$: Observable<AnimeDetails>;
 
 	public constructor() {
 		this.animeDetails$ = this.activatedRoute.params.pipe(
@@ -60,11 +60,13 @@ export class AnimeDetailsComponent {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(youtubeTrailerUrl);
 	}
 
-	private catchAnimeGettingError(appError: AppError): Observable<null> {
+	private catchAnimeGettingError(appError: AppError): Observable<never> {
 		if (appError instanceof NotFoundError) {
 			this.router.navigate(['not-found']);
+		} else {
+			this.router.navigate(['']);
 		}
 
-		return of(null);
+		return EMPTY;
 	}
 }
