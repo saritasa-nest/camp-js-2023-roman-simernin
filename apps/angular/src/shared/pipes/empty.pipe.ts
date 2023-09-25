@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class EmptyPipe implements PipeTransform {
 
-	private readonly emptyReplacement: string = '-';
+	private readonly emptyReplacement = '-';
 
 	/** @inheritdoc */
 	public transform(value: unknown): string {

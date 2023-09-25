@@ -1,69 +1,75 @@
 <div class="anime-details" *ngIf="animeDetails$ | async as animeDetails">
-    <main class="anime-card">
-        <img class="anime-card__image"
-            [src]="animeDetails.imageUrl" 
-            alt="Open dialog with full size anime cover"
-            (click)="openFullSizeImage(animeDetails.imageUrl)">
-        <div class="anime-card__info">
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">English title:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.englishTitle | titlecase | empty }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Japanese title:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.japaneseTitle | titlecase | empty }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Aired start date:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.airedStartDate | date }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Type:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.type | titlecase}}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Status:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.status | titlecase }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Age rating:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.ageRating}}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Source:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.source }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Season:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.season }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Airing status:</span>
-                <span class="anime-info-item__space"></span>
-                <span>{{ animeDetails.airingStatus ? 'Yes' : 'No' }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Studios:</span>
-                <span class="anime-info-item__space"></span>
-                <span class="anime-info-item__data_list">{{ animeDetails.studioNames.join(', ') | empty }}</span>
-            </div>
-            <div class="anime-info-item">
-                <span class="anime-info-item__title">Genres:</span>
-                <span class="anime-info-item__space"></span>
-                <span class="anime-info-item__data_list">{{ animeDetails.genreNames.join(', ') | empty }}</span>
-            </div>
-        </div>       
-    </main>
-    <section class="anime-details__description">{{ animeDetails.description }}</section>
-    <section class="anime-trailer anime-details__trailer" *ngIf="animeDetails.youtubeTrailerId !== null">
-        <iframe title="Youtube trailer" class="anime-trailer__player" [src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"></iframe>
-    </section>
+	<main class="anime-card">
+		<img
+			class="anime-card__image"
+			[src]="animeDetails.imageUrl"
+			alt="Open dialog with full size anime cover"
+			(click)="openFullSizeImage(animeDetails.imageUrl)"
+		/>
+		<div class="anime-card__info">
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">English title:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.englishTitle | titlecase | empty }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Japanese title:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.japaneseTitle | titlecase | empty }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Aired start date:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.airedStartDate | date }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Type:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.type | titlecase }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Status:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.status | titlecase }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Age rating:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.ageRating }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Source:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.source }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Season:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.season }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Airing status:</span>
+				<span class="anime-info-item__separator"></span>
+				<span>{{ animeDetails.airingStatus ? "Yes" : "No" }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Studios:</span>
+				<span class="anime-info-item__separator"></span>
+				<span class="anime-info-item__data_list">{{ animeDetails.studioNames.join(", ") | empty }}</span>
+			</div>
+			<div class="anime-info-item">
+				<span class="anime-info-item__title">Genres:</span>
+				<span class="anime-info-item__separator"></span>
+				<span class="anime-info-item__data_list">{{ animeDetails.genreNames.join(", ") | empty }}</span>
+			</div>
+		</div>
+	</main>
+	<section class="anime-details__description">{{ animeDetails.description }}</section>
+	<section class="anime-trailer anime-details__trailer" *ngIf="animeDetails.youtubeTrailerId !== null">
+		<iframe
+			title="Youtube trailer"
+			class="anime-trailer__player"
+			[src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"
+		></iframe>
+	</section>
 </div>

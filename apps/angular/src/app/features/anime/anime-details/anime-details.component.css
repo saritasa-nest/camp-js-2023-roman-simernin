@@ -29,7 +29,7 @@
   font-weight: bold;
 }
 
-.anime-info-item__space {
+.anime-info-item__separator {
   flex: 1 0;
   border-bottom: 1px dotted #000;
   height: 1em;

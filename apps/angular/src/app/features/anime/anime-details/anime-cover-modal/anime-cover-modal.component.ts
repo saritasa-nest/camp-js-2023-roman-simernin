@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 /** Anime cover modal parameters. */
 export interface AnimeCoverModalParameters {
 
-	/** Image url. */
+	/** Image URL. */
 	readonly imageUrl: string;
 }
 
