@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, map, of, switchMap } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
-import { Observable, map, switchMap, tap } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
+import { AppError } from '@js-camp/core/models/app-error';
+import { NotFoundError } from '@js-camp/core/models/not-found-error';
 
 import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
 
@@ -34,7 +37,7 @@ export class AnimeDetailsComponent {
 		this.animeDetails$ = this.activatedRoute.params.pipe(
 			map(({ id }) => Number(id)),
 			switchMap(id => this.animeService.getAnimeById(id)),
-			tap(animeDetails => this.excludeAnimeNotFound(animeDetails)),
+			catchAppError(appError => this.catchAnimeGettingError(appError)),
 		);
 	}
 
@@ -57,11 +60,11 @@ export class AnimeDetailsComponent {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(youtubeTrailerUrl);
 	}
 
-	private excludeAnimeNotFound(animeDetails: AnimeDetails | null): void {
-		const isAnimeNotFound = animeDetails === null;
-
-		if (isAnimeNotFound) {
+	private catchAnimeGettingError(appError: AppError): Observable<null> {
+		if (appError instanceof NotFoundError) {
 			this.router.navigate(['not-found']);
 		}
+
+		return of(null);
 	}
 }
