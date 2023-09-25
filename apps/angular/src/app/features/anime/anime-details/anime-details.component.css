@@ -7,6 +7,10 @@
   width: 50%;
 }
 
+.anime-details-title {
+  text-align: center;
+}
+
 .anime-card {
   display: flex;
 }
@@ -52,7 +56,8 @@
 
 .anime-trailer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .anime-trailer__player {

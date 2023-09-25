@@ -1,5 +1,6 @@
-<div class="anime-details" *ngIf="animeDetails$ | async as animeDetails">
-	<main class="anime-card">
+<main class="anime-details" *ngIf="animeDetails$ | async as animeDetails">
+	<h1 class="anime-details-title">{{animeDetails.englishTitle ? animeDetails.englishTitle : animeDetails.japaneseTitle}}</h1>
+	<section class="anime-card">
 		<img
 			class="anime-card__image"
 			[src]="animeDetails.imageUrl"
@@ -7,6 +8,7 @@
 			(click)="openFullSizeImage(animeDetails.imageUrl)"
 		/>
 		<div class="anime-card__info">
+			<h2 class="anime-details-title">About anime</h2>
 			<div class="anime-info-item">
 				<span class="anime-info-item__title">English title:</span>
 				<span class="anime-info-item__separator"></span>
@@ -63,13 +65,17 @@
 				<span class="anime-info-item__data_list">{{ animeDetails.genreNames.join(", ") | empty }}</span>
 			</div>
 		</div>
-	</main>
-	<section class="anime-details__description">{{ animeDetails.description }}</section>
+	</section>
+	<section class="anime-details__description" *ngIf="animeDetails.description !== ''" >
+		<h2 class="anime-details-title">Description</h2>
+		<div>{{ animeDetails.description }}</div>
+	</section>
 	<section class="anime-trailer anime-details__trailer" *ngIf="animeDetails.youtubeTrailerId !== null">
+		<h2 class="anime-details-title">Youtube trailer</h2>
 		<iframe
 			title="Youtube trailer"
 			class="anime-trailer__player"
 			[src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"
 		></iframe>
 	</section>
-</div>
+</main>
