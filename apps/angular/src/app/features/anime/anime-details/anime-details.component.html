@@ -18,8 +18,8 @@
 			<camp-anime-info-item itemTitle="Source" [itemValue]="animeDetails.source" />
 			<camp-anime-info-item itemTitle="Season" [itemValue]="animeDetails.season" />
 			<camp-anime-info-item itemTitle="Airing status" [itemValue]="animeDetails.airingStatus ? 'Yes' : 'No'" />
-			<camp-anime-info-item itemTitle="Studios" [itemValue]="animeDetails.studioNames.join(', ') | empty" />
-			<camp-anime-info-item itemTitle="Genres" [itemValue]="animeDetails.genreNames.join(', ') | empty" />
+			<camp-anime-info-item itemTitle="Studios" [itemValue]="animeDetails.studioNames | commaJoin | empty" />
+			<camp-anime-info-item itemTitle="Genres" [itemValue]="animeDetails.genreNames | commaJoin | empty" />
 		</div>
 	</section>
 	<section class="anime-details__description" *ngIf="animeDetails.description !== ''" >
