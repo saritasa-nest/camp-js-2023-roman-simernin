@@ -46,9 +46,10 @@ export class AnimeDetailsComponent {
 	 * @param imageUrl Image url.
 	 */
 	protected openFullSizeImage(imageUrl: string): void {
-		const modalParameters: AnimeCoverModalParameters = { imageUrl };
-
-		this.dialog.open(AnimeCoverModalComponent, { data: modalParameters });
+		this.dialog.open<AnimeCoverModalComponent, AnimeCoverModalParameters, void>(
+			AnimeCoverModalComponent,
+			{ data: { imageUrl } },
+		);
 	}
 
 	/**
