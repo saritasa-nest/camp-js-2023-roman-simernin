@@ -3,7 +3,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 /** Transform empty value.*/
 @Pipe({
 	name: 'empty',
-	pure: false,
 })
 export class EmptyPipe implements PipeTransform {
 
