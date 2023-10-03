@@ -1,7 +1,7 @@
 import { AnimeType } from './anime';
 import { AnimeStatus } from './anime-status';
 
-/** DTO of anime for preview. */
+/** Anime details. */
 export interface AnimeDetails {
 
 	/** Identifier. */
@@ -16,7 +16,7 @@ export interface AnimeDetails {
 	/** Title in Japanese. */
 	readonly japaneseTitle: string;
 
-	/** Start end date for airing. */
+	/** Start date of airing. */
 	readonly airedStartDate: Date;
 
 	/** Type. */
@@ -37,8 +37,8 @@ export interface AnimeDetails {
 	/** Description. */
 	readonly description: string;
 
-	/** Airing status. */
-	readonly airingStatus: boolean;
+	/** Provides anime is airing. */
+	readonly isAiring: boolean;
 
 	/** Studios names. */
 	readonly studioNames: readonly string[];

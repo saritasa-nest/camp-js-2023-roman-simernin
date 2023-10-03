@@ -15,7 +15,7 @@ export interface Anime {
 	/** Title in Japanese. */
 	readonly japaneseTitle: string;
 
-	/** Start end date for airing. */
+	/** Start date of airing. */
 	readonly airedStartDate: Date;
 
 	/** Type. */

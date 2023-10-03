@@ -17,7 +17,7 @@
 			<camp-anime-info-item itemTitle="Age rating" [itemValue]="animeDetails.ageRating" />
 			<camp-anime-info-item itemTitle="Source" [itemValue]="animeDetails.source" />
 			<camp-anime-info-item itemTitle="Season" [itemValue]="animeDetails.season" />
-			<camp-anime-info-item itemTitle="Airing status" [itemValue]="animeDetails.airingStatus ? 'Yes' : 'No'" />
+			<camp-anime-info-item itemTitle="Airing status" [itemValue]="animeDetails.isAiring ? 'Yes' : 'No'" />
 			<camp-anime-info-item itemTitle="Studios" [itemValue]="animeDetails.studioNames | commaJoin | empty" />
 			<camp-anime-info-item itemTitle="Genres" [itemValue]="animeDetails.genreNames | commaJoin | empty" />
 		</div>
