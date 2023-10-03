@@ -1,7 +1,10 @@
 import { AnimeTypeDto } from '../../dtos/anime/anime-type.dto';
 import { AnimeType } from '../../models/anime/anime';
+import { EnumMapping } from '../enum-mapping';
 
 export namespace AnimeTypeMapper {
+
+	type AnimeTypeMapping = EnumMapping<AnimeTypeDto, AnimeType>;
 
 	const mappings: readonly AnimeTypeMapping[] = [
 		{ model: AnimeType.TV, dto: AnimeTypeDto.TV },
@@ -39,15 +42,5 @@ export namespace AnimeTypeMapper {
 		}
 
 		return mappingByModel.dto;
-	}
-
-	/** Anime type mapping. */
-	interface AnimeTypeMapping {
-
-		/** Anime type model. */
-		readonly model: AnimeType;
-
-		/** Anime type dto. */
-		readonly dto: AnimeTypeDto;
 	}
 }

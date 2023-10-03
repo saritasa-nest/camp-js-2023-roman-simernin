@@ -1,7 +1,10 @@
 import { AnimeStatusDto } from '../../dtos/anime/anime-status.dto';
 import { AnimeStatus } from '../../models/anime/anime-status';
+import { EnumMapping } from '../enum-mapping';
 
 export namespace AnimeStatusMapper {
+
+	type AnimeStatusMapping = EnumMapping<AnimeStatusDto, AnimeStatus>;
 
 	const mappings: readonly AnimeStatusMapping[] = [
 		{ model: AnimeStatus.Airing, dto: AnimeStatusDto.Airing },
@@ -36,15 +39,5 @@ export namespace AnimeStatusMapper {
 		}
 
 		return mappingByModel.dto;
-	}
-
-	/** Anime status mapping. */
-	interface AnimeStatusMapping {
-
-		/** Anime status model. */
-		readonly model: AnimeStatus;
-
-		/** Anime status dto. */
-		readonly dto: AnimeStatusDto;
 	}
 }
