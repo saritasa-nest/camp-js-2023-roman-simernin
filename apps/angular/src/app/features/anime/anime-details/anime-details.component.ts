@@ -8,6 +8,7 @@ import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
+import { YoutubeUtils } from '@js-camp/core/utils/youtube.utils';
 
 import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
 
@@ -57,8 +58,7 @@ export class AnimeDetailsComponent {
 	 * @param youtubeTrailerId - Youtube trailer id.
 	 */
 	protected makeYoutubeTrailerUrl(youtubeTrailerId: string): SafeResourceUrl {
-		const youtubeTrailerUrl = `https://www.youtube.com/embed/${youtubeTrailerId}`;
-		return this.sanitizer.bypassSecurityTrustResourceUrl(youtubeTrailerUrl);
+		return this.sanitizer.bypassSecurityTrustResourceUrl(YoutubeUtils.makeEmbeddedUrl(youtubeTrailerId));
 	}
 
 	private catchAnimeGettingError(appError: AppError): Observable<never> {
