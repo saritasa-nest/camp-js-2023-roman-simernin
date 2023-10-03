@@ -10,9 +10,9 @@ export class AnimeInfoItemComponent {
 
 	/** Anime info item title. */
 	@Input({ required: true })
-	public title = '';
+	public itemTitle = '';
 
 	/** Anime info item value. */
 	@Input({ required: true })
-	public value = '';
+	public itemValue = '';
 }

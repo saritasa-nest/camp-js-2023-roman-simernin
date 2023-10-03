@@ -9,17 +9,17 @@
 		/>
 		<div class="anime-card__info">
 			<h2 class="anime-details-title">About anime</h2>
-			<camp-anime-info-item title="English title" [value]="animeDetails.englishTitle | titlecase | empty" />
-			<camp-anime-info-item title="Japanese title" [value]="animeDetails.japaneseTitle | titlecase | empty" />
-			<camp-anime-info-item title="Aired start date" [value]="animeDetails.airedStartDate | date | empty" />
-			<camp-anime-info-item title="Type" [value]="animeDetails.type | titlecase" />
-			<camp-anime-info-item title="Status" [value]="animeDetails.status | titlecase" />
-			<camp-anime-info-item title="Age rating" [value]="animeDetails.ageRating" />
-			<camp-anime-info-item title="Source" [value]="animeDetails.source" />
-			<camp-anime-info-item title="Season" [value]="animeDetails.season" />
-			<camp-anime-info-item title="Airing status" [value]="animeDetails.airingStatus ? 'Yes' : 'No'" />
-			<camp-anime-info-item title="Studios" [value]="animeDetails.studioNames.join(', ') | empty" />
-			<camp-anime-info-item title="Genres" [value]="animeDetails.genreNames.join(', ') | empty" />
+			<camp-anime-info-item itemTitle="English title" [itemValue]="animeDetails.englishTitle | titlecase | empty" />
+			<camp-anime-info-item itemTitle="Japanese title" [itemValue]="animeDetails.japaneseTitle | titlecase | empty" />
+			<camp-anime-info-item itemTitle="Aired start date" [itemValue]="animeDetails.airedStartDate | date | empty" />
+			<camp-anime-info-item itemTitle="Type" [itemValue]="animeDetails.type | titlecase" />
+			<camp-anime-info-item itemTitle="Status" [itemValue]="animeDetails.status | titlecase" />
+			<camp-anime-info-item itemTitle="Age rating" [itemValue]="animeDetails.ageRating" />
+			<camp-anime-info-item itemTitle="Source" [itemValue]="animeDetails.source" />
+			<camp-anime-info-item itemTitle="Season" [itemValue]="animeDetails.season" />
+			<camp-anime-info-item itemTitle="Airing status" [itemValue]="animeDetails.airingStatus ? 'Yes' : 'No'" />
+			<camp-anime-info-item itemTitle="Studios" [itemValue]="animeDetails.studioNames.join(', ') | empty" />
+			<camp-anime-info-item itemTitle="Genres" [itemValue]="animeDetails.genreNames.join(', ') | empty" />
 		</div>
 	</section>
 	<section class="anime-details__description" *ngIf="animeDetails.description !== ''" >
