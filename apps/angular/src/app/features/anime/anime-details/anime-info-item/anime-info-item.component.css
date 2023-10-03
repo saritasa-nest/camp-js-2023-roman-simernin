@@ -1,20 +1,20 @@
-.anime-info-item {
+:host {
   display: flex;
   justify-content: space-between;
 }
 
-.anime-info-item__title {
+.anime-info-item-title {
   font-weight: bold;
 }
 
-.anime-info-item__separator {
+.anime-info-item-separator {
   flex: 1 0;
   border-bottom: 1px dotted #000;
   height: 1em;
   margin: 0 0.4em;
 }
 
-.anime-info-item__data {
+.anime-info-item-value {
   overflow-wrap: break-word;
   text-align: right;
 }
