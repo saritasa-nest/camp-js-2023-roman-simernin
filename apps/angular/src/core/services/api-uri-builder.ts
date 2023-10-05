@@ -8,11 +8,13 @@ import { Injectable } from '@angular/core';
 export class ApiUriBuilder {
 	private readonly apiUrl = environment.apiUrl;
 
+	private readonly authBasePath = 'auth';
+
+	private readonly animeBasePath = 'anime/anime';
+
 	/** Build uri for search anime endpoint. */
 	public buildGetAnimeListUri(): string {
-		const path = 'anime/anime/';
-
-		return this.buildAbsoluteUri(path);
+		return this.buildAnimeBasePath('');
 	}
 
 	/**
@@ -20,35 +22,38 @@ export class ApiUriBuilder {
 	 * @param id - Anime id.
 	 * */
 	public buildGetAnimeByIdUri(id: number): string {
-		const path = `anime/anime/${id}/`;
-
-		return this.buildAbsoluteUri(path);
-	}
-
-	/** Get base uri for authentication endpoints. */
-	public getAuthBaseUri(): string {
-		return 'auth';
+		return this.buildAnimeBasePath(`${id}/`);
 	}
 
 	/** Build uri for login endpoint. */
 	public buildLoginUri(): string {
-		const path = `${this.getAuthBaseUri()}/login/`;
-
-		return this.buildAbsoluteUri(path);
+		return this.buildAuthBasePath('login/');
 	}
 
 	/** Build uri for registration endpoint. */
 	public buildRegistrationUri(): string {
-		const path = `${this.getAuthBaseUri()}/register/`;
-
-		return this.buildAbsoluteUri(path);
+		return this.buildAuthBasePath('register/');
 	}
 
 	/** Build uri for resfresh endpoint. */
 	public buildRefreshUri(): string {
-		const path = `${this.getAuthBaseUri()}/token/refresh/`;
+		return this.buildAuthBasePath('token/refresh/');
+	}
 
-		return this.buildAbsoluteUri(path);
+	/**
+	 * Provide uri is for authentication.
+	 * @param uri - Uri.
+	 * */
+	public isAuthUri(uri: string): boolean {
+		return uri.startsWith(this.authBasePath);
+	}
+
+	private buildAuthBasePath(path: string): string {
+		return this.buildAbsoluteUri(`${this.authBasePath}/${path}`);
+	}
+
+	private buildAnimeBasePath(path: string): string {
+		return this.buildAbsoluteUri(`${this.animeBasePath}/${path}`);
 	}
 
 	private buildAbsoluteUri(path: string): string {
