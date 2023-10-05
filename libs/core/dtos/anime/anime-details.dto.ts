@@ -10,12 +10,6 @@ export interface AnimeDetailsDto {
 	/** Identifier. */
 	readonly id: number;
 
-	/** Creation date. */
-	readonly created: string;
-
-	/** Modification date. */
-	readonly modified: string;
-
 	/** Title in English. */
 	readonly title_eng: string;
 
