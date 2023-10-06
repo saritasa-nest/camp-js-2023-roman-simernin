@@ -14,7 +14,7 @@ export class ApiUriBuilder {
 
 	/** Build uri for search anime endpoint. */
 	public buildGetAnimeListUri(): string {
-		return this.buildAnimeBasePath('');
+		return this.buildAnimeUri('');
 	}
 
 	/**
@@ -22,22 +22,22 @@ export class ApiUriBuilder {
 	 * @param id - Anime id.
 	 * */
 	public buildGetAnimeByIdUri(id: number): string {
-		return this.buildAnimeBasePath(`${id}/`);
+		return this.buildAnimeUri(`${id}/`);
 	}
 
 	/** Build uri for login endpoint. */
 	public buildLoginUri(): string {
-		return this.buildAuthBasePath('login/');
+		return this.buildAuthUri('login/');
 	}
 
 	/** Build uri for registration endpoint. */
 	public buildRegistrationUri(): string {
-		return this.buildAuthBasePath('register/');
+		return this.buildAuthUri('register/');
 	}
 
 	/** Build uri for resfresh endpoint. */
 	public buildRefreshUri(): string {
-		return this.buildAuthBasePath('token/refresh/');
+		return this.buildAuthUri('token/refresh/');
 	}
 
 	/**
@@ -48,15 +48,15 @@ export class ApiUriBuilder {
 		return uri.startsWith(this.authBasePath);
 	}
 
-	private buildAuthBasePath(path: string): string {
-		return this.buildAbsoluteUri(`${this.authBasePath}/${path}`);
+	private buildAuthUri(path: string): string {
+		return this.buildAbsoluteUri(this.authBasePath, path);
 	}
 
-	private buildAnimeBasePath(path: string): string {
-		return this.buildAbsoluteUri(`${this.animeBasePath}/${path}`);
+	private buildAnimeUri(path: string): string {
+		return this.buildAbsoluteUri(this.animeBasePath, path);
 	}
 
-	private buildAbsoluteUri(path: string): string {
-		return new URL(path, this.apiUrl).toString();
+	private buildAbsoluteUri(basePath: string, path: string): string {
+		return new URL(`${basePath}/${path}`, this.apiUrl).toString();
 	}
 }
