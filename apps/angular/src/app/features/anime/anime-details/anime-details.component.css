@@ -20,6 +20,17 @@
   max-height: var(--anime-image-size);
 }
 
+.anime-card__image-full-size-btn {
+  width: 30px;
+  height: 30px;
+}
+
+.anime-card__magnifying-glass {
+  content: url("../../../../assets/magnifying-glass.svg");
+  width: 100%;
+  height: 100%;
+}
+
 .anime-card__info {
   width: 100%;
 }

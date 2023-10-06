@@ -4,9 +4,13 @@
 		<img
 			class="anime-card__image"
 			[src]="animeDetails.imageUrl"
-			alt="Open dialog with full size anime cover"
-			(click)="openFullSizeImage(animeDetails.imageUrl)"
+			alt=""
 		/>
+		<button type="button"
+			class="anime-card__image-full-size-btn" 
+			(click)="openFullSizeImage(animeDetails.imageUrl)">
+			<i class="anime-card__magnifying-glass"></i>
+		</button>
 		<div class="anime-card__info">
 			<h2 class="anime-details-title">About anime</h2>
 			<camp-anime-info-item itemTitle="English title" [itemValue]="animeDetails.englishTitle | titlecase | empty" />
