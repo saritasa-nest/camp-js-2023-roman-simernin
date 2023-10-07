@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 /** Anime info item component. */
 @Component({
 	selector: 'camp-anime-info-item',
 	templateUrl: './anime-info-item.component.html',
 	styleUrls: ['./anime-info-item.component.css'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeInfoItemComponent {
 

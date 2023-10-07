@@ -32,10 +32,6 @@
 	</section>
 	<section class="anime-trailer anime-details__trailer" *ngIf="animeDetails.youtubeTrailerId !== null">
 		<h2 class="anime-details-title">Youtube trailer</h2>
-		<iframe
-			title="Youtube trailer"
-			class="anime-trailer__player"
-			[src]="makeYoutubeTrailerUrl(animeDetails.youtubeTrailerId)"
-		></iframe>
+		<camp-youtube-player class="anime-trailer__player" [videoId]="animeDetails.youtubeTrailerId"></camp-youtube-player>
 	</section>
 </main>

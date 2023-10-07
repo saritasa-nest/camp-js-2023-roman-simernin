@@ -2,13 +2,11 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Observable, map, switchMap } from 'rxjs';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
 import { AppError } from '@js-camp/core/models/app-error';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
-import { YoutubeUtils } from '@js-camp/core/utils/youtube.utils';
 
 import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
 
@@ -28,8 +26,6 @@ export class AnimeDetailsComponent {
 	private readonly router = inject(Router);
 
 	private readonly dialog = inject(MatDialog);
-
-	private readonly sanitizer = inject(DomSanitizer);
 
 	/** Anime details stream. */
 	protected readonly animeDetails$: Observable<AnimeDetails>;
@@ -51,14 +47,6 @@ export class AnimeDetailsComponent {
 			AnimeCoverModalComponent,
 			{ data: { imageUrl } },
 		);
-	}
-
-	/**
-	 * Make youtube trailer url.
-	 * @param youtubeTrailerId - Youtube trailer id.
-	 */
-	protected makeYoutubeTrailerUrl(youtubeTrailerId: string): SafeResourceUrl {
-		return this.sanitizer.bypassSecurityTrustResourceUrl(YoutubeUtils.makeEmbeddedUrl(youtubeTrailerId));
 	}
 
 	private catchAnimeGettingError(appError: AppError): Observable<never> {

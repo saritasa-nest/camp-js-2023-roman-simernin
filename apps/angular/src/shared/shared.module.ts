@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { EmptyPipe } from './pipes/empty.pipe';
 import { CommaJoinPipe } from './pipes/comma-join.pipe';
+import { YoutubePlayerComponent } from './components/youtube-player/youtube-player.component';
 
 /** Shared module. */
 @NgModule({
-	declarations: [EmptyPipe, CommaJoinPipe],
+	declarations: [EmptyPipe, CommaJoinPipe, YoutubePlayerComponent],
 	imports: [CommonModule],
-	exports: [EmptyPipe, CommaJoinPipe],
+	exports: [EmptyPipe, CommaJoinPipe, YoutubePlayerComponent],
 })
-export class SharedModule { }
+export class SharedModule {}
