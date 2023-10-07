@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
@@ -10,8 +10,13 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { AnimeMapper } from '@js-camp/core/mappers/anime/anime.mapper';
 import { AnimeParameters } from '@js-camp/core/models/anime/anime-parameters';
 import { AnimeParametersMapper } from '@js-camp/core/mappers/anime/anime-parameters.mapper';
-
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
+import { AnimeDetailsMapper } from '@js-camp/core/mappers/anime/anime-details.mapper';
+import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
+import { AnimeDetailsDto } from '@js-camp/core/dtos/anime/anime-details.dto';
+import { NotFoundError } from '@js-camp/core/models/not-found-error';
+
+import { catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
 
@@ -38,6 +43,22 @@ export class AnimeService {
 		})
 			.pipe(
 				map(paginationDto => PaginationMapper.fromDto(paginationDto, AnimeMapper.fromDto)),
+			);
+	}
+
+	/**
+	 * Get anime by id..
+	 * @param id - Anime id.
+	 * */
+	public getAnimeById(id: number): Observable<AnimeDetails> {
+		const uri = this.apiUriBuilder.buildGetAnimeByIdUri(id);
+
+		return this.httpClient.get<AnimeDetailsDto>(uri)
+			.pipe(
+				map(animeDetailsDto => AnimeDetailsMapper.fromDto(animeDetailsDto)),
+				catchApiError((apiError, throwApiError$) => apiError.statusCode === HttpStatusCode.NotFound ?
+					throwError(() => new NotFoundError('anime')) :
+					throwApiError$),
 			);
 	}
 }

@@ -1,3 +1,5 @@
+import { AnimeStatus } from './anime-status';
+
 /** Domain model anime for preview. */
 export interface Anime {
 
@@ -13,14 +15,14 @@ export interface Anime {
 	/** Title in Japanese. */
 	readonly japaneseTitle: string;
 
-	/** Start end date for airing. */
+	/** Start date of airing. */
 	readonly airedStartDate: Date;
 
 	/** Type. */
 	readonly type: AnimeType;
 
 	/** Status. */
-	readonly status: string;
+	readonly status: AnimeStatus;
 }
 
 /** Anime type. */

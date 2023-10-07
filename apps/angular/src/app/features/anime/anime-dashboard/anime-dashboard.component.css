@@ -23,8 +23,8 @@
 }
 
 .anime-table__cell-image {
-  max-width: var(--anime-image-size);
-  max-height: var(--anime-image-size);
+  width: var(--anime-thumbnail-image-size);
+  height: var(--anime-thumbnail-image-size);
 }
 
 .anime-pagination {

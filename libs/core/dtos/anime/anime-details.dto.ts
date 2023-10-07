@@ -1,18 +1,14 @@
+import { GenreDto } from './genre.dto';
 import { AnimeAiringDto } from './anime-airing.dto';
-import { AnimeStatusDto } from './anime-status.dto';
 import { AnimeTypeDto } from './anime-type.dto';
+import { StudioDto } from './studio.dto';
+import { AnimeStatusDto } from './anime-status.dto';
 
 /** DTO of anime for preview. */
-export interface AnimeDto {
+export interface AnimeDetailsDto {
 
 	/** Identifier. */
 	readonly id: number;
-
-	/** Creation date. */
-	readonly created: string;
-
-	/** Modification date. */
-	readonly modified: string;
 
 	/** Title in English. */
 	readonly title_eng: string;
@@ -37,4 +33,28 @@ export interface AnimeDto {
 
 	/** Amine rating specified by the user. */
 	readonly user_score: number;
+
+	/** Age rating. */
+	readonly rating: string;
+
+	/** Source. */
+	readonly source: string;
+
+	/** Season. */
+	readonly season: string;
+
+	/** Description. */
+	readonly synopsis: string;
+
+	/** Airing status. */
+	readonly airing: boolean;
+
+	/** Studios. */
+	readonly studios_data: readonly StudioDto[];
+
+	/** Genres. */
+	readonly genres_data: readonly GenreDto[];
+
+	/** Youtube trailer id. */
+	readonly trailer_youtube_id: string | null;
 }
