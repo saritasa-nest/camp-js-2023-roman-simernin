@@ -3,6 +3,9 @@ import { AnimeDetailsDto } from '../../dtos/anime/anime-details.dto';
 
 import { AnimeTypeMapper } from './anime-type.mapper';
 import { AnimeStatusMapper } from './anime-status.mapper';
+import { AnimeRatingMapper } from './anime-rating.mapper';
+import { AnimeSourceMapper } from './anime-source.mapper';
+import { AnimeSeasonMapper } from './anime-season.mapper';
 
 export namespace AnimeDetailsMapper {
 
@@ -19,9 +22,9 @@ export namespace AnimeDetailsMapper {
 			airedStartDate: new Date(dto.aired.start),
 			type: AnimeTypeMapper.fromDto(dto.type),
 			status: AnimeStatusMapper.fromDto(dto.status),
-			ageRating: dto.rating,
-			source: dto.source,
-			season: dto.season,
+			ageRating: AnimeRatingMapper.fromDto(dto.rating),
+			source: AnimeSourceMapper.fromDto(dto.source),
+			season: AnimeSeasonMapper.fromDto(dto.season),
 			description: dto.synopsis,
 			isAiring: dto.airing,
 			studioNames: dto.studios_data.map(studioDto => studioDto.name),

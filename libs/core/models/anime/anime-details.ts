@@ -1,4 +1,7 @@
 import { AnimeType } from './anime';
+import { AnimeRating } from './anime-rating';
+import { AnimeSeason } from './anime-season';
+import { AnimeSource } from './anime-source';
 import { AnimeStatus } from './anime-status';
 
 /** Anime details. */
@@ -26,13 +29,13 @@ export interface AnimeDetails {
 	readonly status: AnimeStatus;
 
 	/** Age rating. */
-	readonly ageRating: string;
+	readonly ageRating: AnimeRating;
 
 	/** Source. */
-	readonly source: string;
+	readonly source: AnimeSource;
 
 	/** Season. */
-	readonly season: string;
+	readonly season: AnimeSeason;
 
 	/** Description. */
 	readonly description: string;
