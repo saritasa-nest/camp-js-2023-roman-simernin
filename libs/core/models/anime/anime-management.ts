@@ -5,14 +5,11 @@ import { AnimeSeason } from './anime-season';
 import { AnimeSource } from './anime-source';
 import { AnimeStatus } from './anime-status';
 
-/** Anime details. */
-export interface AnimeDetails {
+/** Model for anime create/edit. */
+export interface AnimeManagement {
 
-	/** Identifier. */
-	readonly id: number;
-
-	/** Image URL. */
-	readonly imageUrl: string;
+	/** Youtube trailer id. */
+	readonly youtubeTrailerId: string | null;
 
 	/** Title in English. */
 	readonly englishTitle: string;
@@ -20,14 +17,20 @@ export interface AnimeDetails {
 	/** Title in Japanese. */
 	readonly japaneseTitle: string;
 
-	/** Start date of airing. */
-	readonly airedDates: AnimeAiring;
-
 	/** Type. */
 	readonly type: AnimeType;
 
 	/** Status. */
 	readonly status: AnimeStatus;
+
+	/** Provides anime is airing. */
+	readonly isAiring: boolean;
+
+	/** Airing dates. */
+	readonly airedDates: AnimeAiring;
+
+	/** Description. */
+	readonly description: string;
 
 	/** Age rating. */
 	readonly ageRating: AnimeRating;
@@ -37,19 +40,4 @@ export interface AnimeDetails {
 
 	/** Season. */
 	readonly season: AnimeSeason;
-
-	/** Description. */
-	readonly description: string;
-
-	/** Provides anime is airing. */
-	readonly isAiring: boolean;
-
-	/** Studios names. */
-	readonly studioNames: readonly string[];
-
-	/** Genres names. */
-	readonly genreNames: readonly string[];
-
-	/** Youtube trailer id. */
-	readonly youtubeTrailerId: string | null;
 }
