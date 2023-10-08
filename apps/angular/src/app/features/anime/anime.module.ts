@@ -19,6 +19,7 @@ import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.compo
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 import { AnimeCoverModalComponent } from './anime-details/anime-cover-modal/anime-cover-modal.component';
 import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-info-item.component';
+import { AnimeFormComponent } from './anime-management/anime-form/anime-form.component';
 
 /** Anime module. */
 @NgModule({
@@ -38,7 +39,13 @@ import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-in
 		MatIconModule,
 		MatButtonModule,
 	],
-	declarations: [AnimeDashboardComponent, AnimeDetailsComponent, AnimeCoverModalComponent, AnimeInfoItemComponent],
+	declarations: [
+		AnimeDashboardComponent,
+		AnimeDetailsComponent,
+		AnimeCoverModalComponent,
+		AnimeInfoItemComponent,
+		AnimeFormComponent,
+	],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })
 export class AnimeModule {}
