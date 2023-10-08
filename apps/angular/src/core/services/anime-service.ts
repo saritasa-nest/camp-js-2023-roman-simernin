@@ -15,8 +15,10 @@ import { AnimeDetailsMapper } from '@js-camp/core/mappers/anime/anime-details.ma
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { AnimeDetailsDto } from '@js-camp/core/dtos/anime/anime-details.dto';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
+import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
+import { AnimeManagementMapper } from '@js-camp/core/mappers/anime/anime-management.mapper';
 
-import { catchApiError } from '../utils/rxjs/catch-api-error';
+import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
 
@@ -59,6 +61,34 @@ export class AnimeService {
 				catchApiError((apiError, throwApiError$) => apiError.statusCode === HttpStatusCode.NotFound ?
 					throwError(() => new NotFoundError('anime')) :
 					throwApiError$),
+			);
+	}
+
+	/**
+	 * Create anime.
+	 * @param animeManagement - Anime management model.
+	 */
+	public createAnime(animeManagement: AnimeManagement): Observable<number | void> {
+		const uri = this.apiUriBuilder.buildCreateAnimeUri();
+
+		return this.httpClient.post<AnimeDetailsDto>(uri, AnimeManagementMapper.toCreateDto(animeManagement))
+			.pipe(
+				map(detailsDto => detailsDto.id),
+				catchApiError(apiError => applicationApiErrorHandler(apiError)),
+			);
+	}
+
+	/**
+	 * Edit anime.
+	 * @param animeManagement - Anime management model.
+	 * @param id - Anime id.
+	 */
+	public editAnime(id: number, animeManagement: AnimeManagement): Observable<void> {
+		const uri = this.apiUriBuilder.buildEditAnimeUri(id);
+
+		return this.httpClient.put<void>(uri, AnimeManagementMapper.toEditDto(animeManagement))
+			.pipe(
+				catchApiError(apiError => applicationApiErrorHandler(apiError)),
 			);
 	}
 

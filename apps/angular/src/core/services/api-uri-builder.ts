@@ -25,6 +25,19 @@ export class ApiUriBuilder {
 		return this.buildAnimeUri(`${id}/`);
 	}
 
+	/** Build uri for creation endpoint. */
+	public buildCreateAnimeUri(): string {
+		return this.buildAnimeUri('');
+	}
+
+	/**
+	 * Build uri for anime editing endpoint.
+	 * @param id - Anime id.
+	 */
+	public buildEditAnimeUri(id: number): string {
+		return this.buildAnimeUri(`${id}/`);
+	}
+
 	/**
 	 * Build uri for anime deleting by id endpoint.
 	 * @param id - Anime id.
