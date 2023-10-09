@@ -1,0 +1,53 @@
+<form>
+    <mat-form-field *ngIf="formGroup.controls.englishTitle as englishTitle">
+        <mat-label>English title</mat-label>
+        <input matInput [formControl]="englishTitle" />
+    </mat-form-field>
+
+    <mat-form-field *ngIf="formGroup.controls.japaneseTitle as japaneseTitle">
+        <mat-label>Japanese title</mat-label>
+        <input matInput [formControl]="japaneseTitle" />
+    </mat-form-field>
+
+    <mat-form-field class="anime-form__description" *ngIf="formGroup.controls.description as description">
+        <mat-label>Description</mat-label>
+        <textarea matInput [formControl]="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="formGroup.controls.type as type">
+        <mat-label>Type</mat-label>
+        <mat-select [formControl]="type">
+            <mat-option *ngFor="let type of animeTypes; trackBy trackByIndex" [value]="type">{{type}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="formGroup.controls.status as status">
+        <mat-label>Status</mat-label>
+        <mat-select [formControl]="status">
+            <mat-option *ngFor="let status of animeStatuses; trackBy trackByIndex" [value]="status">{{status}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="formGroup.controls.ageRating as rating">
+        <mat-label>Rating</mat-label>
+        <mat-select [formControl]="rating">
+            <mat-option *ngFor="let rating of animeRatings; trackBy trackByIndex" [value]="rating">{{rating}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="formGroup.controls.source as source">
+        <mat-label>Source</mat-label>
+        <mat-select [formControl]="source">
+            <mat-option *ngFor="let source of animeSources; trackBy trackByIndex" [value]="source">{{source}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="formGroup.controls.season as season">
+        <mat-label>Season</mat-label>
+        <mat-select [formControl]="season">
+            <mat-option *ngFor="let season of animeSeasons; trackBy trackByIndex" [value]="season">{{season}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+	<button type="submit" mat-button>Save</button>
+</form>
