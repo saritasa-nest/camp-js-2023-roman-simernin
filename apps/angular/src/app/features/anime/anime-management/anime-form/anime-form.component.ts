@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject} from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
+import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
 import { AnimeRating } from '@js-camp/core/models/anime/anime-rating';
 import { AnimeSeason } from '@js-camp/core/models/anime/anime-season';
 import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
@@ -17,10 +18,10 @@ interface AnimeManagementFormControls {
 	readonly japaneseTitle: FormControl<string>;
 
 	/** Type. */
-	readonly type: FormControl<AnimeType | null>;
+	readonly type: FormControl<AnimeType>;
 
 	/** Status. */
-	readonly status: FormControl<AnimeStatus | null>;
+	readonly status: FormControl<AnimeStatus>;
 
 	/** Provides anime is airing. */
 	readonly isAiring: FormControl<boolean>;
@@ -29,13 +30,19 @@ interface AnimeManagementFormControls {
 	readonly description: FormControl<string>;
 
 	/** Age rating. */
-	readonly ageRating: FormControl<AnimeRating | null>;
+	readonly ageRating: FormControl<AnimeRating>;
 
 	/** Source. */
-	readonly source: FormControl<AnimeSource | null>;
+	readonly source: FormControl<AnimeSource>;
 
 	/** Season. */
-	readonly season: FormControl<AnimeSeason | null>;
+	readonly season: FormControl<AnimeSeason>;
+
+	/** Aired start date. */
+	readonly airedStart: FormControl<Date>;
+
+	/** Aired end date. */
+	readonly airedEnd: FormControl<Date>;
 }
 
 /** Anime form component. */
@@ -67,17 +74,23 @@ export class AnimeFormComponent {
 	/** Anime management form group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
 
+	/** Submit event. */
+	@Output()
+	public submitEvent = new EventEmitter<AnimeManagement>();
+
 	public constructor() {
 		this.formGroup = this.formBuilder.group({
 			englishTitle: ['', [Validators.required]],
 			japaneseTitle: ['', [Validators.required]],
-			type: [null as AnimeType | null, [Validators.required]],
-			status: [null as AnimeStatus | null, [Validators.required]],
+			type: [AnimeType.Unknown, [Validators.required]],
+			status: [AnimeStatus.NotYetAired, [Validators.required]],
 			isAiring: [false, [Validators.required]],
 			description: ['', [Validators.required]],
-			ageRating: [null as AnimeRating | null, [Validators.required]],
-			source: [null as AnimeSource | null, [Validators.required]],
-			season: [null as AnimeSeason | null, [Validators.required]],
+			ageRating: [AnimeRating.Unknown, [Validators.required]],
+			source: [AnimeSource.Unknown, [Validators.required]],
+			season: [AnimeSeason.NonSeasonal, [Validators.required]],
+			airedStart: [new Date(), [Validators.required]],
+			airedEnd: [new Date(), [Validators.required]],
 		});
 	}
 
@@ -87,5 +100,21 @@ export class AnimeFormComponent {
 	 */
 	protected trackByIndex(index: number): number {
 		return index;
+	}
+
+	/** Handle anime management form submitting. */
+	protected handleSubmit(): void {
+		this.formGroup.markAllAsTouched();
+
+		if (this.formGroup.invalid) {
+			return;
+		}
+
+		const formData = this.formGroup.getRawValue();
+
+		this.submitEvent.emit({
+			...formData,
+			youtubeTrailerId: null,
+		});
 	}
 }

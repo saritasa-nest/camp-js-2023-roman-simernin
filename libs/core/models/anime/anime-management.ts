@@ -26,8 +26,11 @@ export interface AnimeManagement {
 	/** Provides anime is airing. */
 	readonly isAiring: boolean;
 
-	/** Airing dates. */
-	readonly airedDates: AnimeAiring;
+	/** Aired start date. */
+	readonly airedStart: Date;
+
+	/** Aired end date. */
+	readonly airedEnd: Date;
 
 	/** Description. */
 	readonly description: string;

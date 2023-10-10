@@ -24,7 +24,8 @@ export namespace AnimeManagementMapper {
 			type: details.type,
 			status: details.status,
 			isAiring: details.isAiring,
-			airedDates: details.airedDates,
+			airedStart: details.airedDates.start,
+			airedEnd: details.airedDates.end,
 			description: details.description,
 			ageRating: details.ageRating,
 			source: details.source,
@@ -38,14 +39,17 @@ export namespace AnimeManagementMapper {
 	 */
 	export function toCreateDto(management: AnimeManagement): AnimeCreateDto {
 		return {
-			image: '',
+			image: 'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
 			trailer_youtube_id: management.youtubeTrailerId,
 			title_eng: management.englishTitle,
 			title_jpn: management.japaneseTitle,
 			type: AnimeTypeMapper.toDto(management.type),
 			status: AnimeStatusMapper.toDto(management.status),
 			airing: management.isAiring,
-			aired: AnimeAiringMapper.toDto(management.airedDates),
+			aired: AnimeAiringMapper.toDto({
+				start: management.airedStart,
+				end: management.airedEnd,
+			}),
 			synopsis: management.description,
 			studios: [],
 			genres: [],
@@ -68,7 +72,10 @@ export namespace AnimeManagementMapper {
 			type: AnimeTypeMapper.toDto(management.type),
 			status: AnimeStatusMapper.toDto(management.status),
 			airing: management.isAiring,
-			aired: AnimeAiringMapper.toDto(management.airedDates),
+			aired: AnimeAiringMapper.toDto({
+				start: management.airedStart,
+				end: management.airedEnd,
+			}),
 			synopsis: management.description,
 			studios: [],
 			genres: [],

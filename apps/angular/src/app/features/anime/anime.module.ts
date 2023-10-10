@@ -13,6 +13,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '@js-camp/angular/shared/shared.module';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
@@ -20,6 +22,7 @@ import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 import { AnimeCoverModalComponent } from './anime-details/anime-cover-modal/anime-cover-modal.component';
 import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-info-item.component';
 import { AnimeFormComponent } from './anime-management/anime-form/anime-form.component';
+import { AnimeCreationComponent } from './anime-management/anime-creation/anime-creation.component';
 
 /** Anime module. */
 @NgModule({
@@ -38,6 +41,8 @@ import { AnimeFormComponent } from './anime-management/anime-form/anime-form.com
 		MatDialogModule,
 		MatIconModule,
 		MatButtonModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
 	],
 	declarations: [
 		AnimeDashboardComponent,
@@ -45,6 +50,7 @@ import { AnimeFormComponent } from './anime-management/anime-form/anime-form.com
 		AnimeCoverModalComponent,
 		AnimeInfoItemComponent,
 		AnimeFormComponent,
+		AnimeCreationComponent,
 	],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })

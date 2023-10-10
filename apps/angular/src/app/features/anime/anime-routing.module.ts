@@ -5,11 +5,17 @@ import { shouldBeAuthenticatedGuard } from '@js-camp/angular/core/guards/auth.gu
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
+import { AnimeCreationComponent } from './anime-management/anime-creation/anime-creation.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: AnimeDashboardComponent,
+	},
+	{
+		path: 'create',
+		component: AnimeCreationComponent,
+		canActivateChild: [shouldBeAuthenticatedGuard],
 	},
 	{
 		path: ':id',

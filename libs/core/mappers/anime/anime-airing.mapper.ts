@@ -20,8 +20,8 @@ export namespace AnimeAiringMapper {
 	 */
 	export function toDto(model: AnimeAiring): AnimeAiringDto {
 		return {
-			start: model.start.toString(),
-			end: model.end.toString(),
+			start: model.start.toISOString(),
+			end: model.end.toISOString(),
 		};
 	}
 }
