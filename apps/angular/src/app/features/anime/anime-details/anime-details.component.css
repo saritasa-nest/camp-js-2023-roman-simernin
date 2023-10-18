@@ -88,19 +88,6 @@
   width: 75%;
 }
 
-.anime-details__management {
-  margin-top: 50px;
-}
-
-.anime-management {
-  display: flex;
-  justify-content: center;
-}
-
-.anime-management__action {
-  width: 25%;
-}
-
 @media (width < 786px) {
   .anime-card {
     flex-direction: column;
