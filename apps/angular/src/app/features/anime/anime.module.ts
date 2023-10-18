@@ -13,8 +13,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '@js-camp/angular/shared/shared.module';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
@@ -23,12 +24,12 @@ import { AnimeCoverModalComponent } from './anime-details/anime-cover-modal/anim
 import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-info-item.component';
 import { AnimeFormComponent } from './anime-management/anime-form/anime-form.component';
 import { AnimeCreationComponent } from './anime-management/anime-creation/anime-creation.component';
+import { AnimeEditingComponent } from './anime-management/anime-editing/anime-editing.component';
 
 /** Anime module. */
 @NgModule({
 	imports: [
 		HttpClientModule,
-		CommonModule,
 		MatTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -36,13 +37,15 @@ import { AnimeCreationComponent } from './anime-management/anime-creation/anime-
 		MatFormFieldModule,
 		ReactiveFormsModule,
 		MatInputModule,
-		AnimeRoutingModule,
 		SharedModule,
 		MatDialogModule,
 		MatIconModule,
 		MatButtonModule,
 		MatDatepickerModule,
 		MatNativeDateModule,
+		CommonModule,
+		RouterModule,
+		AnimeRoutingModule,
 	],
 	declarations: [
 		AnimeDashboardComponent,
@@ -51,6 +54,7 @@ import { AnimeCreationComponent } from './anime-management/anime-creation/anime-
 		AnimeInfoItemComponent,
 		AnimeFormComponent,
 		AnimeCreationComponent,
+		AnimeEditingComponent,
 	],
 	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })

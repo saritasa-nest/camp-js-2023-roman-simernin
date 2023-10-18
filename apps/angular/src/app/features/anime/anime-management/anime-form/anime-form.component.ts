@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, inject} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
 import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
@@ -55,7 +55,7 @@ interface AnimeManagementFormControls {
 	styleUrls: ['./anime-form.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnimeFormComponent {
+export class AnimeFormComponent implements OnInit {
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
@@ -77,6 +77,10 @@ export class AnimeFormComponent {
 	/** Anime management form group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
 
+	/** Anime management. */
+	@Input()
+	public animeManagement: AnimeManagement | null = null;
+
 	/** Submit event. */
 	@Output()
 	public submitEvent = new EventEmitter<AnimeManagement>();
@@ -96,6 +100,13 @@ export class AnimeFormComponent {
 			airedEnd: [new Date(), [Validators.required]],
 			imageFile: [new File([], ''), [Validators.required]],
 		});
+	}
+
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		if (this.animeManagement !== null) {
+			this.formGroup.patchValue(this.animeManagement);
+		}
 	}
 
 	/**

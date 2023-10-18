@@ -1,5 +1,4 @@
 import { AnimeType } from './anime';
-import { AnimeAiring } from './anime-airing';
 import { AnimeRating } from './anime-rating';
 import { AnimeSeason } from './anime-season';
 import { AnimeSource } from './anime-source';

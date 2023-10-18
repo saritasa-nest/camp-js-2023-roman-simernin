@@ -86,13 +86,14 @@ export class AnimeService {
 	 * @param animeManagement - Anime management model.
 	 * @param id - Anime id.
 	 */
-	public editAnime(id: number, animeManagement: AnimeManagement): Observable<void> {
+	public editAnime(id: number, animeManagement: AnimeManagement): Observable<number> {
 		const uri = this.apiUriBuilder.buildEditAnimeUri(id);
 
-		return this.httpClient.put<void>(uri, AnimeManagementMapper.toEditDto(animeManagement))
-			.pipe(
-				catchApiError(apiError => applicationApiErrorHandler(apiError)),
-			);
+		return this.imageFileService.addToStorage(animeManagement.imageFile, ImageFileType.AnimeImage).pipe(
+			map(imageUrl => AnimeManagementMapper.toEditDto({ ...animeManagement, imageUrl })),
+			switchMap(animeMangementDto => this.httpClient.put<AnimeDetailsDto>(uri, animeMangementDto)),
+			map(detailsDto => detailsDto.id),
+		);
 	}
 
 	/**
