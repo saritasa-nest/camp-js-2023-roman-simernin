@@ -12,6 +12,14 @@ export class ApiUriBuilder {
 
 	private readonly animeBasePath = 'anime/anime';
 
+	/**
+	 * Provide url is from api.
+	 * @param url - URL.
+	 * */
+	public isApiUrl(url: string): boolean {
+		return url.startsWith(this.apiUrl);
+	}
+
 	/** Build uri for search anime endpoint. */
 	public buildGetAnimeListUri(): string {
 		return this.buildAnimeUri('');
@@ -67,6 +75,11 @@ export class ApiUriBuilder {
 	 * */
 	public isAuthUri(uri: string): boolean {
 		return uri.startsWith(this.authBasePath);
+	}
+
+	/** Build uri for getting s3 parameters. */
+	public buildS3ParamsUri(): string {
+		return this.buildAbsoluteUri('s3direct', 'get_params/');
 	}
 
 	private buildAuthUri(path: string): string {

@@ -8,6 +8,12 @@ import { AnimeStatus } from './anime-status';
 /** Model for anime create/edit. */
 export interface AnimeManagement {
 
+	/** Image url. */
+	readonly imageUrl: string;
+
+	/** Image file. */
+	readonly imageFile: File;
+
 	/** Youtube trailer id. */
 	readonly youtubeTrailerId: string | null;
 

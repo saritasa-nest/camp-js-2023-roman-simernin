@@ -43,6 +43,9 @@ interface AnimeManagementFormControls {
 
 	/** Aired end date. */
 	readonly airedEnd: FormControl<Date>;
+
+	/** Image file. */
+	readonly imageFile: FormControl<File>;
 }
 
 /** Anime form component. */
@@ -91,6 +94,7 @@ export class AnimeFormComponent {
 			season: [AnimeSeason.NonSeasonal, [Validators.required]],
 			airedStart: [new Date(), [Validators.required]],
 			airedEnd: [new Date(), [Validators.required]],
+			imageFile: [new File([], ''), [Validators.required]],
 		});
 	}
 
@@ -115,6 +119,25 @@ export class AnimeFormComponent {
 		this.submitEvent.emit({
 			...formData,
 			youtubeTrailerId: null,
+			imageUrl: '',
 		});
+	}
+
+	/**
+	 * Upload image file.
+	 * @param target Image input.
+	 */
+	protected uploadImageFile(target: EventTarget | null): void {
+		if (target === null) {
+			return;
+		}
+
+		const { files } = target as HTMLInputElement;
+		if (files === null) {
+			return;
+		}
+		const file = files[0];
+
+		this.formGroup.patchValue({ imageFile: file });
 	}
 }

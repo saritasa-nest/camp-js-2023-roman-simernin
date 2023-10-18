@@ -19,6 +19,10 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
 	/** @inheritdoc */
 	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+		if (!this.apiUriBuilder.isApiUrl(request.url)) {
+			return next.handle(request);
+		}
+
 		if (this.isAuthenticationRequest(request)) {
 			return next.handle(request);
 		}

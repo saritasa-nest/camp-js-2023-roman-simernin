@@ -18,6 +18,8 @@ export namespace AnimeManagementMapper {
 	 */
 	export function fromDetails(details: AnimeDetails): AnimeManagement {
 		return {
+			imageUrl: details.imageUrl,
+			imageFile: new File([], ''),
 			youtubeTrailerId: details.youtubeTrailerId,
 			englishTitle: details.englishTitle,
 			japaneseTitle: details.japaneseTitle,
@@ -39,7 +41,7 @@ export namespace AnimeManagementMapper {
 	 */
 	export function toCreateDto(management: AnimeManagement): AnimeCreateDto {
 		return {
-			image: 'https://upload.wikimedia.org/wikipedia/en/9/90/One_Piece%2C_Volume_61_Cover_%28Japanese%29.jpg',
+			image: management.imageUrl,
 			trailer_youtube_id: management.youtubeTrailerId,
 			title_eng: management.englishTitle,
 			title_jpn: management.japaneseTitle,
@@ -65,7 +67,7 @@ export namespace AnimeManagementMapper {
 	 */
 	export function toEditDto(management: AnimeManagement): AnimeEditDto {
 		return {
-			image: '',
+			image: management.imageUrl,
 			trailer_youtube_id: management.youtubeTrailerId,
 			title_eng: management.englishTitle,
 			title_jpn: management.japaneseTitle,

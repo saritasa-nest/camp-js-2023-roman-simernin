@@ -65,5 +65,7 @@
         <mat-datepicker #airedEndPicker />
     </mat-form-field>
 
+    <input type="file" (change)="uploadImageFile($event.target)" accept=".jpg, .png, .webp"/>
+
 	<button type="submit" mat-button>Save</button>
 </form>

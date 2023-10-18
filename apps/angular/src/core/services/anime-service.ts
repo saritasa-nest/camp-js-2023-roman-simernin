@@ -1,7 +1,7 @@
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { map, switchMap } from 'rxjs/operators';
+import { Injectable, inject } from '@angular/core';
 
 import { Anime } from '@js-camp/core/models/anime/anime';
 import { AnimeDto } from '@js-camp/core/dtos/anime/anime.dto';
@@ -17,19 +17,22 @@ import { AnimeDetailsDto } from '@js-camp/core/dtos/anime/anime-details.dto';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
 import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/anime/anime-management.mapper';
+import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
 
 import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
+import { ImageFileService } from './image-file.service';
 
 /** Service for actions with anime. */
 @Injectable()
 export class AnimeService {
 
-	public constructor(
-		private readonly httpClient: HttpClient,
-		private readonly apiUriBuilder: ApiUriBuilder,
-	) { }
+	private readonly httpClient = inject(HttpClient);
+
+	private readonly apiUriBuilder = inject(ApiUriBuilder);
+
+	private readonly imageFileService = inject(ImageFileService);
 
 	/**
 	 * Get anime list.
@@ -71,11 +74,11 @@ export class AnimeService {
 	public createAnime(animeManagement: AnimeManagement): Observable<number | void> {
 		const uri = this.apiUriBuilder.buildCreateAnimeUri();
 
-		return this.httpClient.post<AnimeDetailsDto>(uri, AnimeManagementMapper.toCreateDto(animeManagement))
-			.pipe(
-				map(detailsDto => detailsDto.id),
-				catchApiError(apiError => applicationApiErrorHandler(apiError)),
-			);
+		return this.imageFileService.addToStorage(animeManagement.imageFile, ImageFileType.AnimeImage).pipe(
+			map(imageUrl => AnimeManagementMapper.toCreateDto({ ...animeManagement, imageUrl })),
+			switchMap(animeMangementDto => this.httpClient.post<AnimeDetailsDto>(uri, animeMangementDto)),
+			map(detailsDto => detailsDto.id),
+		);
 	}
 
 	/**
