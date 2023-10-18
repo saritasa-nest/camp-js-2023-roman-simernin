@@ -1,4 +1,7 @@
 <main class="anime-details" *ngIf="animeDetails$ | async as animeDetails">
+	<a routerLink="anime" mat-icon-button>
+		<mat-icon>arrow_back</mat-icon>
+	</a>
 	<h1 class="anime-details__title typography typography_title">{{animeDetails.englishTitle ? animeDetails.englishTitle : animeDetails.japaneseTitle}}</h1>
 	<section class="anime-card">
 		<div class="anime-card__image-container">

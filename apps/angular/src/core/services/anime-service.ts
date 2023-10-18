@@ -71,7 +71,7 @@ export class AnimeService {
 	 * Create anime.
 	 * @param animeManagement - Anime management model.
 	 */
-	public createAnime(animeManagement: AnimeManagement): Observable<number | void> {
+	public createAnime(animeManagement: AnimeManagement): Observable<number> {
 		const uri = this.apiUriBuilder.buildCreateAnimeUri();
 
 		return this.imageFileService.addToStorage(animeManagement.imageFile, ImageFileType.AnimeImage).pipe(
