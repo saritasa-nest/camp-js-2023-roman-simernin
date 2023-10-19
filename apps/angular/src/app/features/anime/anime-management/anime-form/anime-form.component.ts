@@ -6,6 +6,7 @@ import { AnimeRating } from '@js-camp/core/models/anime/anime-rating';
 import { AnimeSeason } from '@js-camp/core/models/anime/anime-season';
 import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
 import { AnimeStatus } from '@js-camp/core/models/anime/anime-status';
+import { ImageFile } from '@js-camp/core/models/image-file';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
 /** Anime management form controls. */
@@ -45,7 +46,7 @@ interface AnimeManagementFormControls {
 	readonly airedEnd: FormControl<Date>;
 
 	/** Image file. */
-	readonly imageFile: FormControl<File>;
+	readonly imageFile: FormControl<ImageFile>;
 }
 
 /** Anime form component. */
@@ -98,7 +99,7 @@ export class AnimeFormComponent implements OnInit {
 			season: [AnimeSeason.NonSeasonal, [Validators.required]],
 			airedStart: [new Date(), [Validators.required]],
 			airedEnd: [new Date(), [Validators.required]],
-			imageFile: [new File([], ''), [Validators.required]],
+			imageFile: [{ source: null } as ImageFile],
 		});
 	}
 
@@ -130,25 +131,6 @@ export class AnimeFormComponent implements OnInit {
 		this.submitEvent.emit({
 			...formData,
 			youtubeTrailerId: null,
-			imageUrl: '',
 		});
-	}
-
-	/**
-	 * Upload image file.
-	 * @param target Image input.
-	 */
-	protected uploadImageFile(target: EventTarget | null): void {
-		if (target === null) {
-			return;
-		}
-
-		const { files } = target as HTMLInputElement;
-		if (files === null) {
-			return;
-		}
-		const file = files[0];
-
-		this.formGroup.patchValue({ imageFile: file });
 	}
 }

@@ -57,15 +57,7 @@
         <mat-datepicker #airedStartPicker />
     </mat-form-field>
 
-    <mat-form-field *ngIf="formGroup.controls.airedEnd as airedEnd">
-        <mat-label>Aired end</mat-label>
-        <input matInput [matDatepicker]="airedEndPicker" [formControl]="airedEnd">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="airedEndPicker" />
-        <mat-datepicker #airedEndPicker />
-    </mat-form-field>
-
-    <input type="file" (change)="uploadImageFile($event.target)" accept=".jpg, .png, .webp"/>
-
+    <camp-image-file-uploading matInput [formControl]="formGroup.controls.imageFile"/>
+        
 	<button type="submit" mat-button>Save</button>
 </form>

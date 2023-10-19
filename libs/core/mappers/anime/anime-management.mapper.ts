@@ -18,8 +18,7 @@ export namespace AnimeManagementMapper {
 	 */
 	export function fromDetails(details: AnimeDetails): AnimeManagement {
 		return {
-			imageUrl: details.imageUrl,
-			imageFile: new File([], ''),
+			imageFile: { source: details.imageUrl },
 			youtubeTrailerId: details.youtubeTrailerId,
 			englishTitle: details.englishTitle,
 			japaneseTitle: details.japaneseTitle,
@@ -41,7 +40,7 @@ export namespace AnimeManagementMapper {
 	 */
 	export function toCreateDto(management: AnimeManagement): AnimeCreateDto {
 		return {
-			image: management.imageUrl,
+			image: management.imageFile.source as string,
 			trailer_youtube_id: management.youtubeTrailerId,
 			title_eng: management.englishTitle,
 			title_jpn: management.japaneseTitle,
@@ -67,7 +66,7 @@ export namespace AnimeManagementMapper {
 	 */
 	export function toEditDto(management: AnimeManagement): AnimeEditDto {
 		return {
-			image: management.imageUrl,
+			image: management.imageFile.source as string,
 			trailer_youtube_id: management.youtubeTrailerId,
 			title_eng: management.englishTitle,
 			title_jpn: management.japaneseTitle,

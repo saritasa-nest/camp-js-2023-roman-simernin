@@ -1,4 +1,4 @@
-import { Observable, throwError } from 'rxjs';
+import { Observable, defer, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { Injectable, inject } from '@angular/core';
@@ -19,7 +19,7 @@ import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/anime/anime-management.mapper';
 import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
 
-import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
+import { catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
 import { ImageFileService } from './image-file.service';
@@ -74,11 +74,20 @@ export class AnimeService {
 	public createAnime(animeManagement: AnimeManagement): Observable<number> {
 		const uri = this.apiUriBuilder.buildCreateAnimeUri();
 
-		return this.imageFileService.addToStorage(animeManagement.imageFile, ImageFileType.AnimeImage).pipe(
-			map(imageUrl => AnimeManagementMapper.toCreateDto({ ...animeManagement, imageUrl })),
-			switchMap(animeMangementDto => this.httpClient.post<AnimeDetailsDto>(uri, animeMangementDto)),
-			map(detailsDto => detailsDto.id),
-		);
+		const imageFileSource = animeManagement.imageFile.source;
+
+		if (imageFileSource instanceof File) {
+			return this.imageFileService.addToStorage(imageFileSource, ImageFileType.AnimeImage).pipe(
+				map(imageStorageUrl => AnimeManagementMapper.toCreateDto({
+					...animeManagement,
+					imageFile: { source: imageStorageUrl },
+				})),
+				switchMap(animeMangementDto => this.httpClient.post<AnimeDetailsDto>(uri, animeMangementDto)),
+				map(detailsDto => detailsDto.id),
+			);
+		}
+
+		throw new Error('Image file source for anime creation must be File.');
 	}
 
 	/**
@@ -89,8 +98,27 @@ export class AnimeService {
 	public editAnime(id: number, animeManagement: AnimeManagement): Observable<number> {
 		const uri = this.apiUriBuilder.buildEditAnimeUri(id);
 
-		return this.imageFileService.addToStorage(animeManagement.imageFile, ImageFileType.AnimeImage).pipe(
-			map(imageUrl => AnimeManagementMapper.toEditDto({ ...animeManagement, imageUrl })),
+		const imageFileSource = animeManagement.imageFile.source;
+
+		if (imageFileSource === null) {
+			throw new Error('Image file source for anime updating can not br equal null.');
+		}
+
+		const animeManagement$ = defer(() => {
+			if (imageFileSource instanceof File) {
+				return this.imageFileService.addToStorage(imageFileSource, ImageFileType.AnimeImage).pipe(
+					map(imageStorageUrl => ({
+						...animeManagement,
+						imageFile: { source: imageStorageUrl },
+					})),
+				);
+			}
+
+			return of(animeManagement);
+		});
+
+		return animeManagement$.pipe(
+			map(animeManagementData => AnimeManagementMapper.toEditDto(animeManagementData)),
 			switchMap(animeMangementDto => this.httpClient.put<AnimeDetailsDto>(uri, animeMangementDto)),
 			map(detailsDto => detailsDto.id),
 		);

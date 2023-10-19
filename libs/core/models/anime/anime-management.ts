@@ -1,3 +1,4 @@
+import { ImageFile } from '../image-file';
 import { AnimeType } from './anime';
 import { AnimeRating } from './anime-rating';
 import { AnimeSeason } from './anime-season';
@@ -7,11 +8,8 @@ import { AnimeStatus } from './anime-status';
 /** Model for anime create/edit. */
 export interface AnimeManagement {
 
-	/** Image url. */
-	readonly imageUrl: string;
-
-	/** Image file. */
-	readonly imageFile: File;
+	/** Image file.*/
+	readonly imageFile: ImageFile;
 
 	/** Youtube trailer id. */
 	readonly youtubeTrailerId: string | null;
