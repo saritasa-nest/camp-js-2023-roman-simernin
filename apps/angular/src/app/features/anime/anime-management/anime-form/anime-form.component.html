@@ -57,6 +57,11 @@
         <mat-datepicker #airedStartPicker />
     </mat-form-field>
 
+    <mat-form-field *ngIf="formGroup.controls.youtubeTrailerId as youtubeTrailerId">
+        <mat-label>Youtube trailer id</mat-label>
+        <input matInput [formControl]="youtubeTrailerId" />
+    </mat-form-field>
+
     <camp-image-file-uploading matInput [formControl]="formGroup.controls.imageFile"/>
         
 	<button type="submit" mat-button>Save</button>

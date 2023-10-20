@@ -47,6 +47,9 @@ interface AnimeManagementFormControls {
 
 	/** Image file. */
 	readonly imageFile: FormControl<ImageFile>;
+
+	/** Youtube trailer id. */
+	readonly youtubeTrailerId: FormControl<string | null>;
 }
 
 /** Anime form component. */
@@ -100,6 +103,7 @@ export class AnimeFormComponent implements OnInit {
 			airedStart: [new Date(), [Validators.required]],
 			airedEnd: [new Date(), [Validators.required]],
 			imageFile: [{ source: null } as ImageFile],
+			youtubeTrailerId: [null as string | null],
 		});
 	}
 
@@ -130,7 +134,6 @@ export class AnimeFormComponent implements OnInit {
 
 		this.submitEvent.emit({
 			...formData,
-			youtubeTrailerId: null,
 		});
 	}
 }
