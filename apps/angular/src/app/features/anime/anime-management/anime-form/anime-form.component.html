@@ -62,6 +62,8 @@
         <input matInput [formControl]="youtubeTrailerId" />
     </mat-form-field>
 
+    <mat-checkbox [formControl]="formGroup.controls.isAiring"/>
+
     <camp-image-file-uploading matInput [formControl]="formGroup.controls.imageFile"/>
         
 	<button type="submit" mat-button>Save</button>

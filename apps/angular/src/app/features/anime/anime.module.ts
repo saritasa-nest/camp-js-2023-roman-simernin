@@ -16,6 +16,7 @@ import { SharedModule } from '@js-camp/angular/shared/shared.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
@@ -46,6 +47,7 @@ import { AnimeEditingComponent } from './anime-management/anime-editing/anime-ed
 		CommonModule,
 		RouterModule,
 		AnimeRoutingModule,
+		MatCheckboxModule,
 	],
 	declarations: [
 		AnimeDashboardComponent,
