@@ -66,7 +66,7 @@
 
     <camp-image-file-uploading matInput [formControl]="formGroup.controls.imageFile"/>
 
-    <camp-multiple-autocomplete *ngIf="genreItems$ | async as genreItems" [totalItems]="genreItems"/>
+    <camp-multiple-autocomplete *ngIf="genreItems$ | async as genreItems" [totalItems]="genreItems" (parametersChanged)="changeGenreItems($event)"/>
     
 	<button type="submit" mat-button>Save</button>
 </form>

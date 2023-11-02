@@ -16,7 +16,7 @@
         (matChipInputTokenEnd)="handleItemAdded($event)"/>
         
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleItemSelected($event)">
-        <mat-option *ngFor="let itemOption of filteredItems$ | async; trackBy: trackItem" [value]="itemOption.id">
+        <mat-option *ngFor="let itemOption of totalItems; trackBy: trackItem" [value]="itemOption.id">
             {{ itemOption.name }}
         </mat-option>
     </mat-autocomplete>    

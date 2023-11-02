@@ -9,8 +9,9 @@ import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
 import { AnimeStatus } from '@js-camp/core/models/anime/anime-status';
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
+import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
@@ -86,6 +87,11 @@ export class AnimeFormComponent implements OnInit {
 	/** Genre multiple autocomplete items. */
 	protected readonly genreItems$: Observable<readonly MultipleAutocompleteItem[]>;
 
+	/** Genre multiple autocomplete item parameters. */
+	protected readonly genreItemsParameters$ = new BehaviorSubject<MultipleAutocompleteParameters>({
+		search: '',
+	});
+
 	/** Anime management form group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
 
@@ -148,8 +154,17 @@ export class AnimeFormComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * Change genre multiple autocomplete items.
+	 * @param parameters - Parameters.
+	 */
+	protected changeGenreItems(parameters: MultipleAutocompleteParameters): void {
+		this.genreItemsParameters$.next(parameters);
+	}
+
 	private getGenreItems(): Observable<MultipleAutocompleteItem[]> {
-		return this.genreService.getGenreList().pipe(
+		return this.genreItemsParameters$.pipe(
+			switchMap(parameters => this.genreService.getGenreList({ search: parameters.search })),
 			map(paginatedGenres => paginatedGenres.results.map(genre => ({
 				id: genre.id,
 				name: genre.name,

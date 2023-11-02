@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormControl, NonNullableFormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
-import { Observable, map, startWith } from 'rxjs';
-import {ENTER} from '@angular/cdk/keycodes';
+import { debounceTime, startWith, tap } from 'rxjs';
+import { ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** Multiple autocomplete component. */
 @Component({
@@ -13,9 +15,11 @@ import { MatChipInputEvent } from '@angular/material/chips';
 	styleUrls: ['./multiple-autocomplete.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MultipleAutocompleteComponent {
+export class MultipleAutocompleteComponent implements OnInit {
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
+
+	private readonly destroyRef = inject(DestroyRef);
 
 	/** Chip input separators. */
 	protected readonly chipInputSeparators = [ENTER] as readonly number[];
@@ -26,20 +30,21 @@ export class MultipleAutocompleteComponent {
 	/** Input control for item name. */
 	protected itemNameControl: FormControl<string>;
 
-	/** Filtered multiple autocomplete items stream. */
-	protected filteredItems$: Observable<readonly MultipleAutocompleteItem[]>;
-
 	/** Total multiple autocomplete items. */
 	@Input({ required: true })
 	public totalItems: readonly MultipleAutocompleteItem[] = [];
 
+	/** Parameters changed event. */
+	@Output() 
+	public parametersChanged = new EventEmitter<MultipleAutocompleteParameters>();
+
 	public constructor() {
 		this.itemNameControl = this.formBuilder.control<string>('');
+	}
 
-		this.filteredItems$ = this.itemNameControl.valueChanges.pipe(
-			startWith(''),
-			map(itemName => this.filterItems(itemName)),
-		); 
+	/** @inheritdoc */
+	public ngOnInit(): void {
+		this.subscribeToItemSearch();
 	}
 
 	/**
@@ -74,26 +79,26 @@ export class MultipleAutocompleteComponent {
 		event.chipInput.clear();
 		this.itemNameControl.setValue('');
 
-		const itemName = event.value;
+		const itemNameToAdd = event.value;
 
-		if (itemName === '') {
+		if (itemNameToAdd === '') {
 			return;
 		}
 
 		const isSelectedBefore = this.selectedItems
-			.some(item => item.name.toLowerCase() === itemName.toLowerCase());
+			.some(item => this.compareItemNames(item.name, itemNameToAdd));
 
 		if (isSelectedBefore) {
 			return;
 		}
 
 		let itemToAdd = this.totalItems
-			.find(item => item.name.toLowerCase() === itemName.toLowerCase());
+			.find(item => this.compareItemNames(item.name, itemNameToAdd));
 
 		if (itemToAdd === undefined) {
 			itemToAdd = {
 				id: null,
-				name: itemName,
+				name: itemNameToAdd,
 			};
 		}
 
@@ -118,14 +123,19 @@ export class MultipleAutocompleteComponent {
 		return item.name;
 	}
 
-	private filterItems(itemIdentity: string | number): readonly MultipleAutocompleteItem[] {
-		if (typeof (itemIdentity) === 'number') {
-			return this.totalItems
-				.filter(item => item.id === itemIdentity);
-		}
+	private subscribeToItemSearch(): void {
+		this.itemNameControl.valueChanges.pipe(
+			startWith(''),
+			debounceTime(1500),
+			tap(itemName => this.parametersChanged.emit({
+				search: itemName,
+			})),
+			takeUntilDestroyed(this.destroyRef),
+		)
+			.subscribe();
+	}
 
-		return itemIdentity === '' ? this.totalItems : this.totalItems
-			.filter(item => item.name.toLowerCase()
-				.includes(itemIdentity.toLowerCase()));
+	private compareItemNames(itemName: string, itemNameToCompare: string): boolean {
+		return itemName.toLowerCase() === itemNameToCompare.toLowerCase();
 	}
 }
