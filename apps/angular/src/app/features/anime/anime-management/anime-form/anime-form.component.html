@@ -65,6 +65,8 @@
     <mat-checkbox [formControl]="formGroup.controls.isAiring"/>
 
     <camp-image-file-uploading matInput [formControl]="formGroup.controls.imageFile"/>
-        
+
+    <camp-multiple-autocomplete *ngIf="genreItems$ | async as genreItems" [totalItems]="genreItems"/>
+    
 	<button type="submit" mat-button>Save</button>
 </form>

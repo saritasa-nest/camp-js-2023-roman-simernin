@@ -3,22 +3,46 @@ import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 import { EmptyPipe } from './pipes/empty.pipe';
 import { JoinPipe } from './pipes/join.pipe';
 import { YoutubePlayerComponent } from './components/youtube-player/youtube-player.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { ImageFileUploadingComponent } from './components/image-file-uploading/image-file-uploading.component';
+import { MultipleAutocompleteComponent } from './components/multiple-autocomplete/multiple-autocomplete.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 /** Shared module. */
 @NgModule({
-	declarations: [EmptyPipe, JoinPipe, YoutubePlayerComponent, ConfirmationModalComponent, ImageFileUploadingComponent],
+	declarations: [
+		EmptyPipe,
+		JoinPipe,
+		YoutubePlayerComponent,
+		ConfirmationModalComponent,
+		ImageFileUploadingComponent,
+		MultipleAutocompleteComponent,
+	],
 	imports: [
 		CommonModule, 
 		MatDialogModule, 
-		MatButtonModule,
+		MatButtonModule, 
 		MatIconModule,
+		MatAutocompleteModule,
+		MatChipsModule,
+		ReactiveFormsModule,
+		MatInputModule,
 	],
-	exports: [EmptyPipe, JoinPipe, YoutubePlayerComponent, ConfirmationModalComponent, ImageFileUploadingComponent],
+	exports: [
+		EmptyPipe, 
+		JoinPipe, 
+		YoutubePlayerComponent, 
+		ConfirmationModalComponent, 
+		ImageFileUploadingComponent,
+		MultipleAutocompleteComponent,
+	],
 })
 export class SharedModule {}

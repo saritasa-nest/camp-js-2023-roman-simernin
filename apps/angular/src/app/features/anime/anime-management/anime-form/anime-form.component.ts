@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { GenreService } from '@js-camp/angular/core/services/genre-service';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
 import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
 import { AnimeRating } from '@js-camp/core/models/anime/anime-rating';
@@ -7,7 +8,9 @@ import { AnimeSeason } from '@js-camp/core/models/anime/anime-season';
 import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
 import { AnimeStatus } from '@js-camp/core/models/anime/anime-status';
 import { ImageFile } from '@js-camp/core/models/image-file';
+import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
+import { Observable, map } from 'rxjs';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
@@ -63,6 +66,8 @@ export class AnimeFormComponent implements OnInit {
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
+	private readonly genreService = inject(GenreService);
+
 	/** Anime types. */
 	protected readonly animeTypes = EnumUtils.toArray(AnimeType);
 
@@ -78,6 +83,9 @@ export class AnimeFormComponent implements OnInit {
 	/** Anime seasons. */
 	protected readonly animeSeasons = EnumUtils.toArray(AnimeSeason);
 
+	/** Genre multiple autocomplete items. */
+	protected readonly genreItems$: Observable<readonly MultipleAutocompleteItem[]>;
+
 	/** Anime management form group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
 
@@ -90,6 +98,9 @@ export class AnimeFormComponent implements OnInit {
 	public submitEvent = new EventEmitter<AnimeManagement>();
 
 	public constructor() {
+
+		this.genreItems$ = this.getGenreItems();
+
 		this.formGroup = this.formBuilder.group({
 			englishTitle: ['', [Validators.required]],
 			japaneseTitle: ['', [Validators.required]],
@@ -135,5 +146,14 @@ export class AnimeFormComponent implements OnInit {
 		this.submitEvent.emit({
 			...formData,
 		});
+	}
+
+	private getGenreItems(): Observable<MultipleAutocompleteItem[]> {
+		return this.genreService.getGenreList().pipe(
+			map(paginatedGenres => paginatedGenres.results.map(genre => ({
+				id: genre.id,
+				name: genre.name,
+			}))),
+		);
 	}
 }

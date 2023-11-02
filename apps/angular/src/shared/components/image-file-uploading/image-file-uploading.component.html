@@ -1,5 +1,5 @@
 <button mat-icon-button type="button" (click)="imageFileInput.click()" [disabled]="isDisabled">
     <mat-icon>image</mat-icon>
 </button>
-<input hidden matInput type="file" #imageFileInput (change)="uploadImageFile($event)" accept=".jpg, .png"/>
+<input hidden type="file" #imageFileInput (change)="uploadImageFile($event)" accept=".jpg, .png"/>
 <img *ngIf="imageFileUrl$ | async as imageFileUrl" [src]="imageFileUrl" alt=""/>

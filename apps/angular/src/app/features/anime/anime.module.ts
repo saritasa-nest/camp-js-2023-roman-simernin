@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
+import { GenreService } from '@js-camp/angular/core/services/genre-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -58,6 +59,6 @@ import { AnimeEditingComponent } from './anime-management/anime-editing/anime-ed
 		AnimeCreationComponent,
 		AnimeEditingComponent,
 	],
-	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
+	providers: [AnimeService, GenreService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
 })
 export class AnimeModule {}

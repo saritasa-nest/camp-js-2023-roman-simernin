@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { BehaviorSubject, Observable, filter, from, switchMap} from 'rxjs';
@@ -23,6 +23,7 @@ type ImageFileTouchedFunction = () => void;
 			useExisting: ImageFileUploadingComponent,
 		},
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageFileUploadingComponent implements ControlValueAccessor, Validator {
 
