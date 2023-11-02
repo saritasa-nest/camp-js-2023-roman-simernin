@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/anime/anime-management.mapper';
-import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
+import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { Observable, map, switchMap, tap } from 'rxjs';
 
 /** Anime editing component. */
@@ -26,7 +26,7 @@ export class AnimeEditingComponent {
 	protected readonly animeId$: Observable<number>;
 
 	/** Anime management stream. */
-	protected readonly animeManagement$: Observable<AnimeManagement>;
+	protected readonly animeManagement$: Observable<AnimeFormData>;
 
 	public constructor() {
 		this.animeId$ = this.activatedRoute.params.pipe(
@@ -43,7 +43,7 @@ export class AnimeEditingComponent {
 	 * Edit anime.
 	 * @param animeManagement - Anime management model.
 	 * */
-	protected editAnime(animeManagement: AnimeManagement): void {
+	protected editAnime(animeManagement: AnimeFormData): void {
 		this.animeId$.pipe(
 			switchMap(id => this.animeService.editAnime(id, animeManagement)),
 			tap(id => this.router.navigate(['/anime', id])),

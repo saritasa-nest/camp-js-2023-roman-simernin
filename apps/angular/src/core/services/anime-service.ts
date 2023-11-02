@@ -15,7 +15,7 @@ import { AnimeDetailsMapper } from '@js-camp/core/mappers/anime/anime-details.ma
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { AnimeDetailsDto } from '@js-camp/core/dtos/anime/anime-details.dto';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
-import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
+import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { AnimeManagementMapper } from '@js-camp/core/mappers/anime/anime-management.mapper';
 import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
 
@@ -23,6 +23,8 @@ import { catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
 import { ImageFileService } from './image-file.service';
+import { AnimeCreateData } from '@js-camp/core/models/anime/anime-create-data';
+import { AnimeCreateMapper } from '@js-camp/core/mappers/anime/anime-create.mapper';
 
 /** Service for actions with anime. */
 @Injectable()
@@ -69,25 +71,14 @@ export class AnimeService {
 
 	/**
 	 * Create anime.
-	 * @param animeManagement - Anime management model.
+	 * @param animeCreateData - Anime creatiom data.
 	 */
-	public createAnime(animeManagement: AnimeManagement): Observable<number> {
+	public createAnime(animeCreateData: AnimeCreateData): Observable<number> {
 		const uri = this.apiUriBuilder.buildCreateAnimeUri();
 
-		const imageFileSource = animeManagement.imageFile.source;
-
-		if (imageFileSource instanceof File) {
-			return this.imageFileService.addToStorage(imageFileSource, ImageFileType.AnimeImage).pipe(
-				map(imageStorageUrl => AnimeManagementMapper.toCreateDto({
-					...animeManagement,
-					imageFile: { source: imageStorageUrl },
-				})),
-				switchMap(animeMangementDto => this.httpClient.post<AnimeDetailsDto>(uri, animeMangementDto)),
-				map(detailsDto => detailsDto.id),
-			);
-		}
-
-		throw new Error('Image file source for anime creation must be File.');
+		return this.httpClient.post<AnimeDetailsDto>(uri, AnimeCreateMapper.toDto(animeCreateData)).pipe(
+			map(details => details.id),
+		);
 	}
 
 	/**
@@ -95,7 +86,7 @@ export class AnimeService {
 	 * @param animeManagement - Anime management model.
 	 * @param id - Anime id.
 	 */
-	public editAnime(id: number, animeManagement: AnimeManagement): Observable<number> {
+	public editAnime(id: number, animeManagement: AnimeFormData): Observable<number> {
 		const uri = this.apiUriBuilder.buildEditAnimeUri(id);
 
 		const imageFileSource = animeManagement.imageFile.source;

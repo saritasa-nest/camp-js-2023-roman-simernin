@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { AnimeMultipleAutocompleteService, animeMultipleAutocompleteGroups } from '@js-camp/angular/core/services/anime-multiple-autocomplete.service';
 import { GenreService } from '@js-camp/angular/core/services/genre-service';
+import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
-import { AnimeManagement } from '@js-camp/core/models/anime/anime-management';
+import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { AnimeRating } from '@js-camp/core/models/anime/anime-rating';
 import { AnimeSeason } from '@js-camp/core/models/anime/anime-season';
 import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
@@ -11,7 +13,7 @@ import { ImageFile } from '@js-camp/core/models/image-file';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
-import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
@@ -54,6 +56,9 @@ interface AnimeManagementFormControls {
 
 	/** Youtube trailer id. */
 	readonly youtubeTrailerId: FormControl<string | null>;
+
+	/** Genres. */
+	readonly genres: FormControl<MultipleAutocompleteItem[]>;
 }
 
 /** Anime form component. */
@@ -62,6 +67,12 @@ interface AnimeManagementFormControls {
 	templateUrl: './anime-form.component.html',
 	styleUrls: ['./anime-form.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [
+		{
+			provide: MultipleAutocompleteService,
+			useClass: AnimeMultipleAutocompleteService,
+		},
+	],
 })
 export class AnimeFormComponent implements OnInit {
 
@@ -84,9 +95,6 @@ export class AnimeFormComponent implements OnInit {
 	/** Anime seasons. */
 	protected readonly animeSeasons = EnumUtils.toArray(AnimeSeason);
 
-	/** Genre multiple autocomplete items. */
-	protected readonly genreItems$: Observable<readonly MultipleAutocompleteItem[]>;
-
 	/** Genre multiple autocomplete item parameters. */
 	protected readonly genreItemsParameters$ = new BehaviorSubject<MultipleAutocompleteParameters>({
 		search: '',
@@ -95,18 +103,20 @@ export class AnimeFormComponent implements OnInit {
 	/** Anime management form group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
 
+	/** Multiple autocomplete groups. */
+	protected get multipleAutocompleteGroups(): typeof animeMultipleAutocompleteGroups {
+		return animeMultipleAutocompleteGroups;
+	}
+
 	/** Anime management. */
 	@Input()
-	public animeManagement: AnimeManagement | null = null;
+	public animeManagement: AnimeFormData | null = null;
 
 	/** Submit event. */
 	@Output()
-	public submitEvent = new EventEmitter<AnimeManagement>();
+	public submitEvent = new EventEmitter<AnimeFormData>();
 
 	public constructor() {
-
-		this.genreItems$ = this.getGenreItems();
-
 		this.formGroup = this.formBuilder.group({
 			englishTitle: ['', [Validators.required]],
 			japaneseTitle: ['', [Validators.required]],
@@ -121,6 +131,7 @@ export class AnimeFormComponent implements OnInit {
 			airedEnd: [new Date(), [Validators.required]],
 			imageFile: [{ source: null } as ImageFile],
 			youtubeTrailerId: [null as string | null],
+			genres: [[] as MultipleAutocompleteItem[]],
 		});
 	}
 
@@ -152,23 +163,5 @@ export class AnimeFormComponent implements OnInit {
 		this.submitEvent.emit({
 			...formData,
 		});
-	}
-
-	/**
-	 * Change genre multiple autocomplete items.
-	 * @param parameters - Parameters.
-	 */
-	protected changeGenreItems(parameters: MultipleAutocompleteParameters): void {
-		this.genreItemsParameters$.next(parameters);
-	}
-
-	private getGenreItems(): Observable<MultipleAutocompleteItem[]> {
-		return this.genreItemsParameters$.pipe(
-			switchMap(parameters => this.genreService.getGenreList({ search: parameters.search })),
-			map(paginatedGenres => paginatedGenres.results.map(genre => ({
-				id: genre.id,
-				name: genre.name,
-			}))),
-		);
 	}
 }

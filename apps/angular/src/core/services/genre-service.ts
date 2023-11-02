@@ -35,4 +35,17 @@ export class GenreService {
 				map(paginationDto => PaginationMapper.fromDto(paginationDto, GenreMapper.fromDto)),
 			);
 	}
+
+	/**
+	 * Create genre.
+	 * @param genreName - Genre name.
+	 */
+	public createGenre(genreName: string): Observable<number> {
+		const uri = this.apiUriBuilder.buildCreateGenreUri();
+
+		return this.httpClient.post<GenreDto>(uri, { name: genreName, type: 'GENRES' })
+			.pipe(
+				map(genreDto => genreDto.id),
+			);
+	}
 }

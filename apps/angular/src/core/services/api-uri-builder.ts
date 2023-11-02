@@ -59,6 +59,11 @@ export class ApiUriBuilder {
 		return this.buildAbsoluteUri('anime', 'genres/');
 	}
 
+	/** Build uri for creation genre endpoint. */
+	public buildCreateGenreUri(): string {
+		return this.buildAbsoluteUri('anime', 'genres/');
+	}
+
 	/** Build uri for login endpoint. */
 	public buildLoginUri(): string {
 		return this.buildAuthUri('login/');

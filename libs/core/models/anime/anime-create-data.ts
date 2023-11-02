@@ -1,15 +1,14 @@
-import { ImageFile } from '../image-file';
 import { AnimeType } from './anime';
 import { AnimeRating } from './anime-rating';
 import { AnimeSeason } from './anime-season';
 import { AnimeSource } from './anime-source';
 import { AnimeStatus } from './anime-status';
 
-/** Model for anime create/edit. */
-export interface AnimeManagement {
+/** Data for anime creation. */
+export interface AnimeCreateData {
 
 	/** Image file.*/
-	readonly imageFile: ImageFile;
+	readonly imageUrl: string;
 
 	/** Youtube trailer id. */
 	readonly youtubeTrailerId: string | null;
@@ -46,4 +45,7 @@ export interface AnimeManagement {
 
 	/** Season. */
 	readonly season: AnimeSeason;
+
+	/** Genres ids. */
+	readonly genreIds: number[];
 }
