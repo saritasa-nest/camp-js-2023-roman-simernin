@@ -5,6 +5,9 @@ import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomp
 import { BehaviorSubject, Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, shareReplay, startWith, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
+import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
+import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
+import { Pagination } from '@js-camp/core/models/pagination';
 
 type MultipleAutocompleteChangedFunction = (addedItems: MultipleAutocompleteItem[]) => void;
 type MultipleAutocompleteTouchedFunction = () => void;
@@ -32,6 +35,11 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	// Must be provided in parent component.
 	private readonly multipleAutocompleteService = inject(MultipleAutocompleteService);
 
+	private readonly defaultPagination: PaginationParameters = {
+		pageNumber: 1,
+		pageSize: 50,
+	};
+
 	private onMultipleAutocompleteChanged: MultipleAutocompleteChangedFunction | null = null;
 
 	private onMultipleAutocompleteTouched: MultipleAutocompleteTouchedFunction | null = null;
@@ -48,10 +56,16 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	protected isDisabled = false;
 
 	/** Total multiple autocomplete items stream. */
-	protected readonly totalItems$: Observable<readonly MultipleAutocompleteItem[]>;
+	protected readonly totalItems$: Observable<Pagination<MultipleAutocompleteItem>>;
+
+	/** Multiple autocomplete parameters. */
+	protected readonly parameters$ = new BehaviorSubject<MultipleAutocompleteParameters>({
+		search: '',
+		...this.defaultPagination,
+	});
 
 	/** Stream provides items are loading. */
-	protected readonly isItemsLoaded$ = new BehaviorSubject(false);
+	protected readonly isItemsLoading$ = new BehaviorSubject(true);
 
 	/** Item group. */
 	@Input({ required: true })
@@ -60,21 +74,18 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	public constructor() {
 		this.itemNameControl = this.formBuilder.control<string>('');
 
-		this.totalItems$ = this.itemNameControl.valueChanges.pipe(
-			startWith(''),
-			distinctUntilChanged(),
-			tap(() => this.isItemsLoaded$.next(false)),
+		this.totalItems$ = this.parameters$.pipe(
+			tap(() => this.isItemsLoading$.next(true)),
 			debounceTime(1500),
-			switchMap(itemName => this.multipleAutocompleteService.getItems(this.itemGroup, {
-				search: itemName,
-			})),
-			tap(() => this.isItemsLoaded$.next(true)),
+			switchMap(parameters => this.multipleAutocompleteService.getItems(this.itemGroup, parameters)),
+			tap(() => this.isItemsLoading$.next(false)),
 			shareReplay({ bufferSize: 1, refCount: true }),
 		);
 	}
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
+		this.subscribeToItemSearch();
 		this.subscribeToItemAdding();
 	}
 
@@ -138,14 +149,26 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	 * Provides prohibition for item creation.
 	 * @param totalItems - Total items.
 	 */
-	protected isForbiddenToCreateItem(totalItems: readonly MultipleAutocompleteItem[] | null): boolean {
-		if (totalItems === null) {
-			return true;
-		}
-
+	protected isForbiddenToCreateItem(totalItems: readonly MultipleAutocompleteItem[]): boolean {
 		const itemNameToCreate = this.itemNameControl.value;
 
 		return !this.canCreateItem(itemNameToCreate, totalItems);
+	}
+
+	/**
+	 * Scroll.
+	 * @param previousParameters - Previous multiple autocomplete parameters.
+	 * @param totalCount - Total count.
+	 */
+	protected scroll(previousParameters: MultipleAutocompleteParameters, totalCount: number): void {
+		if (previousParameters.pageSize >= totalCount) {
+			return;
+		}
+
+		this.parameters$.next({
+			...previousParameters,
+			pageSize: previousParameters.pageSize + this.defaultPagination.pageSize,
+		});
 	}
 
 	/**
@@ -157,12 +180,24 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		return item.name;
 	}
 
+	private subscribeToItemSearch(): void {
+		this.itemNameControl.valueChanges.pipe(
+			distinctUntilChanged(),
+			tap(itemNameToSearch => this.parameters$.next({
+				search: itemNameToSearch,
+				...this.defaultPagination,
+			})),
+			takeUntilDestroyed(this.destroyRef),
+		)
+			.subscribe();
+	}
+
 	private subscribeToItemAdding(): void {
 		combineLatest([
 			this.itemIdentityToAdd$,
 			this.totalItems$,
 		]).pipe(
-			tap(([itemIdentityToAdd, totalItems]) => this.addItem(itemIdentityToAdd, totalItems)),
+			tap(([itemIdentityToAdd, totalItems]) => this.addItem(itemIdentityToAdd, totalItems.results)),
 			takeUntilDestroyed(this.destroyRef),
 		)
 			.subscribe();
@@ -181,7 +216,6 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 		this.onMultipleAutocompleteChanged?.(this.addedItems);
 		this.itemNameControl.reset();
-		this.itemNameControl.setValue('');
 	}
 
 	private trySelectItem(itemIdToSelect: number, totalItems: readonly MultipleAutocompleteItem[]): boolean {

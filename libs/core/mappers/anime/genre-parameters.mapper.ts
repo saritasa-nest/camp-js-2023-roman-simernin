@@ -10,6 +10,8 @@ export namespace GenreParametersMapper {
 	export function toDto(model: GenreParameters): GenreParametersDto {
 		return {
 			search: model.search,
+			limit: model.pageSize,
+			offset: model.pageSize * (model.pageNumber - 1),
 		};
 	}
 }

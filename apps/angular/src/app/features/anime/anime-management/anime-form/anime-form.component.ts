@@ -11,9 +11,7 @@ import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
 import { AnimeStatus } from '@js-camp/core/models/anime/anime-status';
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
-import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
-import { BehaviorSubject } from 'rxjs';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
@@ -94,11 +92,6 @@ export class AnimeFormComponent implements OnInit {
 
 	/** Anime seasons. */
 	protected readonly animeSeasons = EnumUtils.toArray(AnimeSeason);
-
-	/** Genre multiple autocomplete item parameters. */
-	protected readonly genreItemsParameters$ = new BehaviorSubject<MultipleAutocompleteParameters>({
-		search: '',
-	});
 
 	/** Anime management form group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;

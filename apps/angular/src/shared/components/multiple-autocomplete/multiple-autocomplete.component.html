@@ -14,10 +14,17 @@
         [disabled]="isDisabled"/>
         
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleItemSelected($event)">
-        <ng-container *ngIf="isItemsLoaded$ | async; else itemsLoadingOption">
-            <mat-option *ngFor="let itemOption of totalItems$ | async; trackBy: trackItem" [value]="itemOption.id">
-                {{ itemOption.name }}
-            </mat-option>
+        <ng-container *ngIf="totalItems$ | async as totalItems; else itemsLoadingOption">
+            <div class="autocomplete-option-container" *ngIf="parameters$ | async as parameters"
+                infiniteScroll 
+                [infiniteScrollDistance]="1"
+                [scrollWindow]="false"
+                [infiniteScrollThrottle]="50" 
+                (scrolled)="scroll(parameters, totalItems.totalCount)">    
+                <mat-option *ngFor="let itemOption of totalItems.results; trackBy: trackItem" [value]="itemOption.id">
+                    {{ itemOption.name }}
+                </mat-option>
+            </div>
         </ng-container>
         <ng-template #itemsLoadingOption>
             <mat-option disabled="true">Loading...</mat-option>
@@ -27,6 +34,6 @@
 <button mat-icon-button 
     type="button" 
     (click)="handleItemAdding()" 
-    [disabled]="(isItemsLoaded$ | async) === false || isForbiddenToCreateItem(totalItems$ | async)">
+    [disabled]="(isItemsLoading$ | async) || isForbiddenToCreateItem((totalItems$ | async)?.results ?? [])">
     <mat-icon>add_circle_outline</mat-icon>
 </button>  
