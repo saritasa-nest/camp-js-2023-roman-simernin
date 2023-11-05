@@ -156,18 +156,35 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	}
 
 	/**
-	 * Scroll.
+	 * Scroll to next page.
 	 * @param previousParameters - Previous multiple autocomplete parameters.
 	 * @param totalCount - Total count.
 	 */
-	protected scroll(previousParameters: MultipleAutocompleteParameters, totalCount: number): void {
-		if (previousParameters.pageSize >= totalCount) {
+	protected scrollToNextPage(previousParameters: MultipleAutocompleteParameters, totalCount: number): void {
+		const lastPageNumber = Math.ceil(totalCount / previousParameters.pageSize);
+
+		if (previousParameters.pageNumber === lastPageNumber) {
 			return;
 		}
 
 		this.parameters$.next({
 			...previousParameters,
-			pageSize: previousParameters.pageSize + this.defaultPagination.pageSize,
+			pageNumber: previousParameters.pageNumber + 1,
+		});
+	}
+
+	/**
+	 * Scroll to previous page.
+	 * @param previousParameters - Previous multiple autocomplete parameters.
+	 */
+	protected scrollToPreviousPage(previousParameters: MultipleAutocompleteParameters): void {
+		if (previousParameters.pageNumber === 1) {
+			return;
+		}
+
+		this.parameters$.next({
+			...previousParameters,
+			pageNumber: previousParameters.pageNumber - 1,
 		});
 	}
 

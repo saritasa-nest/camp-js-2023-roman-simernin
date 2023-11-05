@@ -20,7 +20,8 @@
                 [infiniteScrollDistance]="1"
                 [scrollWindow]="false"
                 [infiniteScrollThrottle]="50" 
-                (scrolled)="scroll(parameters, totalItems.totalCount)">    
+                (scrolled)="scrollToNextPage(parameters, totalItems.totalCount)"
+                (scrolledUp)="scrollToPreviousPage(parameters)">    
                 <mat-option *ngFor="let itemOption of totalItems.results; trackBy: trackItem" [value]="itemOption.id">
                     {{ itemOption.name }}
                 </mat-option>
