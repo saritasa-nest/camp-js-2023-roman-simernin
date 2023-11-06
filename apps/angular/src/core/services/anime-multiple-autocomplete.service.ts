@@ -3,6 +3,8 @@ import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomp
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { inject } from '@angular/core';
 import { Pagination } from '@js-camp/core/models/pagination';
+import { GenreSortingField } from '@js-camp/core/models/anime/genre-sorting-field';
+import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
 
 import { MultipleAutocompleteService } from './multiple-autocomplete.service';
 import { GenreService } from './genre-service';
@@ -27,7 +29,11 @@ export class AnimeMultipleAutocompleteService extends MultipleAutocompleteServic
 	}
 
 	private getGenreItems(parameters: MultipleAutocompleteParameters): Observable<Pagination<MultipleAutocompleteItem>> {
-		return this.genreService.getGenreList({ ...parameters }).pipe(
+		return this.genreService.getGenreList({
+			field: GenreSortingField.Name,
+			direction: SortingDirection.Ascending,
+			...parameters,
+		}).pipe(
 			map(paginatedGenres => ({
 				totalCount: paginatedGenres.totalCount,
 				results: paginatedGenres.results
