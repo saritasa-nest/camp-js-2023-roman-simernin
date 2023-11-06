@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Genre } from '@js-camp/core/models/anime/genre';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Observable, map } from 'rxjs';
@@ -13,6 +13,7 @@ import { GenreParametersMapper } from '@js-camp/core/mappers/anime/genre-paramet
 import { ApiUriBuilder } from './api-uri-builder';
 
 /** Service for genres. */
+@Injectable()
 export class GenreService {
 
 	private readonly apiUriBuilder = inject(ApiUriBuilder);

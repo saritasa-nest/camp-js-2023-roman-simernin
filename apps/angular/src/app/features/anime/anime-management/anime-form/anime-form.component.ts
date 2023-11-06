@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AnimeMultipleAutocompleteService, animeMultipleAutocompleteGroups } from '@js-camp/angular/core/services/anime-multiple-autocomplete.service';
-import { GenreService } from '@js-camp/angular/core/services/genre-service';
 import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
@@ -57,6 +56,9 @@ interface AnimeManagementFormControls {
 
 	/** Genres. */
 	readonly genres: FormControl<MultipleAutocompleteItem[]>;
+
+	/** Genres. */
+	readonly studios: FormControl<MultipleAutocompleteItem[]>;
 }
 
 /** Anime form component. */
@@ -75,8 +77,6 @@ interface AnimeManagementFormControls {
 export class AnimeFormComponent implements OnInit {
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
-
-	private readonly genreService = inject(GenreService);
 
 	/** Anime types. */
 	protected readonly animeTypes = EnumUtils.toArray(AnimeType);
@@ -125,6 +125,7 @@ export class AnimeFormComponent implements OnInit {
 			imageFile: [{ source: null } as ImageFile],
 			youtubeTrailerId: [null as string | null],
 			genres: [[] as MultipleAutocompleteItem[]],
+			studios: [[] as MultipleAutocompleteItem[]],
 		});
 	}
 

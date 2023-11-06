@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { GenreService } from '@js-camp/angular/core/services/genre-service';
 import { ImageFileService } from '@js-camp/angular/core/services/image-file.service';
+import { StudioService } from '@js-camp/angular/core/services/studio.service';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
 import { Observable, forkJoin, from, map, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
@@ -20,6 +21,8 @@ export class AnimeCreationComponent {
 
 	private readonly genreService = inject(GenreService);
 
+	private readonly studioService = inject(StudioService);
+
 	private readonly imageFileService = inject(ImageFileService);
 
 	private readonly destroyRef = inject(DestroyRef);
@@ -33,11 +36,13 @@ export class AnimeCreationComponent {
 	protected createAnime(formData: AnimeFormData): void {
 		forkJoin({
 			genreIds$: this.getGenreIds(formData),
+			studioIds$: this.getStudioIds(formData),
 			imageUrl$: this.saveImage(formData),
 		}).pipe(
-			switchMap(({ genreIds$: genreIds, imageUrl$: imageUrl }) => this.animeService.createAnime({
+			switchMap(({ genreIds$: genreIds, studioIds$: studioIds, imageUrl$: imageUrl }) => this.animeService.createAnime({
 				...formData,
 				genreIds,
+				studioIds,
 				imageUrl,
 			})),
 			tap(id => this.router.navigate(['anime', id])),
@@ -47,6 +52,7 @@ export class AnimeCreationComponent {
 	}
 
 	private getGenreIds(formData: AnimeFormData): Observable<number[]> {
+		debugger
 		const existingGenresIds = formData.genres
 			.map(genre => genre.id)
 			.filter((genreId): genreId is number => genreId !== null); 
@@ -62,6 +68,26 @@ export class AnimeCreationComponent {
 			mergeMap(genreToCreate => this.genreService.createGenre(genreToCreate.name)),
 			toArray(),
 			map(createdGenreIds => createdGenreIds.concat(existingGenresIds)),
+		);
+	}
+
+	private getStudioIds(formData: AnimeFormData): Observable<number[]> {
+		debugger
+		const existingStudioIds = formData.studios
+			.map(studio => studio.id)
+			.filter((studio): studio is number => studio !== null); 
+
+		const studiosToCreate = formData.studios
+			.filter(studio => studio.id === null);
+
+		if (studiosToCreate.length === 0) {
+			return of(existingStudioIds);
+		}
+
+		return from(studiosToCreate).pipe(
+			mergeMap(studioToCreate => this.studioService.createStudio(studioToCreate.name)),
+			toArray(),
+			map(createdStudioIds => createdStudioIds.concat(existingStudioIds)),
 		);
 	}
 

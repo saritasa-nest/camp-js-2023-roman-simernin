@@ -48,4 +48,7 @@ export interface AnimeCreateData {
 
 	/** Genres ids. */
 	readonly genreIds: number[];
+
+	/** Studio ids. */
+	readonly studioIds: number[];
 }

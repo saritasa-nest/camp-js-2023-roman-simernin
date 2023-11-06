@@ -28,7 +28,7 @@ export namespace AnimeCreateMapper {
 				end: model.airedEnd,
 			}),
 			synopsis: model.description,
-			studios: [],
+			studios: model.studioIds,
 			genres: model.genreIds,
 			rating: AnimeRatingMapper.toDto(model.ageRating),
 			source: AnimeSourceMapper.toDto(model.source),

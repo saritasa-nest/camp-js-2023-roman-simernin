@@ -51,4 +51,7 @@ export interface AnimeFormData {
 
 	/** Genres. */
 	readonly genres: MultipleAutocompleteItem[];
+
+	/** Genres. */
+	readonly studios: MultipleAutocompleteItem[];
 }

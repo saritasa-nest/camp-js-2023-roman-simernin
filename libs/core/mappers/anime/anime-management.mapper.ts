@@ -32,6 +32,7 @@ export namespace AnimeManagementMapper {
 			source: details.source,
 			season: details.season,
 			genres: [],
+			studios: [],
 		};
 	}
 

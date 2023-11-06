@@ -18,6 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { StudioService } from '@js-camp/angular/core/services/studio.service';
 
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
@@ -59,6 +60,11 @@ import { AnimeEditingComponent } from './anime-management/anime-editing/anime-ed
 		AnimeCreationComponent,
 		AnimeEditingComponent,
 	],
-	providers: [AnimeService, GenreService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
+	providers: [
+		AnimeService, 
+		GenreService, 
+		StudioService, 
+		{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+	],
 })
 export class AnimeModule {}

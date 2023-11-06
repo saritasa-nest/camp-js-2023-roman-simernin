@@ -12,6 +12,10 @@ export class ApiUriBuilder {
 
 	private readonly animeBasePath = 'anime/anime';
 
+	private readonly genreBasePath = 'anime/genres';
+
+	private readonly studioBasePath = 'anime/studios';
+
 	/**
 	 * Provide url is from api.
 	 * @param url - URL.
@@ -56,12 +60,22 @@ export class ApiUriBuilder {
 
 	/** Build uri for search genre endpoint. */
 	public buildGetGenreListUri(): string {
-		return this.buildAbsoluteUri('anime', 'genres/');
+		return this.buildGenreUri('');
 	}
 
 	/** Build uri for creation genre endpoint. */
 	public buildCreateGenreUri(): string {
-		return this.buildAbsoluteUri('anime', 'genres/');
+		return this.buildGenreUri('');
+	}
+
+	/** Build uri for search studio endpoint. */
+	public buildGetStudioListUri(): string {
+		return this.buildStudioUri('');
+	}
+
+	/** Build uri for creation studio endpoint. */
+	public buildCreateStudioUri(): string {
+		return this.buildStudioUri('');
 	}
 
 	/** Build uri for login endpoint. */
@@ -98,6 +112,14 @@ export class ApiUriBuilder {
 
 	private buildAnimeUri(path: string): string {
 		return this.buildAbsoluteUri(this.animeBasePath, path);
+	}
+
+	private buildGenreUri(path: string): string {
+		return this.buildAbsoluteUri(this.genreBasePath, path);
+	}
+
+	private buildStudioUri(path: string): string {
+		return this.buildAbsoluteUri(this.studioBasePath, path);
 	}
 
 	private buildAbsoluteUri(basePath: string, path: string): string {
