@@ -30,8 +30,8 @@
 				<camp-anime-info-item itemTitle="Source" [itemValue]="animeDetails.source" />
 				<camp-anime-info-item itemTitle="Season" [itemValue]="animeDetails.season" />
 				<camp-anime-info-item itemTitle="Airing status" [itemValue]="animeDetails.isAiring ? 'Yes' : 'No'" />
-				<camp-anime-info-item itemTitle="Studios" [itemValue]="animeDetails.studioNames | join | empty" />
-				<camp-anime-info-item itemTitle="Genres" [itemValue]="animeDetails.genreNames | join | empty" />	
+				<camp-anime-info-item itemTitle="Studios" [itemValue]="getStudioNames(animeDetails) | join | empty" />
+				<camp-anime-info-item itemTitle="Genres" [itemValue]="getGenreNames(animeDetails) | join | empty" />	
 			</div>
 			<p class="anime-card-info__description typography typography_body" *ngIf="animeDetails.description !== ''" >{{ animeDetails.description }}</p>
 		</div>

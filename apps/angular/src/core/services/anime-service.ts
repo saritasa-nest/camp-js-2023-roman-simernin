@@ -1,6 +1,6 @@
-import { Observable, defer, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpStatusCode } from '@angular/common/http';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Injectable, inject } from '@angular/core';
 
 import { Anime } from '@js-camp/core/models/anime/anime';
@@ -15,16 +15,15 @@ import { AnimeDetailsMapper } from '@js-camp/core/mappers/anime/anime-details.ma
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { AnimeDetailsDto } from '@js-camp/core/dtos/anime/anime-details.dto';
 import { NotFoundError } from '@js-camp/core/models/not-found-error';
-import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
-import { AnimeManagementMapper } from '@js-camp/core/mappers/anime/anime-management.mapper';
-import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
+import { AnimeCreateData } from '@js-camp/core/models/anime/anime-create-data';
+import { AnimeCreateMapper } from '@js-camp/core/mappers/anime/anime-create.mapper';
+import { AnimeEditData } from '@js-camp/core/models/anime/anime-edit-data';
+import { AnimeEditMapper } from '@js-camp/core/mappers/anime/anime-edit.mapper';
 
 import { catchApiError } from '../utils/rxjs/catch-api-error';
 
 import { ApiUriBuilder } from './api-uri-builder';
 import { ImageFileService } from './image-file.service';
-import { AnimeCreateData } from '@js-camp/core/models/anime/anime-create-data';
-import { AnimeCreateMapper } from '@js-camp/core/mappers/anime/anime-create.mapper';
 
 /** Service for actions with anime. */
 @Injectable()
@@ -83,34 +82,13 @@ export class AnimeService {
 
 	/**
 	 * Edit anime.
-	 * @param animeManagement - Anime management model.
+	 * @param animeEditData - Anime edit data.
 	 * @param id - Anime id.
 	 */
-	public editAnime(id: number, animeManagement: AnimeFormData): Observable<number> {
+	public editAnime(id: number, animeEditData: AnimeEditData): Observable<number> {
 		const uri = this.apiUriBuilder.buildEditAnimeUri(id);
 
-		const imageFileSource = animeManagement.imageFile.source;
-
-		if (imageFileSource === null) {
-			throw new Error('Image file source for anime updating can not br equal null.');
-		}
-
-		const animeManagement$ = defer(() => {
-			if (imageFileSource instanceof File) {
-				return this.imageFileService.addToStorage(imageFileSource, ImageFileType.AnimeImage).pipe(
-					map(imageStorageUrl => ({
-						...animeManagement,
-						imageFile: { source: imageStorageUrl },
-					})),
-				);
-			}
-
-			return of(animeManagement);
-		});
-
-		return animeManagement$.pipe(
-			map(animeManagementData => AnimeManagementMapper.toEditDto(animeManagementData)),
-			switchMap(animeMangementDto => this.httpClient.put<AnimeDetailsDto>(uri, animeMangementDto)),
+		return this.httpClient.put<AnimeDetailsDto>(uri, AnimeEditMapper.toDto(animeEditData)).pipe(
 			map(detailsDto => detailsDto.id),
 		);
 	}

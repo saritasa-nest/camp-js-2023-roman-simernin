@@ -11,6 +11,7 @@ import { ConfirmationModalComponent, ConfirmationModalParameters } from '@js-cam
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
+import { animate } from '@angular/animations';
 
 /** Anime details component. */
 @Component({
@@ -40,6 +41,24 @@ export class AnimeDetailsComponent {
 			switchMap(id => this.animeService.getAnimeById(id)),
 			catchAppError(appError => this.catchAnimeGettingError(appError)),
 		);
+	}
+
+	/**
+	 * Get genre names.
+	 * @param animeDetails - Anime details.
+	 */
+	protected getGenreNames(animeDetails: AnimeDetails): readonly string[] {
+		return animeDetails.genres
+			.map(genre => genre.name);
+	}
+
+	/**
+	 * Get studio names.
+	 * @param animeDetails - Anime details.
+	 */
+	protected getStudioNames(animeDetails: AnimeDetails): readonly string[] {
+		return animeDetails.studios
+			.map(studio => studio.name);
 	}
 
 	/**

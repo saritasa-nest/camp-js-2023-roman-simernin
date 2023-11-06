@@ -7,6 +7,8 @@ import { AnimeRatingMapper } from './anime-rating.mapper';
 import { AnimeSourceMapper } from './anime-source.mapper';
 import { AnimeSeasonMapper } from './anime-season.mapper';
 import { AnimeAiringMapper } from './anime-airing.mapper';
+import { StudioMapper } from './studio.mapper';
+import { GenreMapper } from './genre.mapper';
 
 export namespace AnimeDetailsMapper {
 
@@ -28,8 +30,8 @@ export namespace AnimeDetailsMapper {
 			season: AnimeSeasonMapper.fromDto(dto.season),
 			description: dto.synopsis,
 			isAiring: dto.airing,
-			studioNames: dto.studios_data.map(studioDto => studioDto.name),
-			genreNames: dto.genres_data.map(genreDto => genreDto.name),
+			studios: dto.studios_data.map(studioDto => StudioMapper.fromDto(studioDto)),
+			genres: dto.genres_data.map(genreDto => GenreMapper.fromDto(genreDto)),
 			youtubeTrailerId: dto.trailer_youtube_id,
 		};
 	}

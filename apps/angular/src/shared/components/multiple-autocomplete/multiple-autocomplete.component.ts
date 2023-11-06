@@ -92,7 +92,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	/** @inheritdoc */
 	public writeValue(itemsToAdd: MultipleAutocompleteItem[]): void {
 		for (const itemToAdd of itemsToAdd) {
-			this.itemIdentityToAdd$.next(itemToAdd.id !== null ? itemToAdd.id : itemToAdd.name);
+			this.addedItems.push(itemToAdd);
 		}
 	}
 

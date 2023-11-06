@@ -52,7 +52,6 @@ export class AnimeCreationComponent {
 	}
 
 	private getGenreIds(formData: AnimeFormData): Observable<number[]> {
-		debugger
 		const existingGenresIds = formData.genres
 			.map(genre => genre.id)
 			.filter((genreId): genreId is number => genreId !== null); 
@@ -72,7 +71,6 @@ export class AnimeCreationComponent {
 	}
 
 	private getStudioIds(formData: AnimeFormData): Observable<number[]> {
-		debugger
 		const existingStudioIds = formData.studios
 			.map(studio => studio.id)
 			.filter((studio): studio is number => studio !== null); 

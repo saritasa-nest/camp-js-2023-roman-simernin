@@ -93,7 +93,7 @@ export class AnimeFormComponent implements OnInit {
 	/** Anime seasons. */
 	protected readonly animeSeasons = EnumUtils.toArray(AnimeSeason);
 
-	/** Anime management form group. */
+	/** Anime form data group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
 
 	/** Multiple autocomplete groups. */
@@ -101,9 +101,9 @@ export class AnimeFormComponent implements OnInit {
 		return animeMultipleAutocompleteGroups;
 	}
 
-	/** Anime management. */
+	/** Anime form data. */
 	@Input()
-	public animeManagement: AnimeFormData | null = null;
+	public animeFormData: AnimeFormData | null = null;
 
 	/** Submit event. */
 	@Output()
@@ -131,8 +131,8 @@ export class AnimeFormComponent implements OnInit {
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		if (this.animeManagement !== null) {
-			this.formGroup.patchValue(this.animeManagement);
+		if (this.animeFormData !== null) {
+			this.formGroup.patchValue(this.animeFormData);
 		}
 	}
 
