@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { ImageFile } from '@js-camp/core/models/image-file';
-import { BehaviorSubject, Observable, filter, from, switchMap} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 type ImageFileChangedFunction = (imageFile: ImageFile) => void;
 type ImageFileTouchedFunction = () => void;
@@ -27,22 +27,11 @@ type ImageFileTouchedFunction = () => void;
 })
 export class ImageFileUploadingComponent implements ControlValueAccessor, Validator {
 
-	private imageFile$ = new BehaviorSubject<ImageFile>({
-		source: null,
-	});
+	/** Image file subject. */
+	protected imageFile$ = new BehaviorSubject<ImageFile>('');
 
 	/** Provide control is disabled.  */
 	protected isDisabled = false;
-
-	/** Image file url stream. */
-	protected imageFileUrl$: Observable<string>;
-
-	public constructor() {
-		this.imageFileUrl$ = this.imageFile$.pipe(
-			filter(imageFile => imageFile.source !== null),
-			switchMap(imageFile => from(this.mapImageFileUrl(imageFile))),
-		);
-	}
 
 	/**
 	 * Upload image file.
@@ -63,31 +52,37 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 			return;
 		}
 
-		const imageFile: ImageFile = {
-			source: files[0],
-		};
+		const imageFile: ImageFile = files[0];
 
 		this.imageFile$.next(imageFile);
 
 		this.onImageFileChanged?.(imageFile);
 	}
 
-	private mapImageFileUrl(imageFile: ImageFile): Promise<string> {
-		if (imageFile.source instanceof File) {
-			const fileReader = new FileReader();
-
-			fileReader.readAsDataURL(imageFile.source);
-
-			return new Promise<string>(resolve => {
-				fileReader.onloadend = function () {
-					if (typeof (fileReader.result) === 'string') {
-						resolve(fileReader.result);
-					}
-				}
-			})
+	/**
+	 * Get image location.
+	 * @param imageFile Image file.
+	 */
+	protected getImageName(imageFile: string | File | null): string {
+		if (imageFile === null) {
+			return '';
 		}
 
-		return Promise.resolve(imageFile.source as string);
+		return typeof (imageFile) === 'string' ?
+
+			// Get last section in image url in file storage.
+			imageFile.split('/').pop() ?? '' :
+			imageFile.name;
+	}
+
+	/**
+	 * Get image source.
+	 * @param imageFile - Image file.
+	 */
+	protected getImageSource(imageFile: string | File): string {
+		return typeof (imageFile) === 'string' ?
+			imageFile :
+			URL.createObjectURL(imageFile);
 	}
 
 	private onImageFileChanged: ImageFileChangedFunction | null = null;
@@ -118,7 +113,7 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 	public validate(control: AbstractControl<ImageFile, ImageFile>): ValidationErrors | null {
 		const imageFile = control.value;
 
-		if (imageFile.source === null) {
+		if (imageFile === '') {
 			return {
 				required: true,
 			};

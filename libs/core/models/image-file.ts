@@ -1,6 +1,2 @@
-/** Image file. */
-export interface ImageFile {
-
-	/** Image file source (image file storage url or file).*/
-	readonly source: string | File | null;
-}
+/** File or url to image storage. */
+export type ImageFile = File | string;

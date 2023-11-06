@@ -70,16 +70,10 @@ export class AnimeFormService {
 		* @returns Image url.
 		*/
 	public addOrGetImage(formData: AnimeFormData): Observable<string> {
-		const imageFileSource = formData.imageFile.source;
-
-		if (imageFileSource === null) {
-			throw new Error('Image file source for anime updating can not br equal null.');
+		if (formData.imageFile instanceof File) {
+			return this.imageFileService.addToStorage(formData.imageFile, ImageFileType.AnimeImage);
 		}
 
-		if (imageFileSource instanceof File) {
-			return this.imageFileService.addToStorage(imageFileSource, ImageFileType.AnimeImage);
-		}
-
-		return of(imageFileSource);
+		return of(formData.imageFile);
 	}
 }

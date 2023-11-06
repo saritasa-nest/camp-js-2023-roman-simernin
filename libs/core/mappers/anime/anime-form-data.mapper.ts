@@ -9,7 +9,7 @@ export namespace AnimeFormDataMapper {
 	 */
 	export function fromDetails(details: AnimeDetails): AnimeFormData {
 		return {
-			imageFile: { source: details.imageUrl },
+			imageFile: details.imageUrl,
 			youtubeTrailerId: details.youtubeTrailerId,
 			englishTitle: details.englishTitle,
 			japaneseTitle: details.japaneseTitle,

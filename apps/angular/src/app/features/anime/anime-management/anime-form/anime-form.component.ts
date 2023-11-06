@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { AnimeMultipleAutocompleteService, animeMultipleAutocompleteGroups } from '@js-camp/angular/core/services/anime-multiple-autocomplete.service';
 import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
@@ -122,7 +122,7 @@ export class AnimeFormComponent implements OnInit {
 			season: [AnimeSeason.NonSeasonal, [Validators.required]],
 			airedStart: [new Date(), [Validators.required]],
 			airedEnd: [new Date(), [Validators.required]],
-			imageFile: [{ source: null } as ImageFile],
+			imageFile: ['' as ImageFile],
 			youtubeTrailerId: [null as string | null],
 			genres: [[] as MultipleAutocompleteItem[]],
 			studios: [[] as MultipleAutocompleteItem[]],

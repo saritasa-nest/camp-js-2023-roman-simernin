@@ -1,5 +1,9 @@
+<mat-form-field>
+    <mat-label>Image file</mat-label>
+    <input matInput disabled="true" [value]="getImageName(imageFile$ | async)"/>
+    <input hidden type="file" #imageFileInput (change)="uploadImageFile($event)" accept=".jpg, .png"/>    
+</mat-form-field>
 <button mat-icon-button type="button" (click)="imageFileInput.click()" [disabled]="isDisabled">
     <mat-icon>image</mat-icon>
 </button>
-<input hidden type="file" #imageFileInput (change)="uploadImageFile($event)" accept=".jpg, .png"/>
-<img *ngIf="imageFileUrl$ | async as imageFileUrl" [src]="imageFileUrl" alt=""/>
+<img *ngIf="imageFile$ | async as imageFile" [src]="getImageSource(imageFile)" alt=""/>
