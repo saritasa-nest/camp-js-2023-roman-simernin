@@ -5,15 +5,15 @@ import { inject } from '@angular/core';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { GenreSortingField } from '@js-camp/core/models/anime/genre-sorting-field';
 import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
+import { StudioSortingField } from '@js-camp/core/models/anime/studio-sorting-field';
 
 import { MultipleAutocompleteService } from './multiple-autocomplete.service';
 import { GenreService } from './genre-service';
 import { StudioService } from './studio.service';
-import { StudioSortingField } from '@js-camp/core/models/anime/studio-sorting-field';
 
 export const animeMultipleAutocompleteGroups = {
-	genreGroup: 'genre',
-	studioGroup: 'studio',
+	genreGroup: 'Genres',
+	studioGroup: 'Studios',
 };
 
 /** Anime multiple autocomplete service. */

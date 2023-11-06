@@ -1,4 +1,5 @@
-<mat-form-field>
+<mat-form-field class="multiple-autocomplete">
+    <mat-label>{{itemGroup}}</mat-label>
     <mat-chip-listbox>
         <mat-chip-option *ngFor="let addedItem of addedItems; trackBy: trackItem" (removed)="removeItem(addedItem)">
             {{ addedItem.name }}
@@ -15,7 +16,7 @@
         
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleItemSelected($event)">
         <ng-container *ngIf="totalItems$ | async as totalItems; else itemsLoadingOption">
-            <div class="autocomplete-option-container" *ngIf="parameters$ | async as parameters"
+            <div class="multiple-autocomplete__option-container" *ngIf="parameters$ | async as parameters"
                 infiniteScroll 
                 [infiniteScrollDistance]="1"
                 [scrollWindow]="false"
@@ -36,5 +37,5 @@
     type="button" 
     (click)="handleItemAdding()" 
     [disabled]="(isItemsLoading$ | async) || isForbiddenToCreateItem((totalItems$ | async)?.results ?? [])">
-    <mat-icon>add_circle_outline</mat-icon>
+    <mat-icon class="item-creation-btn-icon">add_circle_outline</mat-icon>
 </button>  

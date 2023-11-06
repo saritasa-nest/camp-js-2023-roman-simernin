@@ -1,4 +1,22 @@
-.autocomplete-option-container {
+:root {
+  --item-creation-btn-size: 40px;
+}
+
+:host {
+  display: flex;
+}
+
+.multiple-autocomplete {
+  width: 100%;
+}
+
+.multiple-autocomplete__option-container {
   max-height: 100%;
   overflow: auto;
+}
+
+.item-creation-btn-icon {
+  font-size: var(--item-creation-btn-size);
+  width: var(--item-creation-btn-size);
+  height: var(--item-creation-btn-size);
 }
