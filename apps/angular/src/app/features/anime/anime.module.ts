@@ -20,6 +20,8 @@ import { RouterModule } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StudioService } from '@js-camp/angular/core/services/studio.service';
 
+import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
+
 import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
@@ -28,7 +30,6 @@ import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-in
 import { AnimeFormComponent } from './anime-management/anime-form/anime-form.component';
 import { AnimeCreationComponent } from './anime-management/anime-creation/anime-creation.component';
 import { AnimeEditingComponent } from './anime-management/anime-editing/anime-editing.component';
-import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
 
 /** Anime module. */
 @NgModule({
@@ -62,8 +63,8 @@ import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.serv
 		AnimeEditingComponent,
 	],
 	providers: [
-		AnimeService, 
-		GenreService, 
+		AnimeService,
+		GenreService,
 		StudioService,
 		AnimeFormService,
 		{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },

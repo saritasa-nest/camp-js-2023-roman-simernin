@@ -5,13 +5,12 @@ import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.serv
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeFormDataMapper } from '@js-camp/core/mappers/anime/anime-form-data.mapper';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
-import { Observable, forkJoin, map, switchMap, tap } from 'rxjs';
+import { Observable, forkJoin, map, switchMap, take, tap } from 'rxjs';
 
 /** Anime editing component. */
 @Component({
 	selector: 'camp-anime-editing',
 	templateUrl: './anime-editing.component.html',
-	styleUrls: ['./anime-editing.component.css'],
 })
 export class AnimeEditingComponent {
 
@@ -48,12 +47,12 @@ export class AnimeEditingComponent {
 	 * */
 	protected editAnime(formData: AnimeFormData): void {
 		forkJoin({
-			animeId$: this.animeId$,
+			animeId$: this.animeId$.pipe(take(1)),
 			genreIds$: this.animeFormService.createOrGetGenres(formData),
 			studioIds$: this.animeFormService.createOrGetStudios(formData),
 			imageUrl$: this.animeFormService.addOrGetImage(formData),
 		}).pipe(
-			switchMap(({ 
+			switchMap(({
 				animeId$: animeId,
 				genreIds$: genreIds,
 				studioIds$: studioIds,

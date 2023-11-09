@@ -10,7 +10,6 @@ import { forkJoin, switchMap, tap } from 'rxjs';
 @Component({
 	selector: 'camp-anime-creation',
 	templateUrl: './anime-creation.component.html',
-	styleUrls: ['./anime-creation.component.css'],
 })
 export class AnimeCreationComponent {
 

@@ -16,13 +16,3 @@
   flex-basis: 300px;
   flex-grow: 1;
 }
-
-.anime-form-airing {
-  display: flex;
-  gap: 20px;
-}
-
-.anime-form-airing__date {
-  flex-grow: 1;
-  align-self: start;
-}

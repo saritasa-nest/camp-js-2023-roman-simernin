@@ -1,4 +1,4 @@
-<mat-form-field class="multiple-autocomplete">
+<mat-form-field class="multiple-autocomplete" floatLabel="always">
     <mat-label>{{itemGroup}}</mat-label>
     <mat-chip-listbox>
         <mat-chip-option *ngFor="let addedItem of addedItems; trackBy: trackItem" (removed)="removeItem(addedItem)">

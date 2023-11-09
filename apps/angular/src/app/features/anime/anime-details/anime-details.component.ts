@@ -11,7 +11,6 @@ import { ConfirmationModalComponent, ConfirmationModalParameters } from '@js-cam
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AnimeCoverModalComponent, AnimeCoverModalParameters } from './anime-cover-modal/anime-cover-modal.component';
-import { animate } from '@angular/animations';
 
 /** Anime details component. */
 @Component({

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject }
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NonNullableFormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
-import { BehaviorSubject, Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, shareReplay, startWith, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, shareReplay, switchMap, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
@@ -214,6 +214,8 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			this.itemIdentityToAdd$,
 			this.totalItems$,
 		]).pipe(
+			distinctUntilChanged(([previousItemIdentityToAdd], [currentItemIdentityToAdd]) =>
+				previousItemIdentityToAdd === currentItemIdentityToAdd),
 			tap(([itemIdentityToAdd, totalItems]) => this.addItem(itemIdentityToAdd, totalItems.results)),
 			takeUntilDestroyed(this.destroyRef),
 		)
@@ -222,6 +224,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 	private addItem(itemIdentity: number | string, totalItems: readonly MultipleAutocompleteItem[]): void {
 		this.onMultipleAutocompleteTouched?.();
+		this.itemNameControl.reset();
 
 		const isItemAdded = typeof (itemIdentity) === 'number' ?
 			this.trySelectItem(itemIdentity, totalItems) :
@@ -232,7 +235,6 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		}
 
 		this.onMultipleAutocompleteChanged?.(this.addedItems);
-		this.itemNameControl.reset();
 	}
 
 	private trySelectItem(itemIdToSelect: number, totalItems: readonly MultipleAutocompleteItem[]): boolean {

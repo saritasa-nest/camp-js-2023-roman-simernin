@@ -24,7 +24,7 @@ export class AnimeFormService {
 	public createOrGetGenres(formData: AnimeFormData): Observable<number[]> {
 		const existingGenresIds = formData.genres
 			.map(genre => genre.id)
-			.filter((genreId): genreId is number => genreId !== null); 
+			.filter((genreId): genreId is number => genreId !== null);
 
 		const genresToCreate = formData.genres
 			.filter(genre => genre.id === null);

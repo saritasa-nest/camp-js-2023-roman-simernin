@@ -1,4 +1,4 @@
-import { Observable, map } from 'rxjs';
+import { EMPTY, Observable, map } from 'rxjs';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { inject } from '@angular/core';
@@ -34,7 +34,9 @@ export class AnimeMultipleAutocompleteService extends MultipleAutocompleteServic
 			return this.getStudioItems(parameters);
 		}
 
-		throw new Error('Invalid anime item group for multiple autocomplete.');
+		console.error('Invalid anime item group for multiple autocomplete.');
+
+		return EMPTY;
 	}
 
 	private getGenreItems(parameters: MultipleAutocompleteParameters): Observable<Pagination<MultipleAutocompleteItem>> {
