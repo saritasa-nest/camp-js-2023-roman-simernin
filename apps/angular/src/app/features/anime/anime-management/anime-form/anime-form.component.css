@@ -1,0 +1,28 @@
+.anime-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.anime-form-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.anime-form-section__field {
+  flex-basis: 300px;
+  flex-grow: 1;
+}
+
+.anime-form-airing {
+  display: flex;
+  gap: 20px;
+}
+
+.anime-form-airing__date {
+  flex-grow: 1;
+  align-self: start;
+}
