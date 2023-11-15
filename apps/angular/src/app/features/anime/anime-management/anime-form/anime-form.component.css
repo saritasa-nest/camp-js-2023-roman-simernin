@@ -1,7 +1,7 @@
 .anime-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space);
   justify-content: space-between;
 }
 
@@ -9,7 +9,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: var(--space);
 }
 
 .anime-form-section__field {
