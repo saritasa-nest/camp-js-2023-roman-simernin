@@ -110,23 +110,7 @@ export class AnimeFormComponent implements OnInit {
 	public submitEvent = new EventEmitter<AnimeFormData>();
 
 	public constructor() {
-		this.formGroup = this.formBuilder.group({
-			englishTitle: ['', [Validators.required]],
-			japaneseTitle: ['', [Validators.required]],
-			type: [AnimeType.Unknown, [Validators.required]],
-			status: [AnimeStatus.NotYetAired, [Validators.required]],
-			isAiring: [false, [Validators.required]],
-			description: ['', [Validators.required]],
-			ageRating: [AnimeRating.Unknown, [Validators.required]],
-			source: [AnimeSource.Unknown, [Validators.required]],
-			season: [AnimeSeason.NonSeasonal, [Validators.required]],
-			airedStart: [new Date(), [Validators.required]],
-			airedEnd: [new Date(), [Validators.required]],
-			imageFile: ['' as ImageFile],
-			youtubeTrailerId: [null as string | null],
-			genres: [[] as MultipleAutocompleteItem[]],
-			studios: [[] as MultipleAutocompleteItem[]],
-		});
+		this.formGroup = this.initAnimeForm();
 	}
 
 	/** @inheritdoc */
@@ -156,6 +140,26 @@ export class AnimeFormComponent implements OnInit {
 
 		this.submitEvent.emit({
 			...formData,
+		});
+	}
+
+	private initAnimeForm(): FormGroup<AnimeManagementFormControls> {
+		return this.formBuilder.group({
+			englishTitle: this.formBuilder.control('', Validators.required),
+			japaneseTitle: this.formBuilder.control('', Validators.required),
+			type: this.formBuilder.control(AnimeType.Unknown, Validators.required),
+			status: this.formBuilder.control(AnimeStatus.NotYetAired, Validators.required),
+			isAiring: this.formBuilder.control(false, Validators.required),
+			description: this.formBuilder.control('', Validators.required),
+			ageRating: this.formBuilder.control(AnimeRating.Unknown, Validators.required),
+			source: this.formBuilder.control(AnimeSource.Unknown, Validators.required),
+			season: this.formBuilder.control(AnimeSeason.NonSeasonal, Validators.required),
+			airedStart: this.formBuilder.control(new Date(), Validators.required),
+			airedEnd: this.formBuilder.control(new Date(), Validators.required),
+			imageFile: this.formBuilder.control('' as ImageFile),
+			youtubeTrailerId: this.formBuilder.control(null as string | null),
+			genres: this.formBuilder.control([] as MultipleAutocompleteItem[]),
+			studios: this.formBuilder.control([] as MultipleAutocompleteItem[]),
 		});
 	}
 }
