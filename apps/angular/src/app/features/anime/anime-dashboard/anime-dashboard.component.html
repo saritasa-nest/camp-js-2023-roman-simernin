@@ -10,7 +10,7 @@
         <mat-option *ngFor="let animeType of animeTypes; trackBy: trackAnimeType" [value]="animeType">{{animeType}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <a [routerLink]="['create']" mat-icon-button>
+    <a routerLink="create" mat-icon-button>
 				<mat-icon>add_circle_outline</mat-icon>
 		</a>
   </form>
