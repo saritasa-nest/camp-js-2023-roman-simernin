@@ -43,19 +43,19 @@ export class AnimeDetailsComponent {
 	}
 
 	/**
-	 * Get genre names.
+	 * Get genre names from specified anime details.
 	 * @param animeDetails - Anime details.
 	 */
-	protected getGenreNames(animeDetails: AnimeDetails): readonly string[] {
+	protected getGenreNames(animeDetails: AnimeDetails): string[] {
 		return animeDetails.genres
 			.map(genre => genre.name);
 	}
 
 	/**
-	 * Get studio names.
+	 * Get studio names from specified anime details.
 	 * @param animeDetails - Anime details.
 	 */
-	protected getStudioNames(animeDetails: AnimeDetails): readonly string[] {
+	protected getStudioNames(animeDetails: AnimeDetails): string[] {
 		return animeDetails.studios
 			.map(studio => studio.name);
 	}
