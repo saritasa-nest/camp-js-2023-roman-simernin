@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, Observable, map, switchMap, tap } from 'rxjs';
+import { EMPTY, Observable, filter, map, switchMap, tap } from 'rxjs';
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeDetails } from '@js-camp/core/models/anime/anime-details';
 import { catchAppError } from '@js-camp/angular/core/utils/rxjs/catch-app.error';
@@ -83,9 +83,8 @@ export class AnimeDetailsComponent {
 		});
 
 		dialogRef.afterClosed().pipe(
-			switchMap(isDeletionConfirmed => isDeletionConfirmed === true ?
-				this.deleteAnime(id) :
-				EMPTY),
+			filter(isDeletionConfirmed => isDeletionConfirmed === true),
+			switchMap(() => this.deleteAnime(id)),
 			takeUntilDestroyed(this.destroyRef),
 		)
 			.subscribe();
