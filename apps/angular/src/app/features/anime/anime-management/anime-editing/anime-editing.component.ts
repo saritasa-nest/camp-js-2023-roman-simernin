@@ -5,7 +5,7 @@ import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.serv
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeFormDataMapper } from '@js-camp/core/mappers/anime/anime-form-data.mapper';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
-import { Observable, forkJoin, map, switchMap, take, tap } from 'rxjs';
+import { Observable, map, switchMap, tap } from 'rxjs';
 
 /** Anime editing component. */
 @Component({
@@ -46,23 +46,8 @@ export class AnimeEditingComponent {
 	 * @param formData - Anime form data.
 	 * */
 	protected editAnime(formData: AnimeFormData): void {
-		forkJoin({
-			animeId$: this.animeId$.pipe(take(1)),
-			genreIds$: this.animeFormService.createOrGetGenres(formData),
-			studioIds$: this.animeFormService.createOrGetStudios(formData),
-			imageUrl$: this.animeFormService.addOrGetImage(formData),
-		}).pipe(
-			switchMap(({
-				animeId$: animeId,
-				genreIds$: genreIds,
-				studioIds$: studioIds,
-				imageUrl$: imageUrl,
-			}) => this.animeService.editAnime(animeId, {
-				...formData,
-				genreIds,
-				studioIds,
-				imageUrl,
-			})),
+		this.animeId$.pipe(
+			switchMap(id => this.animeFormService.editAnime(id, formData)),
 			tap(id => this.router.navigate(['/anime', id])),
 			takeUntilDestroyed(this.destroyRef),
 		)

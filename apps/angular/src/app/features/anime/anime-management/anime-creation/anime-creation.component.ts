@@ -2,9 +2,8 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
-import { AnimeService } from '@js-camp/angular/core/services/anime-service';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
-import { forkJoin, switchMap, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 /** Anime creation component. */
 @Component({
@@ -12,8 +11,6 @@ import { forkJoin, switchMap, tap } from 'rxjs';
 	templateUrl: './anime-creation.component.html',
 })
 export class AnimeCreationComponent {
-
-	private readonly animeService = inject(AnimeService);
 
 	private readonly animeFormService = inject(AnimeFormService);
 
@@ -26,17 +23,7 @@ export class AnimeCreationComponent {
 	 * @param formData - Anime form data.
 	 * */
 	protected createAnime(formData: AnimeFormData): void {
-		forkJoin({
-			genreIds$: this.animeFormService.createOrGetGenres(formData),
-			studioIds$: this.animeFormService.createOrGetStudios(formData),
-			imageUrl$: this.animeFormService.addOrGetImage(formData),
-		}).pipe(
-			switchMap(({ genreIds$: genreIds, studioIds$: studioIds, imageUrl$: imageUrl }) => this.animeService.createAnime({
-				...formData,
-				genreIds,
-				studioIds,
-				imageUrl,
-			})),
+		this.animeFormService.createAnime(formData).pipe(
 			tap(id => this.router.navigate(['anime', id])),
 			takeUntilDestroyed(this.destroyRef),
 		)
