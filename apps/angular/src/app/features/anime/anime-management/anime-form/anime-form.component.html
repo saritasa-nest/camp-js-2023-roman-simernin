@@ -1,31 +1,41 @@
 <form [formGroup]="formGroup" (submit)="handleSubmit()" class="anime-form">
 
     <div class="anime-form-section">
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.englishTitle as englishTitle">
+        <mat-form-field 
+            *ngIf="formGroup.controls.englishTitle as englishTitle" 
+            class="anime-form-section__field">
             <mat-label>English title</mat-label>
             <input matInput [formControl]="englishTitle" />
         </mat-form-field>
     
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.japaneseTitle as japaneseTitle">
+        <mat-form-field 
+            *ngIf="formGroup.controls.japaneseTitle as japaneseTitle"
+            class="anime-form-section__field">
             <mat-label>Japanese title</mat-label>
             <input matInput [formControl]="japaneseTitle" />
         </mat-form-field>
     </div>
 
-    <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.description as description">
+    <mat-form-field 
+        *ngIf="formGroup.controls.description as description"
+        class="anime-form-section__field">
         <mat-label>Description</mat-label>
         <textarea matInput rows="10" [formControl]="description"></textarea>
     </mat-form-field>
     
     <div class="anime-form-section">
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.type as type">
+        <mat-form-field 
+            *ngIf="formGroup.controls.type as type"
+            class="anime-form-section__field">
             <mat-label>Type</mat-label>
             <mat-select [formControl]="type">
                 <mat-option *ngFor="let type of animeTypes; trackBy trackByIndex" [value]="type">{{type}}</mat-option>
             </mat-select>
         </mat-form-field>
     
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.status as status">
+        <mat-form-field 
+            *ngIf="formGroup.controls.status as status"
+            class="anime-form-section__field">
             <mat-label>Status</mat-label>
             <mat-select [formControl]="status">
                 <mat-option *ngFor="let status of animeStatuses; trackBy trackByIndex" [value]="status">{{status}}</mat-option>
@@ -34,14 +44,18 @@
     </div>
 
     <div class="anime-form-section">
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.ageRating as rating">
+        <mat-form-field 
+            *ngIf="formGroup.controls.ageRating as rating"
+            class="anime-form-section__field">
             <mat-label>Rating</mat-label>
             <mat-select [formControl]="rating">
                 <mat-option *ngFor="let rating of animeRatings; trackBy trackByIndex" [value]="rating">{{rating}}</mat-option>
             </mat-select>
         </mat-form-field>
     
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.source as source">
+        <mat-form-field 
+            *ngIf="formGroup.controls.source as source"
+            class="anime-form-section__field">
             <mat-label>Source</mat-label>
             <mat-select [formControl]="source">
                 <mat-option *ngFor="let source of animeSources; trackBy trackByIndex" [value]="source">{{source}}</mat-option>
@@ -50,14 +64,18 @@
     </div>
 
     <div class="anime-form-section">
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.season as season">
+        <mat-form-field 
+            *ngIf="formGroup.controls.season as season"
+            class="anime-form-section__field">
             <mat-label>Season</mat-label>
             <mat-select [formControl]="season">
                 <mat-option *ngFor="let season of animeSeasons; trackBy trackByIndex" [value]="season">{{season}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="anime-form-section__field" *ngIf="formGroup.controls.youtubeTrailerId as youtubeTrailerId">
+        <mat-form-field 
+            *ngIf="formGroup.controls.youtubeTrailerId as youtubeTrailerId"
+            class="anime-form-section__field">
             <mat-label>Youtube trailer id</mat-label>
             <input matInput [formControl]="youtubeTrailerId" />
         </mat-form-field>
@@ -74,7 +92,9 @@
     </div>
 
     <div class="anime-form-section">
-        <mat-form-field class="anime-form-section__field"  *ngIf="formGroup.controls.airedStart as airedStart">
+        <mat-form-field   
+            *ngIf="formGroup.controls.airedStart as airedStart"
+            class="anime-form-section__field">
             <mat-label>Aired start</mat-label>
             <input matInput [matDatepicker]="airedStartPicker" [formControl]="airedStart">
             <mat-hint>MM/DD/YYYY</mat-hint>
@@ -82,7 +102,9 @@
             <mat-datepicker #airedStartPicker />
         </mat-form-field>
 
-        <mat-form-field class="anime-form-section__field"  *ngIf="formGroup.controls.airedEnd as airedEnd">
+        <mat-form-field 
+            *ngIf="formGroup.controls.airedEnd as airedEnd" 
+            class="anime-form-section__field">
             <mat-label>Aired end</mat-label>
             <input matInput [matDatepicker]="airedEndPicker" [formControl]="airedEnd">
             <mat-hint>MM/DD/YYYY</mat-hint>
