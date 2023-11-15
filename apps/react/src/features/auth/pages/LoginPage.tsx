@@ -5,6 +5,9 @@ import { selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { nameof } from '@js-camp/react/utils/nameof';
 import { FC, memo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { TextField, Button } from '@mui/material';
+
+import styles from './LoginPage.module.css';
 
 /** Login page component. */
 const LoginPageComponent: FC = () => {
@@ -33,11 +36,19 @@ const LoginPageComponent: FC = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<input {...register(nameof<Login>('email'))}/>
-			<input {...register(nameof<Login>('password'))}/>
-			<button>Sign in</button>
-		</form>
+		<div className={styles['login-form-container']}>
+			<form onSubmit={handleSubmit(onSubmit)}
+				className={styles['login-form']}>
+				<TextField
+					label="Email"
+					{...register(nameof<Login>('email'))}/>
+				<TextField
+					type="password"
+					label="Password"
+					{...register(nameof<Login>('password'))}/>
+				<Button type="submit">Sign in</Button>
+			</form>
+		</div>
 	);
 };
 
