@@ -5,7 +5,6 @@
 
 .anime-info-item-title {
   font-weight: bold;
-  font-family: "Anime Ace", sans-serif;
 }
 
 .anime-info-item-separator {
@@ -18,5 +17,4 @@
 .anime-info-item-value {
   overflow-wrap: break-word;
   text-align: right;
-  font-family: Georgia, serif;
 }
