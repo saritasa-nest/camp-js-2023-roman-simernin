@@ -22,6 +22,16 @@ export class AnimeFormService {
 	private readonly animeService = inject(AnimeService);
 
 	/**
+	 * Get anime form data.
+	 * @param id - Anime id.
+	 */
+	public getAnimeFormData(id: number): Observable<AnimeFormData> {
+		return this.animeService.getAnimeById(id).pipe(
+			map(animeDetails => AnimeFormDataMapper.fromDetails(animeDetails)),
+		);
+	}
+
+	/**
 	 * Create anime.
 	 * @param formData - Anime form data.
 	 * */

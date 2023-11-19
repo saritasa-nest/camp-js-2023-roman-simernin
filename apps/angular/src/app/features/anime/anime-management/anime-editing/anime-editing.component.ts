@@ -2,8 +2,6 @@ import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
-import { AnimeService } from '@js-camp/angular/core/services/anime-service';
-import { AnimeFormDataMapper } from '@js-camp/core/mappers/anime/anime-form-data.mapper';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { Observable, map, switchMap, tap } from 'rxjs';
 
@@ -13,8 +11,6 @@ import { Observable, map, switchMap, tap } from 'rxjs';
 	templateUrl: './anime-editing.component.html',
 })
 export class AnimeEditingComponent {
-
-	private readonly animeService = inject(AnimeService);
 
 	private readonly destroyRef = inject(DestroyRef);
 
@@ -36,8 +32,7 @@ export class AnimeEditingComponent {
 		);
 
 		this.animeFormData$ = this.animeId$.pipe(
-			switchMap(id => this.animeService.getAnimeById(id)),
-			map(animeDetails => AnimeFormDataMapper.fromDetails(animeDetails)),
+			switchMap(id => this.animeFormService.getAnimeFormData(id)),
 		);
 	}
 
