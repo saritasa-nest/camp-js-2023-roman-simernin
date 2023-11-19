@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { BehaviorSubject } from 'rxjs';
 
@@ -113,10 +113,8 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 	public validate(control: AbstractControl<ImageFile, ImageFile>): ValidationErrors | null {
 		const imageFile = control.value;
 
-		if (imageFile === '') {
-			return {
-				required: true,
-			};
+		if (typeof (imageFile) === 'string' && control.hasValidator(Validators.required)) {
+			return Validators.required(control);
 		}
 
 		return null;

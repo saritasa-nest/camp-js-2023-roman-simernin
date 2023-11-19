@@ -156,7 +156,7 @@ export class AnimeFormComponent implements OnInit {
 			season: this.formBuilder.control(AnimeSeason.NonSeasonal, Validators.required),
 			airedStart: this.formBuilder.control(new Date(), Validators.required),
 			airedEnd: this.formBuilder.control(new Date(), Validators.required),
-			imageFile: this.formBuilder.control('' as ImageFile),
+			imageFile: this.formBuilder.control('' as ImageFile, Validators.required),
 			youtubeTrailerId: this.formBuilder.control(null as string | null),
 			genres: this.formBuilder.control([] as MultipleAutocompleteItem[]),
 			studios: this.formBuilder.control([] as MultipleAutocompleteItem[]),
