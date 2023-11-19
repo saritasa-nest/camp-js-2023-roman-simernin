@@ -1,11 +1,13 @@
+import { AnimeCreateData } from '../../models/anime/anime-create-data';
 import { AnimeDetails } from '../../models/anime/anime-details';
 import { AnimeFormData } from '../../models/anime/anime-form-data';
+import { AnimeEditData } from '../../models/anime/anime-edit-data';
 
 export namespace AnimeFormDataMapper {
 
 	/**
-	 * Map dto to model for anime management.
-	 * @param details Anime details.
+	 * Map anime details to form data.
+	 * @param details - Anime details.
 	 */
 	export function fromDetails(details: AnimeDetails): AnimeFormData {
 		return {
@@ -24,6 +26,70 @@ export namespace AnimeFormDataMapper {
 			season: details.season,
 			genres: details.genres.map(genre => ({ id: genre.id, name: genre.name })),
 			studios: details.studios.map(studio => ({ id: studio.id, name: studio.name })),
+		};
+	}
+
+	/**
+	 * Map anime form data to creating data.
+	 * @param formData - Anime form data.
+	 * @param genreIds - Genre ids.
+	 * @param studioIds - Studio ids.
+	 * @param imageUrl - Image url.
+	 */
+	export function toCreateData(
+		formData: AnimeFormData,
+		genreIds: number[],
+		studioIds: number[],
+		imageUrl: string,
+	): AnimeCreateData {
+		return {
+			genreIds,
+			studioIds,
+			imageUrl,
+			youtubeTrailerId: formData.youtubeTrailerId,
+			englishTitle: formData.englishTitle,
+			japaneseTitle: formData.japaneseTitle,
+			type: formData.type,
+			status: formData.status,
+			isAiring: formData.isAiring,
+			airedStart: formData.airedStart,
+			airedEnd: formData.airedEnd,
+			description: formData.description,
+			ageRating: formData.ageRating,
+			source: formData.source,
+			season: formData.season,
+		};
+	}
+
+	/**
+	 * Map anime form data to editing data.
+	 * @param formData - Anime form data.
+	 * @param genreIds - Genre ids.
+	 * @param studioIds - Studio ids.
+	 * @param imageUrl - Image url.
+	 */
+	export function toEditData(
+		formData: AnimeFormData,
+		genreIds: number[],
+		studioIds: number[],
+		imageUrl: string,
+	): AnimeEditData {
+		return {
+			genreIds,
+			studioIds,
+			imageUrl,
+			youtubeTrailerId: formData.youtubeTrailerId,
+			englishTitle: formData.englishTitle,
+			japaneseTitle: formData.japaneseTitle,
+			type: formData.type,
+			status: formData.status,
+			isAiring: formData.isAiring,
+			airedStart: formData.airedStart,
+			airedEnd: formData.airedEnd,
+			description: formData.description,
+			ageRating: formData.ageRating,
+			source: formData.source,
+			season: formData.season,
 		};
 	}
 }
