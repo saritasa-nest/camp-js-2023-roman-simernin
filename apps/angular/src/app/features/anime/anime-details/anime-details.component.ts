@@ -43,7 +43,7 @@ export class AnimeDetailsComponent {
 	}
 
 	/**
-	 * Get genre names from specified anime details.
+	 * Gets genre names from specified anime details.
 	 * @param animeDetails - Anime details.
 	 */
 	protected getGenreNames(animeDetails: AnimeDetails): string[] {
@@ -52,7 +52,7 @@ export class AnimeDetailsComponent {
 	}
 
 	/**
-	 * Get studio names from specified anime details.
+	 * Gets studio names from specified anime details.
 	 * @param animeDetails - Anime details.
 	 */
 	protected getStudioNames(animeDetails: AnimeDetails): string[] {
