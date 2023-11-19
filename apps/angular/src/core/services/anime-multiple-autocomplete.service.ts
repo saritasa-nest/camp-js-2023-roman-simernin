@@ -1,4 +1,4 @@
-import { EMPTY, Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { inject } from '@angular/core';
@@ -7,7 +7,7 @@ import { GenreSortingField } from '@js-camp/core/models/anime/genre-sorting-fiel
 import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
 import { StudioSortingField } from '@js-camp/core/models/anime/studio-sorting-field';
 
-import { MultipleAutocompleteService } from './multiple-autocomplete.service';
+import { MultipleAutocompleteItemProvider, MultipleAutocompleteService } from './multiple-autocomplete.service';
 import { GenreService } from './genre-service';
 import { StudioService } from './studio.service';
 
@@ -24,19 +24,11 @@ export class AnimeMultipleAutocompleteService extends MultipleAutocompleteServic
 	private readonly studioService = inject(StudioService);
 
 	/** @inheritdoc */
-	public override getItems(itemGroup: string, parameters: MultipleAutocompleteParameters):
-	Observable<Pagination<MultipleAutocompleteItem>> {
-		if (itemGroup === animeMultipleAutocompleteGroups.genreGroup) {
-			return this.getGenreItems(parameters);
-		}
-
-		if (itemGroup === animeMultipleAutocompleteGroups.studioGroup) {
-			return this.getStudioItems(parameters);
-		}
-
-		console.error('Invalid anime item group for multiple autocomplete.');
-
-		return EMPTY;
+	protected override getProviders(): Map<string, MultipleAutocompleteItemProvider> {
+		return new Map<string, MultipleAutocompleteItemProvider>([
+			[animeMultipleAutocompleteGroups.genreGroup, this.getGenreItems],
+			[animeMultipleAutocompleteGroups.studioGroup, this.getStudioItems],
+		]);
 	}
 
 	private getGenreItems(parameters: MultipleAutocompleteParameters): Observable<Pagination<MultipleAutocompleteItem>> {
@@ -44,13 +36,7 @@ export class AnimeMultipleAutocompleteService extends MultipleAutocompleteServic
 			field: GenreSortingField.Name,
 			direction: SortingDirection.Ascending,
 			...parameters,
-		}).pipe(
-			map(paginatedGenres => ({
-				totalCount: paginatedGenres.totalCount,
-				results: paginatedGenres.results
-					.map(genre => ({ id: genre.id, name: genre.name })),
-			})),
-		);
+		});
 	}
 
 	private getStudioItems(parameters: MultipleAutocompleteParameters): Observable<Pagination<MultipleAutocompleteItem>> {
@@ -58,12 +44,6 @@ export class AnimeMultipleAutocompleteService extends MultipleAutocompleteServic
 			field: StudioSortingField.Name,
 			direction: SortingDirection.Ascending,
 			...parameters,
-		}).pipe(
-			map(paginatedGenres => ({
-				totalCount: paginatedGenres.totalCount,
-				results: paginatedGenres.results
-					.map(genre => ({ id: genre.id, name: genre.name })),
-			})),
-		);
+		});
 	}
 }
