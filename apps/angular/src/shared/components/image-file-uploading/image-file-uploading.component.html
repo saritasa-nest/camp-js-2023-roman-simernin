@@ -11,7 +11,11 @@
     </div>    
 </div>
 <div class="image-file-preview">
-    <img class="image-file-preview__image" *ngIf="imageFile$ | async as imageFile; else noImageAvailable" [src]="getImageSource(imageFile)" alt=""/>
+    <img
+      *ngIf="imageFile$ | async as imageFile; else noImageAvailable" 
+      class="image-file-preview__image" 
+      [src]="getImageSource(imageFile)" 
+      alt=""/>
     <ng-template #noImageAvailable>
         <img class="image-file-preview__image" alt="No image available" src="assets/no-image-available.jpg"/>
     </ng-template>                

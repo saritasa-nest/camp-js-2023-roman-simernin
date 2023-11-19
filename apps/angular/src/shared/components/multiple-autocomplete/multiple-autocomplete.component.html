@@ -16,13 +16,15 @@
         
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleItemSelected($event)">
         <ng-container *ngIf="totalItems$ | async as totalItems; else itemsLoadingOption">
-            <div class="multiple-autocomplete__option-container" *ngIf="parameters$ | async as parameters"
-                infiniteScroll 
-                [infiniteScrollDistance]="1"
-                [scrollWindow]="false"
-                [infiniteScrollThrottle]="50" 
-                (scrolled)="scrollToNextPage(parameters, totalItems.totalCount)"
-                (scrolledUp)="scrollToPreviousPage(parameters)">    
+            <div
+              *ngIf="parameters$ | async as parameters" 
+              class="multiple-autocomplete__option-container"
+              infiniteScroll 
+              [infiniteScrollDistance]="1"
+              [scrollWindow]="false"
+              [infiniteScrollThrottle]="50" 
+              (scrolled)="scrollToNextPage(parameters, totalItems.totalCount)"
+              (scrolledUp)="scrollToPreviousPage(parameters)">    
                 <mat-option *ngFor="let itemOption of totalItems.results; trackBy: trackItem" [value]="itemOption.id">
                     {{ itemOption.name }}
                 </mat-option>

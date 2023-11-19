@@ -1,4 +1,6 @@
-<main class="anime-details" *ngIf="animeDetails$ | async as animeDetails">
+<main
+  *ngIf="animeDetails$ | async as animeDetails"
+  class="anime-details">
 	<a routerLink="/anime" mat-icon-button>
 		<mat-icon>arrow_back</mat-icon>
 	</a>
@@ -34,10 +36,16 @@
 				<camp-anime-info-item itemTitle="Studios" [itemValue]="getStudioNames(animeDetails) | join | empty" />
 				<camp-anime-info-item itemTitle="Genres" [itemValue]="getGenreNames(animeDetails) | join | empty" />	
 			</div>
-			<p class="anime-card-info__description typography typography_body" *ngIf="animeDetails.description !== ''" >{{ animeDetails.description }}</p>
+			<p 
+			  *ngIf="animeDetails.description !== ''" 
+			  class="anime-card-info__description typography typography_body">
+			    {{ animeDetails.description }}
+			</p>
 		</div>
 	</section>
-	<section class="anime-trailer anime-details__trailer" *ngIf="animeDetails.youtubeTrailerId !== null">
+	<section 
+	  *ngIf="animeDetails.youtubeTrailerId !== null" 
+	  class="anime-trailer anime-details__trailer">
 		<h2 class="typography typography_subtitle">Youtube trailer</h2>
 		<camp-youtube-player class="anime-trailer__player" [videoId]="animeDetails.youtubeTrailerId"></camp-youtube-player>
 	</section>
