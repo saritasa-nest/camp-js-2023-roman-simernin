@@ -9,7 +9,7 @@ import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
 import { ImageFileTypeMapper } from '@js-camp/core/mappers/s3/image-file-type.mapper';
 import { S3UploadResponse } from '@js-camp/core/dtos/s3/s3-upload-response.dto';
 
-import { ApiUriBuilder } from './api-uri-builder';
+import { ApiUrlBuilder } from './api-url-builder';
 
 /** S3 service. */
 @Injectable({
@@ -19,7 +19,7 @@ export class ImageFileService {
 
 	private readonly http = inject(HttpClient);
 
-	private readonly apiUriBuilder = inject(ApiUriBuilder);
+	private readonly apiUrlBuilder = inject(ApiUrlBuilder);
 
 	/**
 		* Add image file to storage.
@@ -38,9 +38,9 @@ export class ImageFileService {
 	}
 
 	private getS3Params(s3ParamsRequest: S3ParamsRequestDto): Observable<S3ParamsResponseDto> {
-		const uri = this.apiUriBuilder.buildS3ParamsUri();
+		const url = this.apiUrlBuilder.buildS3ParamsUrl();
 
-		return this.http.post<S3ParamsResponseDto>(uri, s3ParamsRequest);
+		return this.http.post<S3ParamsResponseDto>(url, s3ParamsRequest);
 	}
 
 	private saveImageFileInS3(s3ParamsResponse: S3ParamsResponseDto, imageFile: File): Observable<S3UploadResponse> {

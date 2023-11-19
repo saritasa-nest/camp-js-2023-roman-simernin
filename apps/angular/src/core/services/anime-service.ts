@@ -22,7 +22,7 @@ import { AnimeEditMapper } from '@js-camp/core/mappers/anime/anime-edit.mapper';
 
 import { catchApiError } from '../utils/rxjs/catch-api-error';
 
-import { ApiUriBuilder } from './api-uri-builder';
+import { ApiUrlBuilder } from './api-url-builder';
 import { ImageFileService } from './image-file.service';
 
 /** Service for actions with anime. */
@@ -31,7 +31,7 @@ export class AnimeService {
 
 	private readonly httpClient = inject(HttpClient);
 
-	private readonly apiUriBuilder = inject(ApiUriBuilder);
+	private readonly apiUrlBuilder = inject(ApiUrlBuilder);
 
 	private readonly imageFileService = inject(ImageFileService);
 
@@ -40,9 +40,9 @@ export class AnimeService {
 	 * @param parameters - Anime list parameters.
 	 * */
 	public getAnimeList(parameters: AnimeParameters): Observable<Pagination<Anime>> {
-		const uri = this.apiUriBuilder.buildGetAnimeListUri();
+		const url = this.apiUrlBuilder.buildGetAnimeListUrl();
 
-		return this.httpClient.get<PaginationDto<AnimeDto>>(uri, {
+		return this.httpClient.get<PaginationDto<AnimeDto>>(url, {
 			params: new HttpParams({
 				fromObject: { ...AnimeParametersMapper.toDto(parameters) },
 			}),
@@ -57,9 +57,9 @@ export class AnimeService {
 	 * @param id - Anime id.
 	 * */
 	public getAnimeById(id: number): Observable<AnimeDetails> {
-		const uri = this.apiUriBuilder.buildGetAnimeByIdUri(id);
+		const url = this.apiUrlBuilder.buildGetAnimeByIdUrl(id);
 
-		return this.httpClient.get<AnimeDetailsDto>(uri)
+		return this.httpClient.get<AnimeDetailsDto>(url)
 			.pipe(
 				map(animeDetailsDto => AnimeDetailsMapper.fromDto(animeDetailsDto)),
 				catchApiError((apiError, throwApiError$) => apiError.statusCode === HttpStatusCode.NotFound ?
@@ -73,9 +73,9 @@ export class AnimeService {
 	 * @param animeCreateData - Anime creatiom data.
 	 */
 	public createAnime(animeCreateData: AnimeCreateData): Observable<number> {
-		const uri = this.apiUriBuilder.buildCreateAnimeUri();
+		const url = this.apiUrlBuilder.buildCreateAnimeUrl();
 
-		return this.httpClient.post<AnimeDetailsDto>(uri, AnimeCreateMapper.toDto(animeCreateData)).pipe(
+		return this.httpClient.post<AnimeDetailsDto>(url, AnimeCreateMapper.toDto(animeCreateData)).pipe(
 			map(details => details.id),
 		);
 	}
@@ -86,9 +86,9 @@ export class AnimeService {
 	 * @param id - Anime id.
 	 */
 	public editAnime(id: number, animeEditData: AnimeEditData): Observable<number> {
-		const uri = this.apiUriBuilder.buildEditAnimeUri(id);
+		const url = this.apiUrlBuilder.buildEditAnimeUrl(id);
 
-		return this.httpClient.put<AnimeDetailsDto>(uri, AnimeEditMapper.toDto(animeEditData)).pipe(
+		return this.httpClient.put<AnimeDetailsDto>(url, AnimeEditMapper.toDto(animeEditData)).pipe(
 			map(detailsDto => detailsDto.id),
 		);
 	}
@@ -98,8 +98,8 @@ export class AnimeService {
 	 * @param id - Anime id.
 	 */
 	public deleteAnime(id: number): Observable<void> {
-		const uri = this.apiUriBuilder.buildDeleteAnimeUri(id);
+		const url = this.apiUrlBuilder.buildDeleteAnimeUrl(id);
 
-		return this.httpClient.delete<void>(uri);
+		return this.httpClient.delete<void>(url);
 	}
 }

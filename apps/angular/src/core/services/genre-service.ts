@@ -10,13 +10,13 @@ import { GenreDto } from '@js-camp/core/dtos/anime/genre.dto';
 import { GenreParameters } from '@js-camp/core/models/anime/genre-parameters';
 import { GenreParametersMapper } from '@js-camp/core/mappers/anime/genre-parameters.mapper';
 
-import { ApiUriBuilder } from './api-uri-builder';
+import { ApiUrlBuilder } from './api-url-builder';
 
 /** Service for genres. */
 @Injectable()
 export class GenreService {
 
-	private readonly apiUriBuilder = inject(ApiUriBuilder);
+	private readonly apiUrlBuilder = inject(ApiUrlBuilder);
 
 	private readonly httpClient = inject(HttpClient);
 
@@ -25,9 +25,9 @@ export class GenreService {
 	 * @param parameters - Genre list parameters.
 	 * */
 	public getGenreList(parameters: GenreParameters): Observable<Pagination<Genre>> {
-		const uri = this.apiUriBuilder.buildGetGenreListUri();
+		const url = this.apiUrlBuilder.buildGetGenreListUrl();
 
-		return this.httpClient.get<PaginationDto<GenreDto>>(uri, {
+		return this.httpClient.get<PaginationDto<GenreDto>>(url, {
 			params: new HttpParams({
 				fromObject: { ...GenreParametersMapper.toDto(parameters) },
 			}),
@@ -42,9 +42,9 @@ export class GenreService {
 	 * @param genreName - Genre name.
 	 */
 	public createGenre(genreName: string): Observable<number> {
-		const uri = this.apiUriBuilder.buildCreateGenreUri();
+		const url = this.apiUrlBuilder.buildCreateGenreUrl();
 
-		return this.httpClient.post<GenreDto>(uri, { name: genreName, type: 'GENRES' })
+		return this.httpClient.post<GenreDto>(url, { name: genreName, type: 'GENRES' })
 			.pipe(
 				map(genreDto => genreDto.id),
 			);
