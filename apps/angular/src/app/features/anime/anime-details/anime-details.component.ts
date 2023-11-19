@@ -76,17 +76,17 @@ export class AnimeDetailsComponent {
 	 * @param id - Anime id.
 	 */
 	protected openDeletionConfirmation(id: number): void {
-		const dialogRef = this.dialog.open<ConfirmationModalComponent, ConfirmationModalParameters, boolean>(ConfirmationModalComponent, {
+		this.dialog.open<ConfirmationModalComponent, ConfirmationModalParameters, boolean>(ConfirmationModalComponent, {
 			data: {
 				confirmationText: 'Are you sure you want to delete this anime?',
 			},
-		});
-
-		dialogRef.afterClosed().pipe(
-			filter(isDeletionConfirmed => isDeletionConfirmed === true),
-			switchMap(() => this.deleteAnime(id)),
-			takeUntilDestroyed(this.destroyRef),
-		)
+		})
+			.afterClosed()
+			.pipe(
+				filter(isDeletionConfirmed => isDeletionConfirmed === true),
+				switchMap(() => this.deleteAnime(id)),
+				takeUntilDestroyed(this.destroyRef),
+			)
 			.subscribe();
 	}
 
