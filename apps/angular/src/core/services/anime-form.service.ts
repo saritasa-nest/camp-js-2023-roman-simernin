@@ -37,9 +37,9 @@ export class AnimeFormService {
 	 * */
 	public createAnime(formData: AnimeFormData): Observable<number> {
 		return combineLatest([
-			this.createOrGetGenres(formData),
-			this.createOrGetStudios(formData),
-			this.addOrGetImage(formData),
+			this.createGenres(formData),
+			this.createStudios(formData),
+			this.addImageToFileStorage(formData),
 		]).pipe(
 			switchMap(([genreIds, studioIds, imageUrl]) =>
 				this.animeService.createAnime(AnimeFormDataMapper.toCreateData(
@@ -58,9 +58,9 @@ export class AnimeFormService {
 	 * */
 	public editAnime(id: number, formData: AnimeFormData): Observable<number> {
 		return combineLatest([
-			this.createOrGetGenres(formData),
-			this.createOrGetStudios(formData),
-			this.addOrGetImage(formData),
+			this.createGenres(formData),
+			this.createStudios(formData),
+			this.addImageToFileStorage(formData),
 		]).pipe(
 			switchMap(([genreIds, studioIds, imageUrl]) =>
 				this.animeService.editAnime(id, AnimeFormDataMapper.toEditData(
@@ -73,11 +73,11 @@ export class AnimeFormService {
 	}
 
 	/**
-	 * Create or get exising genres.
+	 * Create genres.
 	 * @param formData - Anime form data.
 	 * @returns Genre ids.
 	 */
-	private createOrGetGenres(formData: AnimeFormData): Observable<number[]> {
+	private createGenres(formData: AnimeFormData): Observable<number[]> {
 		const existingGenresIds = formData.genres
 			.map(genre => genre.id)
 			.filter((genreId): genreId is number => genreId !== null);
@@ -97,11 +97,11 @@ export class AnimeFormService {
 	}
 
 	/**
-	 * Create or get exising studios.
+	 * Create studios.
 	 * @param formData - Anime form data.
 	 * @returns Studio ids.
 	 */
-	private createOrGetStudios(formData: AnimeFormData): Observable<number[]> {
+	private createStudios(formData: AnimeFormData): Observable<number[]> {
 		const existingStudioIds = formData.studios
 			.map(studio => studio.id)
 			.filter((studio): studio is number => studio !== null);
@@ -121,11 +121,11 @@ export class AnimeFormService {
 	}
 
 	/**
-	 * Add or get image.
+	 * Add image to file storage.
 	 * @param formData - Anime form data.
 	 * @returns Image url.
 	 */
-	private addOrGetImage(formData: AnimeFormData): Observable<string> {
+	private addImageToFileStorage(formData: AnimeFormData): Observable<string> {
 		if (formData.imageFile instanceof File) {
 			return this.imageFileService.addToStorage(formData.imageFile, ImageFileType.AnimeImage);
 		}
