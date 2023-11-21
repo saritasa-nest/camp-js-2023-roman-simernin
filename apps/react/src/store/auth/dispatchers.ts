@@ -4,7 +4,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const login = createAsyncThunk(
 	'auth/login',
-	(loginModel: Login) => AuthService.login(loginModel),
+	async(loginModel: Login, { rejectWithValue }) => {
+		try {
+			return await AuthService.login(loginModel);
+		} catch (error: unknown) {
+			return rejectWithValue(error);
+		}
+	},
 );
 
 export const logout = createAsyncThunk(

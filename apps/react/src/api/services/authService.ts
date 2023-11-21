@@ -2,6 +2,8 @@ import { Login } from '@js-camp/core/models/auth/login';
 import { UserAccessTokenDto } from '@js-camp/core/dtos/auth/tokens.dto';
 import { LoginMapper } from '@js-camp/core/mappers/auth/login.mapper';
 import { UserAccessTokenMapper } from '@js-camp/core/mappers/auth/tokens.mapper';
+import { HttpStatusCode } from 'axios';
+import { catchApiError, throwAppError } from '@js-camp/react/utils/catchApiError';
 
 import { http } from '..';
 
@@ -16,10 +18,22 @@ export namespace AuthService {
 	 * @param loginModel - Login model.
 	 */
 	export async function login(loginModel: Login): Promise<void> {
-		const { data: tokensDto } = await http.post<UserAccessTokenDto>(
-			AppUrlsConfig.auth.login,
-			LoginMapper.toDto(loginModel),
-		);
+		let tokensDto: UserAccessTokenDto;
+
+		try {
+			tokensDto = (await http.post<UserAccessTokenDto>(
+				AppUrlsConfig.auth.login,
+				LoginMapper.toDto(loginModel),
+			)).data;
+		} catch (error: unknown) {
+			catchApiError(error, apiError => {
+				if (apiError.statusCode === HttpStatusCode.Forbidden) {
+					throwAppError(apiError);
+				}
+			});
+
+			throw error;
+		}
 
 		const tokens = UserAccessTokenMapper.fromDto(tokensDto);
 		return UserAccessTokenStorageService.save(tokens);

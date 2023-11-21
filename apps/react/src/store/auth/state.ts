@@ -1,3 +1,5 @@
+import { AppError } from '@js-camp/core/models/app-error';
+
 /** Auth state. */
 export interface AuthState {
 
@@ -6,4 +8,7 @@ export interface AuthState {
 
 	/** Provides current user is authenticated. */
 	readonly isAuthenticated: boolean;
+
+	/** Application error. */
+	readonly error: AppError | null;
 }
