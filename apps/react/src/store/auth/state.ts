@@ -3,8 +3,7 @@ export interface AuthState {
 
 	/** Auth is loading. */
 	readonly isLoading: boolean;
-}
 
-export const initialState: AuthState = {
-	isLoading: false,
-};
+	/** Provides current user is authenticated. */
+	readonly isAuthenticated: boolean;
+}

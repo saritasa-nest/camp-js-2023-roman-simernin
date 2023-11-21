@@ -24,4 +24,9 @@ export namespace AuthService {
 		const tokens = UserAccessTokenMapper.fromDto(tokensDto);
 		return UserAccessTokenStorageService.save(tokens);
 	}
+
+	/** Provides current user is authenticated. */
+	export function isAuthenticated(): boolean {
+		return UserAccessTokenStorageService.get() !== null;
+	}
 }

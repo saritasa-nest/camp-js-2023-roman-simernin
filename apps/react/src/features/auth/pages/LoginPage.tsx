@@ -6,6 +6,7 @@ import { nameof } from '@js-camp/react/utils/nameof';
 import { FC, memo } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TextField, Button } from '@mui/material';
+import { Navigate } from 'react-router';
 
 import styles from './LoginPage.module.css';
 
@@ -13,6 +14,7 @@ import styles from './LoginPage.module.css';
 const LoginPageComponent: FC = () => {
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectIsAuthLoading);
+	const isAuthenticated = useAppSelector(selectIsAuthLoading);
 
 	const defaultLoginData: Login = {
 		email: '',
@@ -33,6 +35,10 @@ const LoginPageComponent: FC = () => {
 
 	if (isLoading) {
 		return <div>Loading</div>;
+	}
+
+	if (isAuthenticated) {
+		return <Navigate to=''/>;
 	}
 
 	return (
