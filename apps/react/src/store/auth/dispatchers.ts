@@ -6,3 +6,8 @@ export const login = createAsyncThunk(
 	'auth/login',
 	(loginModel: Login) => AuthService.login(loginModel),
 );
+
+export const logout = createAsyncThunk(
+	'auth/logout',
+	() => AuthService.logout(),
+);

@@ -12,9 +12,9 @@ import { UserAccessTokenStorageService } from './userAccessTokenStorageService';
 export namespace AuthService {
 
 	/**
-		* Login.
-		* @param loginModel - Login model.
-		**/
+	 * Login.
+	 * @param loginModel - Login model.
+	 */
 	export async function login(loginModel: Login): Promise<void> {
 		const { data: tokensDto } = await http.post<UserAccessTokenDto>(
 			AppUrlsConfig.auth.login,
@@ -23,6 +23,11 @@ export namespace AuthService {
 
 		const tokens = UserAccessTokenMapper.fromDto(tokensDto);
 		return UserAccessTokenStorageService.save(tokens);
+	}
+
+	/** Logout. */
+	export function logout(): void {
+		UserAccessTokenStorageService.remove();
 	}
 
 	/** Provides current user is authenticated. */

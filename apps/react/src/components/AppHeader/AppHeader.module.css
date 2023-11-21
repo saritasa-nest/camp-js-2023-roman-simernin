@@ -1,0 +1,8 @@
+.app-header {
+  display: flex;
+  justify-content: right;
+}
+
+.app-header_not-authenticated {
+  visibility: hidden;
+}
