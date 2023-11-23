@@ -1,20 +1,28 @@
 import { Login } from '@js-camp/core/models/auth/login';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
-import { login } from '@js-camp/react/store/auth/dispatchers';
-import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
+import { login, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
+import { selectAuthError } from '@js-camp/react/store/auth/selectors';
 import { nameof } from '@js-camp/react/utils/nameof';
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TextField, Button, Alert } from '@mui/material';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Link } from 'react-router-dom';
+import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 
 import styles from './LoginPage.module.css';
 
-const loginSchema: yup.ObjectSchema<Login> = yup
+type LoginForm = Login;
+
+const loginSchema: yup.ObjectSchema<LoginForm> = yup
 	.object({
-		email: yup.string().required(),
-		password: yup.string().required(),
+		email: yup.string()
+			.required()
+			.email(),
+		password: yup.string()
+			.required()
+			.min(AuthenticationConstants.minPasswordLength),
 	});
 
 /** Login page component. */
@@ -22,7 +30,7 @@ const LoginPageComponent: FC = () => {
 	const dispatch = useAppDispatch();
 	const loginError = useAppSelector(selectAuthError);
 
-	const defaultLoginData: Login = {
+	const defaultLoginData: LoginForm = {
 		email: '',
 		password: '',
 	};
@@ -40,6 +48,12 @@ const LoginPageComponent: FC = () => {
 		dispatch(login(loginData));
 	};
 
+	useEffect(() => {
+		return () => {
+			dispatch(resetAuthError());
+		};
+	}, []);
+
 	return (
 		<div className={styles['login-form-container']}>
 			<form onSubmit={handleSubmit(onSubmit)}
@@ -48,15 +62,16 @@ const LoginPageComponent: FC = () => {
 					label="Email"
 					error={formErrors.email !== undefined}
 					helperText={formErrors.email?.message}
-					{...register(nameof<Login>('email'))}/>
+					{...register(nameof<LoginForm>('email'))}/>
 				<TextField
 					type="password"
 					label="Password"
 					error={formErrors.password !== undefined}
 					helperText={formErrors.password?.message}
-					{...register(nameof<Login>('password'))}/>
-				<Button type="submit">Sign in</Button>
+					{...register(nameof<LoginForm>('password'))}/>
 				{loginError !== null && <Alert severity="error">{loginError.message}</Alert>}
+				<Button type="submit">Sign in</Button>
+				<Link to='/auth/registration' className={styles['login-form__registration-link']}>Sign out</Link>
 			</form>
 		</div>
 	);

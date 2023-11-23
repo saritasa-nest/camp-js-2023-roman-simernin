@@ -1,19 +1,15 @@
-.login-form-container {
+.registration-form-container {
   display: flex;
   justify-content: center;
 }
 
-.login-form {
+.registration-form {
   display: flex;
   flex-direction: column;
   width: 300px;
   gap: 10px;
 }
 
-.login-form__error {
-  text-align: justify;
-}
-
-.login-form__registration-link {
+.registration-form__login-link {
   text-align: center;
 }

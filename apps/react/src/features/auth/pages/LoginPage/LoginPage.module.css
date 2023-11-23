@@ -1,0 +1,15 @@
+.login-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+}
+
+.login-form__registration-link {
+  text-align: center;
+}
