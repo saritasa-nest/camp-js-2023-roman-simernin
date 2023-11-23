@@ -6,6 +6,9 @@ import { refreshTokenInterceptor } from './interceptors/refreshTokenInterceptor'
 
 export const http = axios.create({
 	baseURL: CONFIG.apiUrl,
+	headers: {
+		'Api-Key': CONFIG.apiKey,
+	},
 });
 
 http.interceptors.request.use(config => accessTokenInterceptor(config),

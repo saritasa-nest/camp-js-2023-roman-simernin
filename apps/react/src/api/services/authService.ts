@@ -6,6 +6,8 @@ import { HttpStatusCode } from 'axios';
 import { catchApiError, throwAppError } from '@js-camp/react/utils/catchApiError';
 import { AppError } from '@js-camp/core/models/app-error';
 import { RefreshTokensDto } from '@js-camp/core/dtos/auth/refresh-tokens.dto';
+import { Registration } from '@js-camp/core/models/auth/registration';
+import { RegistrationMapper } from '@js-camp/core/mappers/auth/registration.mapper';
 
 import { http } from '..';
 
@@ -32,9 +34,32 @@ export namespace AuthService {
 				if (apiError.statusCode === HttpStatusCode.Forbidden) {
 					throwAppError(apiError);
 				}
-			});
 
-			throw error;
+				throw error;
+			});
+		}
+	}
+
+	/**
+	 * Register.
+	 * @param registrationModel - Registration model.
+	 */
+	export async function register(registrationModel: Registration): Promise<void> {
+		try {
+			const tokensDto = (await http.post<UserAccessTokenDto>(
+				AppUrlsConfig.auth.register,
+				RegistrationMapper.toDto(registrationModel),
+			)).data;
+
+			authenticate(tokensDto);
+		} catch (error: unknown) {
+			catchApiError(error, apiError => {
+				if (apiError.statusCode === HttpStatusCode.Forbidden) {
+					throwAppError(apiError);
+				}
+
+				throw error;
+			});
 		}
 	}
 

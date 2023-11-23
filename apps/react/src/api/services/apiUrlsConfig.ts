@@ -7,6 +7,7 @@ export namespace AppUrlsConfig {
 	/** Auth-related routes. */
 	export const auth = {
 		login: toApi('auth/login/'),
+		register: toApi('auth/register/'),
 		refresh: toApi('auth/token/refresh/'),
 	} as const;
 
