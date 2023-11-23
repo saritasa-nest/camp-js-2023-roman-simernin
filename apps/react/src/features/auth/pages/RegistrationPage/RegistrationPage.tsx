@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
-import { selectAuthError } from '@js-camp/react/store/auth/selectors';
+import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { nameof } from '@js-camp/react/utils/nameof';
 import { FC, memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { Registration } from '@js-camp/core/models/auth/registration';
 import { register, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
 import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
+
+import { Loader } from '@js-camp/react/components/Loader/Loader';
 
 import styles from './RegistrationPage.module.css';
 
@@ -37,6 +39,7 @@ const registrationSchema: yup.ObjectSchema<RegistrationForm> = yup
 /** Registration page component. */
 const RegistrationPageComponent: FC = () => {
 	const dispatch = useAppDispatch();
+	const isLoading = useAppSelector(selectIsAuthLoading);
 	const registrationError = useAppSelector(selectAuthError);
 
 	const defaultRegistrationForm: RegistrationForm = {
@@ -64,7 +67,7 @@ const RegistrationPageComponent: FC = () => {
 		return () => {
 			dispatch(resetAuthError());
 		};
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className={styles['registration-form-container']}>
@@ -97,6 +100,7 @@ const RegistrationPageComponent: FC = () => {
 					error={formErrors.retypePassword !== undefined}
 					helperText={formErrors.retypePassword?.message}
 					{...formRegister(nameof<RegistrationForm>('retypePassword'))}/>
+				<Loader isLoading={isLoading}></Loader>
 				{registrationError !== null && <Alert severity="error">{registrationError.message}</Alert>}
 				<Button type="submit">Sign out</Button>
 				<Link to='/auth/login' className={styles['registration-form__login-link']}>Sign in</Link>

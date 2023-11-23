@@ -54,7 +54,8 @@ export namespace AuthService {
 			authenticate(tokensDto);
 		} catch (error: unknown) {
 			catchApiError(error, apiError => {
-				if (apiError.statusCode === HttpStatusCode.Forbidden) {
+				if (apiError.statusCode === HttpStatusCode.Forbidden ||
+					apiError.statusCode === HttpStatusCode.BadRequest) {
 					throwAppError(apiError);
 				}
 
