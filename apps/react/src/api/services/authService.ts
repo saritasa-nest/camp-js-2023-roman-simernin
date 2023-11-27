@@ -23,10 +23,10 @@ export namespace AuthService {
 	 */
 	export async function login(loginModel: Login): Promise<void> {
 		try {
-			const tokensDto = (await http.post<UserAccessTokenDto>(
+			const { data: tokensDto } = (await http.post<UserAccessTokenDto>(
 				AppUrlsConfig.auth.login,
 				LoginMapper.toDto(loginModel),
-			)).data;
+			));
 
 			authenticate(tokensDto);
 		} catch (error: unknown) {
@@ -46,10 +46,10 @@ export namespace AuthService {
 	 */
 	export async function register(registrationModel: Registration): Promise<void> {
 		try {
-			const tokensDto = (await http.post<UserAccessTokenDto>(
+			const { data: tokensDto } = (await http.post<UserAccessTokenDto>(
 				AppUrlsConfig.auth.register,
 				RegistrationMapper.toDto(registrationModel),
-			)).data;
+			));
 
 			authenticate(tokensDto);
 		} catch (error: unknown) {
@@ -78,10 +78,10 @@ export namespace AuthService {
 			refresh: currentTokens.refreshToken,
 		};
 
-		const tokensDto = (await http.post<UserAccessTokenDto>(
+		const { data: tokensDto } = (await http.post<UserAccessTokenDto>(
 			AppUrlsConfig.auth.refresh,
 			refreshTokensDto,
-		)).data;
+		));
 
 		authenticate(tokensDto);
 	}
