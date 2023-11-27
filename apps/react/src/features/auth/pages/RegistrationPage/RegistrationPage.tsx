@@ -1,5 +1,4 @@
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
-import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { nameof } from '@js-camp/react/utils/nameof';
 import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -8,8 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import { Registration } from '@js-camp/core/models/auth/registration';
 import { register, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
-
 import { Loader } from '@js-camp/react/components/Loader/Loader';
+import { selectAuth } from '@js-camp/react/store/auth/selectors';
 
 import styles from './RegistrationPage.module.css';
 import { RegistrationForm, registrationSchema } from './RegistrationSchema';
@@ -17,8 +16,7 @@ import { RegistrationForm, registrationSchema } from './RegistrationSchema';
 /** Registration page component. */
 const RegistrationPageComponent = () => {
 	const dispatch = useAppDispatch();
-	const isLoading = useAppSelector(selectIsAuthLoading);
-	const registrationError = useAppSelector(selectAuthError);
+	const { isLoading, error: registrationError } = useAppSelector(selectAuth);
 
 	const defaultRegistrationForm: RegistrationForm = {
 		firstName: '',

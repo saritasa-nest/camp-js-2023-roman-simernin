@@ -1,7 +1,6 @@
 import { Login } from '@js-camp/core/models/auth/login';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { login, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
-import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { nameof } from '@js-camp/react/utils/nameof';
 import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -9,6 +8,7 @@ import { TextField, Button, Alert } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import { Loader } from '@js-camp/react/components/Loader/Loader';
+import { selectAuth } from '@js-camp/react/store/auth/selectors';
 
 import styles from './LoginPage.module.css';
 import { LoginForm, loginSchema } from './LoginSchema';
@@ -16,8 +16,7 @@ import { LoginForm, loginSchema } from './LoginSchema';
 /** Login page component. */
 const LoginPageComponent = () => {
 	const dispatch = useAppDispatch();
-	const isLoading = useAppSelector(selectIsAuthLoading);
-	const loginError = useAppSelector(selectAuthError);
+	const { isLoading, error: loginError } = useAppSelector(selectAuth);
 
 	const defaultLoginData: LoginForm = {
 		email: '',
