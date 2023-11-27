@@ -57,9 +57,9 @@ const LoginPageComponent: FC = () => {
 	}, [dispatch]);
 
 	return (
-		<div className={styles['login-form-container']}>
+		<div className={styles.loginFormContainer}>
 			<form onSubmit={handleSubmit(onSubmit)}
-				className={styles['login-form']}>
+				className={styles.loginForm}>
 				<TextField
 					label="Email"
 					error={formErrors.email !== undefined}
@@ -74,7 +74,7 @@ const LoginPageComponent: FC = () => {
 				<Loader isLoading={isLoading}></Loader>
 				{loginError !== null && <Alert severity="error">{loginError.message}</Alert>}
 				<Button type="submit">Sign in</Button>
-				<Link to='/auth/registration' className={styles['login-form__registration-link']}>Sign out</Link>
+				<Link to='/auth/registration' className={styles.loginForm__registrationLink}>Sign out</Link>
 			</form>
 		</div>
 	);

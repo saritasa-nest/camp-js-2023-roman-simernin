@@ -1,8 +1,8 @@
-.app-header {
+.appHeader {
   display: flex;
   justify-content: right;
 }
 
-.app-header_not-authenticated {
+.appHeader_notAuthenticated {
   visibility: hidden;
 }

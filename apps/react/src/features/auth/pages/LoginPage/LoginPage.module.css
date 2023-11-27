@@ -1,15 +1,15 @@
-.login-form-container {
+.loginFormContainer {
   display: flex;
   justify-content: center;
 }
 
-.login-form {
+.loginForm {
   display: flex;
   flex-direction: column;
   width: 300px;
   gap: 10px;
 }
 
-.login-form__registration-link {
+.loginForm__registrationLink {
   text-align: center;
 }

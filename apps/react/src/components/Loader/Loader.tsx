@@ -22,7 +22,7 @@ const LoaderComponent: FC<LoaderProps> = ({ isLoading, children }) => {
 	}
 
 	return (
-		<div className={styles['loader-container']}>
+		<div className={styles.loaderContainer}>
 			<CircularProgress />
 		</div>
 	);

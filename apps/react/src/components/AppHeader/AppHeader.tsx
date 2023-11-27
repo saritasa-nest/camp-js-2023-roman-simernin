@@ -20,8 +20,8 @@ const AppHeaderComponent: FC = () => {
 		<header
 			hidden={!isAuthenticated}
 			className={`${
-				styles['app-header']} 
-				${!isAuthenticated && styles['app-header_not-authenticated']}`
+				styles.appHeader} 
+				${!isAuthenticated && styles.appHeader_notAuthenticated}`
 			}>
 			<Button
 				type="button"
