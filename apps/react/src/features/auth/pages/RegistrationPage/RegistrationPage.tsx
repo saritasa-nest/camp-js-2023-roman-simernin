@@ -4,37 +4,15 @@ import { nameof } from '@js-camp/react/utils/nameof';
 import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TextField, Button, Alert } from '@mui/material';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import { Registration } from '@js-camp/core/models/auth/registration';
 import { register, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
-import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 
 import { Loader } from '@js-camp/react/components/Loader/Loader';
 
 import styles from './RegistrationPage.module.css';
-
-type RegistrationForm = Registration & {
-	readonly retypePassword: string;
-};
-
-const registrationSchema: yup.ObjectSchema<RegistrationForm> = yup
-	.object({
-		firstName: yup.string().required(),
-		lastName: yup.string().required(),
-		email: yup.string()
-			.required()
-			.email(),
-		password: yup.string()
-			.required()
-			.min(AuthenticationConstants.minPasswordLength),
-		retypePassword: yup.string().required()
-			.test('retype-password', 'Passwords do not match.', function() {
-				const { password, retypePassword } = this.parent;
-				return password === retypePassword;
-			}),
-	});
+import { RegistrationForm, registrationSchema } from './RegistrationSchema';
 
 /** Registration page component. */
 const RegistrationPageComponent = () => {

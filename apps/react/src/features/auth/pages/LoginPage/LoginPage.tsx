@@ -6,25 +6,12 @@ import { nameof } from '@js-camp/react/utils/nameof';
 import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TextField, Button, Alert } from '@mui/material';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
-import { AuthenticationConstants } from '@js-camp/core/utils/authentication-constants';
 import { Loader } from '@js-camp/react/components/Loader/Loader';
 
 import styles from './LoginPage.module.css';
-
-type LoginForm = Login;
-
-const loginSchema: yup.ObjectSchema<LoginForm> = yup
-	.object({
-		email: yup.string()
-			.required()
-			.email(),
-		password: yup.string()
-			.required()
-			.min(AuthenticationConstants.minPasswordLength),
-	});
+import { LoginForm, loginSchema } from './LoginSchema';
 
 /** Login page component. */
 const LoginPageComponent = () => {
