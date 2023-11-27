@@ -31,4 +31,6 @@ const AppHeaderComponent = () => {
 	);
 };
 
+AppHeaderComponent.displayName = 'camp-app-header';
+
 export const AppHeader = memo(AppHeaderComponent);

@@ -28,4 +28,6 @@ const LoaderComponent = ({ isLoading, children }: LoaderProps) => {
 	);
 };
 
+LoaderComponent.displayName = 'camp-loader';
+
 export const Loader = memo(LoaderComponent);

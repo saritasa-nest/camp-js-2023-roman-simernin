@@ -109,4 +109,6 @@ const RegistrationPageComponent = () => {
 	);
 };
 
+RegistrationPageComponent.displayName = 'camp-registration';
+
 export const RegistrationPage = memo(RegistrationPageComponent);

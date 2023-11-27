@@ -80,4 +80,6 @@ const LoginPageComponent = () => {
 	);
 };
 
+LoginPageComponent.displayName = 'camp-login';
+
 export const LoginPage = memo(LoginPageComponent);
