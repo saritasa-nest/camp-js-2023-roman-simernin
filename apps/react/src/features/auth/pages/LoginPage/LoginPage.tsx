@@ -43,6 +43,8 @@ const LoginPageComponent = () => {
 		};
 	}, [dispatch]);
 
+	const loginFormNameof = nameof<LoginForm>();
+
 	return (
 		<div className={styles.loginFormContainer}>
 			<form onSubmit={handleSubmit(onSubmit)}
@@ -51,13 +53,13 @@ const LoginPageComponent = () => {
 					label="Email"
 					error={formErrors.email !== undefined}
 					helperText={formErrors.email?.message}
-					{...register(nameof<LoginForm>('email'))}/>
+					{...register(loginFormNameof('email'))}/>
 				<TextField
 					type="password"
 					label="Password"
 					error={formErrors.password !== undefined}
 					helperText={formErrors.password?.message}
-					{...register(nameof<LoginForm>('password'))}/>
+					{...register(loginFormNameof('password'))}/>
 				<Loader isLoading={isLoading}></Loader>
 				{loginError !== null && <Alert severity="error">{loginError.message}</Alert>}
 				<Button type="submit">Sign in</Button>

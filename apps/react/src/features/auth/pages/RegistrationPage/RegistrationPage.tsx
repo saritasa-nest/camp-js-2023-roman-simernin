@@ -47,6 +47,8 @@ const RegistrationPageComponent = () => {
 		};
 	}, [dispatch]);
 
+	const registrationFormNameof = nameof<RegistrationForm>();
+
 	return (
 		<div className={styles.registrationFormContainer}>
 			<form onSubmit={handleSubmit(onSubmit)}
@@ -55,29 +57,29 @@ const RegistrationPageComponent = () => {
 					label="First name"
 					error={formErrors.firstName !== undefined}
 					helperText={formErrors.firstName?.message}
-					{...formRegister(nameof<RegistrationForm>('firstName'))}/>
+					{...formRegister(registrationFormNameof('firstName'))}/>
 				<TextField
 					label="Last name"
 					error={formErrors.lastName !== undefined}
 					helperText={formErrors.lastName?.message}
-					{...formRegister(nameof<RegistrationForm>('lastName'))}/>
+					{...formRegister(registrationFormNameof('lastName'))}/>
 				<TextField
 					label="Email"
 					error={formErrors.email !== undefined}
 					helperText={formErrors.email?.message}
-					{...formRegister(nameof<RegistrationForm>('email'))}/>
+					{...formRegister(registrationFormNameof('email'))}/>
 				<TextField
 					type="password"
 					label="Password"
 					error={formErrors.password !== undefined}
 					helperText={formErrors.password?.message}
-					{...formRegister(nameof<RegistrationForm>('password'))}/>
+					{...formRegister(registrationFormNameof('password'))}/>
 				<TextField
 					type="password"
 					label="Re-type password"
 					error={formErrors.retypePassword !== undefined}
 					helperText={formErrors.retypePassword?.message}
-					{...formRegister(nameof<RegistrationForm>('retypePassword'))}/>
+					{...formRegister(registrationFormNameof('retypePassword'))}/>
 				<Loader isLoading={isLoading}></Loader>
 				{registrationError !== null && <Alert severity="error">{registrationError.message}</Alert>}
 				<Button type="submit">Sign out</Button>
