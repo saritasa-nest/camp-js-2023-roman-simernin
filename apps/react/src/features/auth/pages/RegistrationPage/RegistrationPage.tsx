@@ -49,7 +49,8 @@ const RegistrationPageComponent = () => {
 
 	return (
 		<div className={styles.registrationFormContainer}>
-			<form onSubmit={handleSubmit(onSubmit)}
+			<form
+				onSubmit={handleSubmit(onSubmit)}
 				className={styles.registrationForm}>
 				<TextField
 					label="First name"
@@ -81,7 +82,11 @@ const RegistrationPageComponent = () => {
 				<Loader isLoading={isLoading}></Loader>
 				{registrationError !== null && <Alert severity="error">{registrationError.message}</Alert>}
 				<Button type="submit">Sign out</Button>
-				<Link to='/auth/login' className={styles.registrationForm__loginLink}>Sign in</Link>
+				<Link
+					to='/auth/login' 
+					className={styles.registrationForm__loginLink}>
+						Sign in
+				</Link>
 			</form>
 		</div>
 	);

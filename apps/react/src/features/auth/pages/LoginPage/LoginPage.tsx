@@ -46,7 +46,8 @@ const LoginPageComponent = () => {
 
 	return (
 		<div className={styles.loginFormContainer}>
-			<form onSubmit={handleSubmit(onSubmit)}
+			<form
+				onSubmit={handleSubmit(onSubmit)}
 				className={styles.loginForm}>
 				<TextField
 					label="Email"
@@ -62,7 +63,11 @@ const LoginPageComponent = () => {
 				<Loader isLoading={isLoading}></Loader>
 				{loginError !== null && <Alert severity="error">{loginError.message}</Alert>}
 				<Button type="submit">Sign in</Button>
-				<Link to='/auth/registration' className={styles.loginForm__registrationLink}>Sign out</Link>
+				<Link
+					to='/auth/registration' 
+					className={styles.loginForm__registrationLink}>
+						Sign out
+				</Link>
 			</form>
 		</div>
 	);

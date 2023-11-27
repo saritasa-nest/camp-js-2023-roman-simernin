@@ -22,8 +22,7 @@ const AppHeaderComponent = () => {
 		!isAuthenticated && styles.appHeader_notAuthenticated);
 
 	return (
-		<header
-			className={headerStyles}>
+		<header className={headerStyles}>
 			<Button
 				type="button"
 				onClick={handleLogout}>
