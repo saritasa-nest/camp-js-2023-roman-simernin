@@ -1,13 +1,13 @@
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { logout } from '@js-camp/react/store/auth/dispatchers';
-import { FC, memo } from 'react';
+import { memo } from 'react';
 import { Button } from '@mui/material';
 import { selectIsAuthenticated } from '@js-camp/react/store/auth/selectors';
 
 import styles from './AppHeader.module.css';
 
 /** App header component. */
-const AppHeaderComponent: FC = () => {
+const AppHeaderComponent = () => {
 	const dispatch = useAppDispatch();
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 

@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { selectAuthError, selectIsAuthLoading } from '@js-camp/react/store/auth/selectors';
 import { nameof } from '@js-camp/react/utils/nameof';
-import { FC, memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { TextField, Button, Alert } from '@mui/material';
 import * as yup from 'yup';
@@ -37,7 +37,7 @@ const registrationSchema: yup.ObjectSchema<RegistrationForm> = yup
 	});
 
 /** Registration page component. */
-const RegistrationPageComponent: FC = () => {
+const RegistrationPageComponent = () => {
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectIsAuthLoading);
 	const registrationError = useAppSelector(selectAuthError);

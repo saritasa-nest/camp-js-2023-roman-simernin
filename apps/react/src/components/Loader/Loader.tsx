@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import { FC, PropsWithChildren, memo } from 'react';
+import { PropsWithChildren, memo } from 'react';
 
 import styles from './Loader.module.css';
 
@@ -11,7 +11,7 @@ type LoaderProps = PropsWithChildren<{
 }>;
 
 /** Loader component. */
-const LoaderComponent: FC<LoaderProps> = ({ isLoading, children }) => {
+const LoaderComponent = ({ isLoading, children }: LoaderProps) => {
 
 	if (!isLoading) {
 		return (
