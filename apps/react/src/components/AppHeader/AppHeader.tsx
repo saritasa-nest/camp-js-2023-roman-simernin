@@ -26,7 +26,9 @@ const AppHeaderComponent = () => {
 			className={headerStyles}>
 			<Button
 				type="button"
-				onClick={handleLogout}>Logout</Button>
+				onClick={handleLogout}>
+					Logout
+			</Button>
 		</header>
 	);
 };
