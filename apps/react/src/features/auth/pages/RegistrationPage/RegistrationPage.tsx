@@ -83,7 +83,7 @@ const RegistrationPageComponent = () => {
 				{registrationError !== null && <Alert severity="error">{registrationError.message}</Alert>}
 				<Button type="submit">Sign out</Button>
 				<Link
-					to='/auth/login' 
+					to='/auth/login'
 					className={styles.registrationForm__loginLink}>
 						Sign in
 				</Link>

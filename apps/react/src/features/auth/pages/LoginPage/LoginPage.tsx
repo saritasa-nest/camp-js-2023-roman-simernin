@@ -64,7 +64,7 @@ const LoginPageComponent = () => {
 				{loginError !== null && <Alert severity="error">{loginError.message}</Alert>}
 				<Button type="submit">Sign in</Button>
 				<Link
-					to='/auth/registration' 
+					to='/auth/registration'
 					className={styles.loginForm__registrationLink}>
 						Sign out
 				</Link>

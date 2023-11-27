@@ -18,8 +18,9 @@ const AppHeaderComponent = () => {
 	};
 
 	const headerStyles = clsx(
-		styles.appHeader, 
-		!isAuthenticated && styles.appHeader_notAuthenticated);
+		styles.appHeader,
+		!isAuthenticated && styles.appHeader_notAuthenticated,
+	);
 
 	return (
 		<header className={headerStyles}>
