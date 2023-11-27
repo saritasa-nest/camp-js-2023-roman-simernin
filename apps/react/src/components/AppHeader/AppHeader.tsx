@@ -3,6 +3,7 @@ import { logout } from '@js-camp/react/store/auth/dispatchers';
 import { memo } from 'react';
 import { Button } from '@mui/material';
 import { selectIsAuthenticated } from '@js-camp/react/store/auth/selectors';
+import clsx from 'clsx';
 
 import styles from './AppHeader.module.css';
 
@@ -16,13 +17,13 @@ const AppHeaderComponent = () => {
 		dispatch(logout());
 	};
 
+	const headerStyles = clsx(
+		styles.appHeader, 
+		!isAuthenticated && styles.appHeader_notAuthenticated);
+
 	return (
 		<header
-			hidden={!isAuthenticated}
-			className={`${
-				styles.appHeader} 
-				${!isAuthenticated && styles.appHeader_notAuthenticated}`
-			}>
+			className={headerStyles}>
 			<Button
 				type="button"
 				onClick={handleLogout}>Logout</Button>
