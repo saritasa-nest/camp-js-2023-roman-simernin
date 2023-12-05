@@ -6,12 +6,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class EmptyPipe implements PipeTransform {
 
-	private readonly emptyReplacement = '-';
+	private readonly defaultEmptyReplacement = '-';
 
 	/** @inheritdoc */
-	public transform(value: unknown): string {
+	public transform(value: unknown, emptyReplacement: string = ''): string {
 		if (value === null || value === undefined || value === '') {
-			return this.emptyReplacement;
+			return emptyReplacement !== '' ?
+				emptyReplacement :
+				this.defaultEmptyReplacement;
 		}
 
 		return value.toString();

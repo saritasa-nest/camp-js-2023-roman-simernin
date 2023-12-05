@@ -86,7 +86,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	/** @inheritdoc */
 	public ngOnInit(): void {
 		this.subscribeToItemSearch();
-		this.subscribeToItemAdding();
+		this.subscribeToItemAdd();
 	}
 
 	/** @inheritdoc */
@@ -209,7 +209,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			.subscribe();
 	}
 
-	private subscribeToItemAdding(): void {
+	private subscribeToItemAdd(): void {
 		combineLatest([
 			this.itemIdentityToAdd$,
 			this.totalItems$,

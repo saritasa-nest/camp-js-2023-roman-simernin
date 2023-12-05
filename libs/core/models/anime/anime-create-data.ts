@@ -47,8 +47,8 @@ export interface AnimeCreateData {
 	readonly season: AnimeSeason;
 
 	/** Genres ids. */
-	readonly genreIds: number[];
+	readonly genreIds: readonly number[];
 
 	/** Studio ids. */
-	readonly studioIds: number[];
+	readonly studioIds: readonly number[];
 }

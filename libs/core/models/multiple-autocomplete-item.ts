@@ -2,7 +2,7 @@
 export interface MultipleAutocompleteItem {
 
 	/**
-	 * Id.
+	 * ID.
 	 * Can be null if it is new value.
 	 */
 	readonly id: number | null;

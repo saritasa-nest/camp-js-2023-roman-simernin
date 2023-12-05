@@ -90,6 +90,16 @@ export class AnimeDetailsComponent {
 			.subscribe();
 	}
 
+	/**
+	 * Get anime title.
+	 * @param animeDetails - Get anime title.
+	 */
+	protected getAnimeTitle(animeDetails: AnimeDetails): string {
+		return animeDetails.englishTitle !== '' ?
+			animeDetails.englishTitle :
+			animeDetails.japaneseTitle;
+	}
+
 	private deleteAnime(id: number): Observable<void> {
 		return this.animeService.deleteAnime(id).pipe(
 			tap(() => this.router.navigate([''])),
