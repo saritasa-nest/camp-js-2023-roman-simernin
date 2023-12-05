@@ -15,8 +15,8 @@
 		<h2 class="visually-hidden">Anime information</h2>
 		<div class="anime-card__image-container">
 			<img class="anime-card__image" [src]="animeDetails.imageUrl" alt="" />
-			<button type="button" mat-icon-button class="anime-card__image-full-size-btn"
-				(click)="openFullSizeImage(animeDetails.imageUrl)">
+			<button type="button" title="Open full size image button" mat-icon-button
+				class="anime-card__image-full-size-btn" (click)="openFullSizeImage(animeDetails.imageUrl)">
 				<mat-icon class="anime-card__magnifying-glass">zoom_in</mat-icon>
 			</button>
 		</div>
