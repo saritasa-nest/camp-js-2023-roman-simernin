@@ -23,10 +23,10 @@ export namespace AuthService {
 	 */
 	export async function login(loginModel: Login): Promise<void> {
 		try {
-			const { data: tokensDto } = (await http.post<UserAccessTokenDto>(
+			const { data: tokensDto } = await http.post<UserAccessTokenDto>(
 				AppUrlsConfig.auth.login,
 				LoginMapper.toDto(loginModel),
-			));
+			);
 
 			authenticate(tokensDto);
 		} catch (error: unknown) {
@@ -46,10 +46,10 @@ export namespace AuthService {
 	 */
 	export async function register(registrationModel: Registration): Promise<void> {
 		try {
-			const { data: tokensDto } = (await http.post<UserAccessTokenDto>(
+			const { data: tokensDto } = await http.post<UserAccessTokenDto>(
 				AppUrlsConfig.auth.register,
 				RegistrationMapper.toDto(registrationModel),
-			));
+			);
 
 			authenticate(tokensDto);
 		} catch (error: unknown) {

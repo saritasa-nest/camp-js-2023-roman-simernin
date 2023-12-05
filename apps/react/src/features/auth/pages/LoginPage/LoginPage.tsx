@@ -53,20 +53,20 @@ const LoginPageComponent = () => {
 					label="Email"
 					error={formErrors.email !== undefined}
 					helperText={formErrors.email?.message}
-					{...register(loginFormNameof('email'))}/>
+					{...register(loginFormNameof('email'))} />
 				<TextField
 					type="password"
 					label="Password"
 					error={formErrors.password !== undefined}
 					helperText={formErrors.password?.message}
-					{...register(loginFormNameof('password'))}/>
-				<Loader isLoading={isLoading}></Loader>
+					{...register(loginFormNameof('password'))} />
+				<Loader isLoading={isLoading} />
 				{loginError !== null && <Alert severity="error">{loginError.message}</Alert>}
 				<Button type="submit">Sign in</Button>
 				<Link
 					to='/auth/registration'
 					className={styles.loginForm__registrationLink}>
-						Sign out
+					Sign out
 				</Link>
 			</form>
 		</div>

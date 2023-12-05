@@ -50,5 +50,5 @@ export function throwAppError(apiError: ApiError): void {
 function isApiError(error: unknown): error is ApiErrorDto {
 	const apiError = error as ApiErrorDto;
 
-	return apiError.type !== undefined && apiError.errors !== undefined;
+	return 'type' in apiError && 'errors' in apiError;
 }
