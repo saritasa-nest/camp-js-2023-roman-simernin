@@ -2,5 +2,4 @@
 	<mat-icon>arrow_back</mat-icon>
 </a>
 <camp-anime-form *ngIf="animeFormData$ | async as animeFormData" [animeFormData]="animeFormData"
-	(submitEvent)="editAnime($event)">
-</camp-anime-form>
+	(submitEvent)="editAnime($event)" />

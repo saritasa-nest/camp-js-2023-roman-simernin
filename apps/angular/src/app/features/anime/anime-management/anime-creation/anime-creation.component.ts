@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
@@ -9,6 +9,7 @@ import { tap } from 'rxjs';
 @Component({
 	selector: 'camp-anime-creation',
 	templateUrl: './anime-creation.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeCreationComponent {
 

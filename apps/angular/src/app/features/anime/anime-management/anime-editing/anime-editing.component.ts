@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
@@ -9,6 +9,7 @@ import { Observable, map, switchMap, tap } from 'rxjs';
 @Component({
 	selector: 'camp-anime-editing',
 	templateUrl: './anime-editing.component.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeEditingComponent {
 
