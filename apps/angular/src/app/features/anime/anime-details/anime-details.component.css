@@ -28,8 +28,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  border: 1px solid grey;
-  border-radius: 10px;
+  border: var(--border);
+  border-radius: var(--border-radius);
   object-fit: cover;
   object-position: top;
 }
@@ -59,15 +59,15 @@
 }
 
 .anime-card-info__items {
-  border: 1px solid grey;
-  border-radius: 10px;
+  border: var(--border);
+  border-radius: var(--border-radius);
   padding: 10px;
   flex: 1;
 }
 
 .anime-card-info__description {
-  border: 1px solid grey;
-  border-radius: 10px;
+  border: var(--border);
+  border-radius: var(--border-radius);
   text-align: justify;
   margin: 0;
   padding: 10px;
