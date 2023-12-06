@@ -62,7 +62,7 @@
   border: 1px solid grey;
   border-radius: 10px;
   padding: 10px;
-  flex-grow: 1;
+  flex: 1;
 }
 
 .anime-card-info__description {
@@ -71,7 +71,7 @@
   text-align: justify;
   margin: 0;
   padding: 10px;
-  flex-grow: 1;
+  flex: 1;
 }
 
 .anime-details__trailer {
