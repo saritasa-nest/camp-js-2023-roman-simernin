@@ -72,10 +72,10 @@ export class AnimeDetailsComponent {
 	}
 
 	/**
-	 * Open modal for anime deletion confirmaion.
+	 * Open modal for anime deletion confirmation.
 	 * @param id - Anime id.
 	 */
-	protected openDeletionConfirmation(id: number): void {
+	protected openDeletionConfirmation(id: AnimeDetails['id']): void {
 		this.dialog.open<ConfirmationModalComponent, ConfirmationModalParameters, boolean>(ConfirmationModalComponent, {
 			data: {
 				confirmationText: 'Are you sure you want to delete this anime?',
