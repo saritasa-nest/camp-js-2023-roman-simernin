@@ -138,13 +138,11 @@ export class AnimeFormComponent implements OnInit {
 
 		const formData = this.formGroup.getRawValue();
 
-		this.submitEvent.emit({
-			...formData,
-		});
+		this.submitEvent.emit(formData);
 	}
 
 	private initAnimeForm(): FormGroup<AnimeManagementFormControls> {
-		return this.formBuilder.group({
+		return this.formBuilder.group<AnimeManagementFormControls>({
 			englishTitle: this.formBuilder.control('', Validators.required),
 			japaneseTitle: this.formBuilder.control('', Validators.required),
 			type: this.formBuilder.control(AnimeType.Unknown, Validators.required),
@@ -156,10 +154,10 @@ export class AnimeFormComponent implements OnInit {
 			season: this.formBuilder.control(AnimeSeason.NonSeasonal, Validators.required),
 			airedStart: this.formBuilder.control(new Date(), Validators.required),
 			airedEnd: this.formBuilder.control(new Date(), Validators.required),
-			imageFile: this.formBuilder.control('' as ImageFile, Validators.required),
-			youtubeTrailerId: this.formBuilder.control(null as string | null),
-			genres: this.formBuilder.control([] as MultipleAutocompleteItem[]),
-			studios: this.formBuilder.control([] as MultipleAutocompleteItem[]),
+			imageFile: this.formBuilder.control('', Validators.required),
+			youtubeTrailerId: this.formBuilder.control(null),
+			genres: this.formBuilder.control([]),
+			studios: this.formBuilder.control([]),
 		});
 	}
 }
