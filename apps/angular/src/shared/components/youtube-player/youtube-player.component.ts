@@ -11,11 +11,11 @@ import { YoutubeUtils } from '@js-camp/core/utils/youtube.utils';
 })
 export class YoutubePlayerComponent implements OnInit {
 
-	private readonly sanitizer = inject(DomSanitizer);
-
 	/** Youtube video id. */
 	@Input({ required: true })
 	public videoId = '';
+
+	private readonly sanitizer = inject(DomSanitizer);
 
 	/** Youtube video url. */
 	protected videoUrl: string | SafeResourceUrl = '';

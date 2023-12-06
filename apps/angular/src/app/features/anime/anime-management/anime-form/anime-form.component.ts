@@ -76,6 +76,14 @@ interface AnimeManagementFormControls {
 })
 export class AnimeFormComponent implements OnInit {
 
+	/** Anime form data. */
+	@Input()
+	public animeFormData: AnimeFormData | null = null;
+
+	/** Submit event. */
+	@Output()
+	public submitEvent = new EventEmitter<AnimeFormData>();
+	
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	/** Anime types. */
@@ -100,14 +108,6 @@ export class AnimeFormComponent implements OnInit {
 	protected get multipleAutocompleteGroups(): typeof animeMultipleAutocompleteGroups {
 		return animeMultipleAutocompleteGroups;
 	}
-
-	/** Anime form data. */
-	@Input()
-	public animeFormData: AnimeFormData | null = null;
-
-	/** Submit event. */
-	@Output()
-	public submitEvent = new EventEmitter<AnimeFormData>();
 
 	public constructor() {
 		this.formGroup = this.initAnimeForm();

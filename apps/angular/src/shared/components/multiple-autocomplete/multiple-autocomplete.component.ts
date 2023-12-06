@@ -28,6 +28,10 @@ type MultipleAutocompleteTouchedFunction = () => void;
 })
 export class MultipleAutocompleteComponent implements OnInit, ControlValueAccessor {
 
+	/** Item group. */
+	@Input({ required: true })
+	public itemGroup = '';
+	
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	private readonly destroyRef = inject(DestroyRef);
@@ -66,10 +70,6 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 	/** Stream provides items are loading. */
 	protected readonly isItemsLoading$ = new BehaviorSubject(true);
-
-	/** Item group. */
-	@Input({ required: true })
-	public itemGroup = '';
 
 	public constructor() {
 		this.itemNameControl = this.formBuilder.control<string>('');
