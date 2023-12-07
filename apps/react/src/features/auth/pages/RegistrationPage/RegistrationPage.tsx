@@ -88,6 +88,8 @@ const RegistrationPageComponent = () => {
 	);
 };
 
-RegistrationPageComponent.displayName = 'camp-registration';
+const RegistrationPage = memo(RegistrationPageComponent);
 
-export const RegistrationPage = memo(RegistrationPageComponent);
+RegistrationPage.displayName = 'camp-registration';
+
+export { RegistrationPage };

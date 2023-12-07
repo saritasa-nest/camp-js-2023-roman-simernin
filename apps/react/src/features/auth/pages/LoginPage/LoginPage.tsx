@@ -71,6 +71,6 @@ const LoginPageComponent = () => {
 	);
 };
 
-LoginPageComponent.displayName = 'camp-login';
-
-export const LoginPage = memo(LoginPageComponent);
+const LoginPage = memo(LoginPageComponent);
+LoginPage.displayName = 'camp-login';
+export { LoginPage };
