@@ -31,7 +31,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	/** Item group. */
 	@Input({ required: true })
 	public itemGroup = '';
-	
+
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	private readonly destroyRef = inject(DestroyRef);

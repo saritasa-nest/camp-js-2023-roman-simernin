@@ -9,6 +9,7 @@ import { AnimeStatus } from './anime-status';
 
 /** Model for anime form data. */
 export interface AnimeFormData {
+
 	/** Image file.*/
 	readonly imageFile: ImageFile;
 

@@ -9,6 +9,7 @@ import { Studio } from './studio';
 
 /** Anime details. */
 export interface AnimeDetails {
+
 	/** Identifier. */
 	readonly id: number;
 

@@ -6,6 +6,7 @@ import { AnimeStatus } from './anime-status';
 
 /** Data for anime creation. */
 export interface AnimeCreateData {
+
 	/** Image file.*/
 	readonly imageUrl: string;
 

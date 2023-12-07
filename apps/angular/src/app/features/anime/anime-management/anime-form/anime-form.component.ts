@@ -17,6 +17,7 @@ import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
+
 	/** Title in English. */
 	readonly englishTitle: FormControl<string>;
 

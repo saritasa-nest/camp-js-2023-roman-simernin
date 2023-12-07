@@ -28,7 +28,7 @@ export class ImageFileService {
 		return this.getS3Params({
 			filename: imageFile.name,
 			dest: ImageFileTypeMapper.toDto(imageFileType),
-		}).pipe(switchMap((s3ParamsResponse) => this.saveImageFileInS3(s3ParamsResponse, imageFile)));
+		}).pipe(switchMap(s3ParamsResponse => this.saveImageFileInS3(s3ParamsResponse, imageFile)));
 	}
 
 	private getS3Params(s3ParamsRequest: S3ParamsRequestDto): Observable<S3ParamsResponseDto> {
@@ -48,7 +48,7 @@ export class ImageFileService {
 
 		return this.http
 			.post(s3ParamsResponse.form_action, formData, { responseType: 'text' })
-			.pipe(map((s3Response) => this.parseImageUrl(s3Response)));
+			.pipe(map(s3Response => this.parseImageUrl(s3Response)));
 	}
 
 	private parseImageUrl(s3Response: string): string {

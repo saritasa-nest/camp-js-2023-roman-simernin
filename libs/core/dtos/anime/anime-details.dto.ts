@@ -9,6 +9,7 @@ import { AnimeSeasonDto } from './anime-season.dto';
 
 /** DTO of anime for preview. */
 export interface AnimeDetailsDto {
+
 	/** Identifier. */
 	readonly id: number;
 

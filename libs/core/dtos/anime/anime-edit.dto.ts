@@ -7,6 +7,7 @@ import { AnimeTypeDto } from './anime-type.dto';
 
 /** DTO for anime editing. */
 export interface AnimeEditDto {
+
 	/** Image. */
 	readonly image: string;
 

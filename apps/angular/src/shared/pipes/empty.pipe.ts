@@ -9,7 +9,7 @@ export class EmptyPipe implements PipeTransform {
 	private readonly defaultEmptyReplacement = '-';
 
 	/** @inheritdoc */
-	public transform(value: unknown, emptyReplacement: string = ''): string {
+	public transform(value: unknown, emptyReplacement = ''): string {
 		if (value === null || value === undefined || value === '') {
 			return emptyReplacement !== '' ?
 				emptyReplacement :
