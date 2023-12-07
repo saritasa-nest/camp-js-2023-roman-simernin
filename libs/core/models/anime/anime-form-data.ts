@@ -9,12 +9,11 @@ import { AnimeStatus } from './anime-status';
 
 /** Model for anime form data. */
 export interface AnimeFormData {
-
 	/** Image file.*/
 	readonly imageFile: ImageFile;
 
 	/** Youtube trailer id. */
-	readonly youtubeTrailerId: string | null;
+	readonly youtubeTrailerId: string;
 
 	/** Title in English. */
 	readonly englishTitle: string;

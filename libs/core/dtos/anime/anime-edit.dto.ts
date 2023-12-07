@@ -7,12 +7,11 @@ import { AnimeTypeDto } from './anime-type.dto';
 
 /** DTO for anime editing. */
 export interface AnimeEditDto {
-
 	/** Image. */
 	readonly image: string;
 
 	/** Trailer video id on youtube. */
-	readonly trailer_youtube_id: string | null;
+	readonly trailer_youtube_id: string;
 
 	/** English title. */
 	readonly title_eng: string;

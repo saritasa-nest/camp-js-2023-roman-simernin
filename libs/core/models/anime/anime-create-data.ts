@@ -6,12 +6,11 @@ import { AnimeStatus } from './anime-status';
 
 /** Data for anime creation. */
 export interface AnimeCreateData {
-
 	/** Image file.*/
 	readonly imageUrl: string;
 
 	/** Youtube trailer id. */
-	readonly youtubeTrailerId: string | null;
+	readonly youtubeTrailerId: string;
 
 	/** Title in English. */
 	readonly englishTitle: string;

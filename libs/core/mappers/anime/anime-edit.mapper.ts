@@ -9,7 +9,6 @@ import { AnimeSourceMapper } from './anime-source.mapper';
 import { AnimeSeasonMapper } from './anime-season.mapper';
 
 export namespace AnimeEditMapper {
-
 	/**
 	 * Map model to dto for anime editing.
 	 * @param model Anime editing model.
@@ -35,5 +34,4 @@ export namespace AnimeEditMapper {
 			season: AnimeSeasonMapper.toDto(model.season),
 		};
 	}
-
 }

@@ -9,7 +9,6 @@ import { Studio } from './studio';
 
 /** Anime details. */
 export interface AnimeDetails {
-
 	/** Identifier. */
 	readonly id: number;
 
@@ -53,5 +52,5 @@ export interface AnimeDetails {
 	readonly genres: readonly Genre[];
 
 	/** Youtube trailer id. */
-	readonly youtubeTrailerId: string | null;
+	readonly youtubeTrailerId: string;
 }

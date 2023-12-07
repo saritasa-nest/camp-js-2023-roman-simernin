@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { AnimeMultipleAutocompleteService, animeMultipleAutocompleteGroups } from '@js-camp/angular/core/services/anime-multiple-autocomplete.service';
+import {
+	AnimeMultipleAutocompleteService,
+	animeMultipleAutocompleteGroups,
+} from '@js-camp/angular/core/services/anime-multiple-autocomplete.service';
 import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
@@ -14,7 +17,6 @@ import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
-
 	/** Title in English. */
 	readonly englishTitle: FormControl<string>;
 
@@ -52,7 +54,7 @@ interface AnimeManagementFormControls {
 	readonly imageFile: FormControl<ImageFile>;
 
 	/** Youtube trailer id. */
-	readonly youtubeTrailerId: FormControl<string | null>;
+	readonly youtubeTrailerId: FormControl<string>;
 
 	/** Genres. */
 	readonly genres: FormControl<MultipleAutocompleteItem[]>;
@@ -75,7 +77,6 @@ interface AnimeManagementFormControls {
 	],
 })
 export class AnimeFormComponent implements OnInit {
-
 	/** Anime form data. */
 	@Input()
 	public animeFormData: AnimeFormData | null = null;
@@ -83,7 +84,7 @@ export class AnimeFormComponent implements OnInit {
 	/** Submit event. */
 	@Output()
 	public submitEvent = new EventEmitter<AnimeFormData>();
-	
+
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	/** Anime types. */
@@ -155,7 +156,7 @@ export class AnimeFormComponent implements OnInit {
 			airedStart: this.formBuilder.control(new Date(), Validators.required),
 			airedEnd: this.formBuilder.control(new Date(), Validators.required),
 			imageFile: this.formBuilder.control('', Validators.required),
-			youtubeTrailerId: this.formBuilder.control(null),
+			youtubeTrailerId: this.formBuilder.control('', Validators.required),
 			genres: this.formBuilder.control([]),
 			studios: this.formBuilder.control([]),
 		});

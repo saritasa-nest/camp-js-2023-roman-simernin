@@ -9,7 +9,6 @@ import { AnimeSeasonDto } from './anime-season.dto';
 
 /** DTO of anime for preview. */
 export interface AnimeDetailsDto {
-
 	/** Identifier. */
 	readonly id: number;
 
@@ -59,5 +58,5 @@ export interface AnimeDetailsDto {
 	readonly genres_data: readonly GenreDto[];
 
 	/** Youtube trailer id. */
-	readonly trailer_youtube_id: string | null;
+	readonly trailer_youtube_id: string;
 }
