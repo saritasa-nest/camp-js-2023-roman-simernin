@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import { PropsWithChildren, memo } from 'react';
+import { Fragment, PropsWithChildren, memo } from 'react';
 
 import styles from './Loader.module.css';
 
@@ -15,9 +15,9 @@ const LoaderComponent = ({ isLoading, children }: LoaderProps) => {
 
 	if (!isLoading) {
 		return (
-			<>
+			<Fragment>
 				{children}
-			</>
+			</Fragment>
 		);
 	}
 

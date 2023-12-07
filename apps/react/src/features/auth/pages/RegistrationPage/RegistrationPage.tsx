@@ -5,26 +5,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { TextField, Button, Alert } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
-import { Registration } from '@js-camp/core/models/auth/registration';
 import { register, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
 import { Loader } from '@js-camp/react/components/Loader/Loader';
 import { selectAuth } from '@js-camp/react/store/auth/selectors';
 
+import clsx from 'clsx';
+
 import styles from './RegistrationPage.module.css';
-import { RegistrationForm, registrationSchema } from './RegistrationSchema';
+import { RegistrationForm, defaultRegistrationForm, registrationSchema } from './RegistrationSchema';
 
 /** Registration page component. */
 const RegistrationPageComponent = () => {
 	const dispatch = useAppDispatch();
 	const { isLoading, error: registrationError } = useAppSelector(selectAuth);
-
-	const defaultRegistrationForm: RegistrationForm = {
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: '',
-		retypePassword: '',
-	};
 
 	const { register: formRegister, handleSubmit, formState: { errors: formErrors } } = useForm({
 		defaultValues: defaultRegistrationForm,
@@ -33,17 +26,17 @@ const RegistrationPageComponent = () => {
 
 	/**
 	 * Handle registration form submitting.
-		* @param registrationData - Registration data.
+	 * @param registrationForm - Registration form.
 	 */
-	const onSubmit: SubmitHandler<Registration> = registrationData => {
-		dispatch(register(registrationData));
+	const onSubmit: SubmitHandler<RegistrationForm> = registrationForm => {
+		dispatch(register(registrationForm));
 	};
 
 	useEffect(() => {
 		return () => {
 			dispatch(resetAuthError());
 		};
-	}, [dispatch]);
+	}, []);
 
 	const registrationFormNameof = nameof<RegistrationForm>();
 
@@ -51,7 +44,10 @@ const RegistrationPageComponent = () => {
 		<div className={styles.registrationFormContainer}>
 			<form
 				onSubmit={handleSubmit(onSubmit)}
-				className={styles.registrationForm}>
+				className={clsx(
+					styles.registrationForm,
+					styles.registrationFormContainer__form,
+				)}>
 				<TextField
 					label="First name"
 					error={formErrors.firstName !== undefined}

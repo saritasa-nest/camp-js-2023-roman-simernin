@@ -3,10 +3,13 @@
   justify-content: center;
 }
 
+.loginFormContainer__form {
+  width: 300px;
+}
+
 .loginForm {
   display: flex;
   flex-direction: column;
-  width: 300px;
   gap: 10px;
 }
 

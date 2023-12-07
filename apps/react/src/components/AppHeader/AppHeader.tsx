@@ -17,13 +17,11 @@ const AppHeaderComponent = () => {
 		dispatch(logout());
 	};
 
-	const headerStyles = clsx(
-		styles.appHeader,
-		!isAuthenticated && styles.appHeader_notAuthenticated,
-	);
-
 	return (
-		<header className={headerStyles}>
+		<header className={clsx(
+			styles.appHeader,
+			!isAuthenticated && styles.appHeader_notAuthenticated,
+		)}>
 			<Button
 				type="button"
 				onClick={handleLogout}>

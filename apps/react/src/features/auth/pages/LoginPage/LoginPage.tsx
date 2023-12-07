@@ -1,4 +1,3 @@
-import { Login } from '@js-camp/core/models/auth/login';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 import { login, resetAuthError } from '@js-camp/react/store/auth/dispatchers';
 import { nameof } from '@js-camp/react/utils/nameof';
@@ -9,38 +8,34 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import { Loader } from '@js-camp/react/components/Loader/Loader';
 import { selectAuth } from '@js-camp/react/store/auth/selectors';
+import clsx from 'clsx';
 
 import styles from './LoginPage.module.css';
-import { LoginForm, loginSchema } from './LoginSchema';
+import { LoginForm, defaultLoginForm, loginSchema } from './LoginSchema';
 
 /** Login page component. */
 const LoginPageComponent = () => {
 	const dispatch = useAppDispatch();
 	const { isLoading, error: loginError } = useAppSelector(selectAuth);
 
-	const defaultLoginData: LoginForm = {
-		email: '',
-		password: '',
-	};
-
 	const { register, handleSubmit, formState: { errors: formErrors } } = useForm({
-		defaultValues: defaultLoginData,
+		defaultValues: defaultLoginForm,
 		resolver: yupResolver(loginSchema),
 	});
 
 	/**
 	 * Handle login form submitting.
-		* @param loginData - Login data.
+	 * @param loginForm - Login form.
 	 */
-	const onSubmit: SubmitHandler<Login> = loginData => {
-		dispatch(login(loginData));
+	const onSubmit: SubmitHandler<LoginForm> = loginForm => {
+		dispatch(login(loginForm));
 	};
 
 	useEffect(() => {
 		return () => {
 			dispatch(resetAuthError());
 		};
-	}, [dispatch]);
+	}, []);
 
 	const loginFormNameof = nameof<LoginForm>();
 
@@ -48,7 +43,10 @@ const LoginPageComponent = () => {
 		<div className={styles.loginFormContainer}>
 			<form
 				onSubmit={handleSubmit(onSubmit)}
-				className={styles.loginForm}>
+				className={clsx(
+					styles.loginForm,
+					styles.loginFormContainer__form,
+				)}>
 				<TextField
 					label="Email"
 					error={formErrors.email !== undefined}

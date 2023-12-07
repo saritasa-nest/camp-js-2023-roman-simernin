@@ -5,13 +5,15 @@ import * as yup from 'yup';
 /** Login form. */
 export type LoginForm = Login;
 
+export const defaultLoginForm: LoginForm = {
+	email: '',
+	password: '',
+};
+
 /** Login schema. */
-export const loginSchema: yup.ObjectSchema<LoginForm> = yup
-	.object({
-		email: yup.string()
-			.required()
-			.email(),
-		password: yup.string()
-			.required()
-			.min(AuthenticationConstants.minPasswordLength),
-	});
+export const loginSchema: yup.ObjectSchema<LoginForm> = yup.object({
+	email: yup.string().required()
+		.email(),
+	password: yup.string().required()
+		.min(AuthenticationConstants.minPasswordLength),
+});

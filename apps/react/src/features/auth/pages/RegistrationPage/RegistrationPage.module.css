@@ -3,10 +3,13 @@
   justify-content: center;
 }
 
+.registrationFormContainer__form {
+  width: 300px;
+}
+
 .registrationForm {
   display: flex;
   flex-direction: column;
-  width: 300px;
   gap: 10px;
 }
 
