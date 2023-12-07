@@ -1,33 +1,34 @@
-<main *ngIf="animeDetails$ | async as animeDetails" class="anime-details">
-	<a routerLink="/anime" mat-icon-button>
-		<mat-icon>arrow_back</mat-icon>
-	</a>
-	<a routerLink="edit" mat-icon-button>
-		<mat-icon>update</mat-icon>
-	</a>
-	<button type="button" mat-icon-button (click)="openDeletionConfirmation(animeDetails.id)">
-		<mat-icon>delete</mat-icon>
-	</button>
+<ng-container *ngIf="animeDetails$ | async as animeDetails">
+	<div>
+		<a routerLink="/anime" mat-icon-button>
+			<mat-icon>arrow_back</mat-icon>
+		</a>
+		<a routerLink="edit" mat-icon-button>
+			<mat-icon>update</mat-icon>
+		</a>
+		<button type="button" mat-icon-button (click)="openDeletionConfirmation(animeDetails.id)">
+			<mat-icon>delete</mat-icon>
+		</button>
+		<button
+			type="button"
+			title="Open full size image button"
+			mat-icon-button
+			(click)="openFullSizeImage(animeDetails.imageUrl)"
+		>
+			<mat-icon>zoom_in</mat-icon>
+		</button>
+	</div>
 	<h1 class="anime-details__title typography typography_title">
-		{{getAnimeTitle(animeDetails) | empty: 'Unknown' }}
+		{{ getAnimeTitle(animeDetails) | empty : "Unknown" }}
 	</h1>
 	<section class="anime-card">
 		<h2 class="visually-hidden">Anime information</h2>
-		<div class="anime-card__image-container">
-			<img class="anime-card__image" [src]="animeDetails.imageUrl" alt="" />
-			<button type="button" title="Open full size image button" mat-icon-button
-				class="anime-card__image-full-size-btn" (click)="openFullSizeImage(animeDetails.imageUrl)">
-				<mat-icon class="anime-card__magnifying-glass">zoom_in</mat-icon>
-			</button>
-		</div>
+		<img class="anime-card__image" [src]="animeDetails.imageUrl" alt="" />
 		<div class="anime-card-info anime-card__info">
 			<div class="anime-card-info__items">
-				<camp-anime-info-item itemTitle="English title"
-					[itemValue]="animeDetails.englishTitle | titlecase | empty" />
-				<camp-anime-info-item itemTitle="Japanese title"
-					[itemValue]="animeDetails.japaneseTitle | titlecase | empty" />
-				<camp-anime-info-item itemTitle="Aired start date"
-					[itemValue]="animeDetails.airedDates.start | date | empty" />
+				<camp-anime-info-item itemTitle="English title" [itemValue]="animeDetails.englishTitle | titlecase | empty" />
+				<camp-anime-info-item itemTitle="Japanese title" [itemValue]="animeDetails.japaneseTitle | titlecase | empty" />
+				<camp-anime-info-item itemTitle="Aired start date" [itemValue]="animeDetails.airedDates.start | date | empty" />
 				<camp-anime-info-item itemTitle="Type" [itemValue]="animeDetails.type | titlecase" />
 				<camp-anime-info-item itemTitle="Status" [itemValue]="animeDetails.status | titlecase" />
 				<camp-anime-info-item itemTitle="Age rating" [itemValue]="animeDetails.ageRating" />
@@ -44,7 +45,6 @@
 	</section>
 	<section *ngIf="animeDetails.youtubeTrailerId !== null" class="anime-trailer anime-details__trailer">
 		<h2 class="typography typography_subtitle">Youtube trailer</h2>
-		<camp-youtube-player class="anime-trailer__player"
-			[videoId]="animeDetails.youtubeTrailerId"></camp-youtube-player>
+		<camp-youtube-player class="anime-trailer__player" [videoId]="animeDetails.youtubeTrailerId"></camp-youtube-player>
 	</section>
-</main>
+</ng-container>
