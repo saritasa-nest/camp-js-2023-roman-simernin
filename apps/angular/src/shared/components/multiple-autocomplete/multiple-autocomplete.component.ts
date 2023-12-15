@@ -92,9 +92,9 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		this.totalItems$ = this.parameters$.pipe(
 			tap(() => this.isItemsLoading$.next(true)),
 			debounceTime(1500),
-			switchMap((parameters) => this.provider(parameters)),
+			switchMap(parameters => this.provider(parameters)),
 			tap(() => this.isItemsLoading$.next(false)),
-			shareReplay({ bufferSize: 1, refCount: true })
+			shareReplay({ bufferSize: 1, refCount: true }),
 		);
 	}
 
@@ -216,13 +216,12 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		this.itemNameControl.valueChanges
 			.pipe(
 				distinctUntilChanged(),
-				tap((itemNameToSearch) =>
+				tap(itemNameToSearch =>
 					this.parameters$.next({
 						search: itemNameToSearch,
 						...this.defaultPagination,
-					})
-				),
-				takeUntilDestroyed(this.destroyRef)
+					})),
+				takeUntilDestroyed(this.destroyRef),
 			)
 			.subscribe();
 	}
@@ -232,10 +231,10 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			.pipe(
 				distinctUntilChanged(
 					([previousItemIdentityToAdd], [currentItemIdentityToAdd]) =>
-						previousItemIdentityToAdd === currentItemIdentityToAdd
+						previousItemIdentityToAdd === currentItemIdentityToAdd,
 				),
 				tap(([itemIdentityToAdd, totalItems]) => this.addItem(itemIdentityToAdd, totalItems.results)),
-				takeUntilDestroyed(this.destroyRef)
+				takeUntilDestroyed(this.destroyRef),
 			)
 			.subscribe();
 	}
@@ -245,9 +244,9 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		this.itemNameControl.reset();
 
 		const isItemAdded =
-			typeof itemIdentity === 'number'
-				? this.trySelectItem(itemIdentity, totalItems)
-				: this.tryCreateItem(itemIdentity, totalItems);
+			typeof itemIdentity === 'number' ?
+				this.trySelectItem(itemIdentity, totalItems) :
+				this.tryCreateItem(itemIdentity, totalItems);
 
 		if (!isItemAdded) {
 			return;
@@ -257,13 +256,13 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	}
 
 	private trySelectItem(itemIdToSelect: number, totalItems: readonly MultipleAutocompleteItem[]): boolean {
-		const isAddedBefore = this.addedItems.some((item) => item.id === itemIdToSelect);
+		const isAddedBefore = this.addedItems.some(item => item.id === itemIdToSelect);
 
 		if (isAddedBefore) {
 			return false;
 		}
 
-		const itemToSelect = totalItems.find((item) => item.id === itemIdToSelect);
+		const itemToSelect = totalItems.find(item => item.id === itemIdToSelect);
 
 		if (itemToSelect === undefined) {
 			return false;
@@ -296,13 +295,13 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			return false;
 		}
 
-		const isSelectable = totalItems.some((item) => this.equalItemNames(item.name, itemNameToCreate));
+		const isSelectable = totalItems.some(item => this.equalItemNames(item.name, itemNameToCreate));
 
 		if (isSelectable) {
 			return false;
 		}
 
-		const isAddedBefore = this.addedItems.some((item) => this.equalItemNames(item.name, itemNameToCreate));
+		const isAddedBefore = this.addedItems.some(item => this.equalItemNames(item.name, itemNameToCreate));
 
 		if (isAddedBefore) {
 			return false;

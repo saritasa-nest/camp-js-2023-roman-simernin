@@ -1,5 +1,6 @@
 /** Sorting parameters. */
 export interface SortingParameters<T extends string> {
+
 	/** Field to sort by. */
 	readonly field: T;
 

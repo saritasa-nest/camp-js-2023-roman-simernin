@@ -2,6 +2,7 @@ import { SortingParametersDto } from '../dtos/sorting-parameters.dto';
 import { SortingDirection, SortingParameters } from '../models/sorting-parameters';
 
 export namespace SortingParametersMapper {
+
 	/**
 	 * Maps model to dto.
 	 * @param model - Model.
@@ -9,7 +10,7 @@ export namespace SortingParametersMapper {
 	 */
 	export function toDto<TSortingField extends string>(
 		model: SortingParameters<TSortingField>,
-		sortingFieldMap: Map<TSortingField, string>
+		sortingFieldMap: Map<TSortingField, string>,
 	): SortingParametersDto {
 		if (model.field === null || model.direction === null) {
 			return {

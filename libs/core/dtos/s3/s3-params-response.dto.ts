@@ -1,5 +1,6 @@
 /** DTO for s3 parameters response. */
 export interface S3ParamsResponseDto {
+
 	/** Policy. */
 	readonly policy: string;
 

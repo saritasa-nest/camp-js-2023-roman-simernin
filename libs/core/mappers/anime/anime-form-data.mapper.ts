@@ -4,6 +4,7 @@ import { AnimeFormData } from '../../models/anime/anime-form-data';
 import { AnimeEditData } from '../../models/anime/anime-edit-data';
 
 export namespace AnimeFormDataMapper {
+
 	/**
 	 * Map anime details to form data.
 	 * @param details - Anime details.
@@ -23,8 +24,8 @@ export namespace AnimeFormDataMapper {
 			ageRating: details.ageRating,
 			source: details.source,
 			season: details.season,
-			genres: details.genres.map((genre) => ({ id: genre.id, name: genre.name })),
-			studios: details.studios.map((studio) => ({ id: studio.id, name: studio.name })),
+			genres: details.genres.map(genre => ({ id: genre.id, name: genre.name })),
+			studios: details.studios.map(studio => ({ id: studio.id, name: studio.name })),
 		};
 	}
 

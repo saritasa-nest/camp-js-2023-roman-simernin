@@ -27,7 +27,7 @@ export class AnimeFormService {
 	public getAnimeFormData(id: number): Observable<AnimeFormData> {
 		return this.animeService
 			.getAnimeById(id)
-			.pipe(map((animeDetails) => AnimeFormDataMapper.fromDetails(animeDetails)));
+			.pipe(map(animeDetails => AnimeFormDataMapper.fromDetails(animeDetails)));
 	}
 
 	/**
@@ -41,8 +41,7 @@ export class AnimeFormService {
 			this.addImageToFileStorage(formData),
 		]).pipe(
 			switchMap(([genreIds, studioIds, imageUrl]) =>
-				this.animeService.createAnime(AnimeFormDataMapper.toCreateData({ formData, genreIds, studioIds, imageUrl }))
-			)
+				this.animeService.createAnime(AnimeFormDataMapper.toCreateData({ formData, genreIds, studioIds, imageUrl }))),
 		);
 	}
 
@@ -58,8 +57,7 @@ export class AnimeFormService {
 			this.addImageToFileStorage(formData),
 		]).pipe(
 			switchMap(([genreIds, studioIds, imageUrl]) =>
-				this.animeService.editAnime(id, AnimeFormDataMapper.toEditData({ formData, genreIds, studioIds, imageUrl }))
-			)
+				this.animeService.editAnime(id, AnimeFormDataMapper.toEditData({ formData, genreIds, studioIds, imageUrl }))),
 		);
 	}
 
@@ -70,20 +68,19 @@ export class AnimeFormService {
 	 */
 	private createGenres(formData: AnimeFormData): Observable<number[]> {
 		const existingGenresIds = formData.genres
-			.map((genre) => genre.id)
+			.map(genre => genre.id)
 			.filter((genreId): genreId is number => genreId !== null);
 
-		const genresToCreate = formData.genres.filter((genre) => genre.id === null);
+		const genresToCreate = formData.genres.filter(genre => genre.id === null);
 
 		if (genresToCreate.length === 0) {
 			return of(existingGenresIds);
 		}
 
-		const genresToCreateRequests = genresToCreate.map((genreToCreate) =>
-			this.genreService.createGenre(genreToCreate.name)
-		);
+		const genresToCreateRequests = genresToCreate.map(genreToCreate =>
+			this.genreService.createGenre(genreToCreate.name));
 
-		return forkJoin(genresToCreateRequests).pipe(map((createdGenreIds) => createdGenreIds.concat(existingGenresIds)));
+		return forkJoin(genresToCreateRequests).pipe(map(createdGenreIds => createdGenreIds.concat(existingGenresIds)));
 	}
 
 	/**
@@ -93,21 +90,20 @@ export class AnimeFormService {
 	 */
 	private createStudios(formData: AnimeFormData): Observable<number[]> {
 		const existingStudioIds = formData.studios
-			.map((studio) => studio.id)
+			.map(studio => studio.id)
 			.filter((studio): studio is number => studio !== null);
 
-		const studiosToCreate = formData.studios.filter((studio) => studio.id === null);
+		const studiosToCreate = formData.studios.filter(studio => studio.id === null);
 
 		if (studiosToCreate.length === 0) {
 			return of(existingStudioIds);
 		}
 
-		const studiosToCreateRequests = studiosToCreate.map((studioToCreate) =>
-			this.studioService.createStudio(studioToCreate.name)
-		);
+		const studiosToCreateRequests = studiosToCreate.map(studioToCreate =>
+			this.studioService.createStudio(studioToCreate.name));
 
 		return forkJoin(studiosToCreateRequests).pipe(
-			map((createdStudioIds) => createdStudioIds.concat(existingStudioIds))
+			map(createdStudioIds => createdStudioIds.concat(existingStudioIds)),
 		);
 	}
 
