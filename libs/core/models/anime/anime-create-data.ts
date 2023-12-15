@@ -1,54 +1,29 @@
-import { AnimeType } from './anime';
-import { AnimeRating } from './anime-rating';
-import { AnimeSeason } from './anime-season';
-import { AnimeSource } from './anime-source';
-import { AnimeStatus } from './anime-status';
+import { AnimeDetails } from './anime-details';
 
 /** Data for anime creation. */
-export interface AnimeCreateData {
+export type AnimeCreateData = Pick<
+	AnimeDetails,
+	| 'imageUrl'
+	| 'englishTitle'
+	| 'japaneseTitle'
+	| 'type'
+	| 'status'
+	| 'ageRating'
+	| 'source'
+	| 'season'
+	| 'description'
+	| 'isAiring'
+	| 'youtubeTrailerId'
+> & {
+	/** Genres ids. */
+	readonly genreIds: readonly number[];
 
-	/** Image file.*/
-	readonly imageUrl: string;
-
-	/** Youtube trailer id. */
-	readonly youtubeTrailerId: string;
-
-	/** Title in English. */
-	readonly englishTitle: string;
-
-	/** Title in Japanese. */
-	readonly japaneseTitle: string;
-
-	/** Type. */
-	readonly type: AnimeType;
-
-	/** Status. */
-	readonly status: AnimeStatus;
-
-	/** Provides anime is airing. */
-	readonly isAiring: boolean;
+	/** Studio ids. */
+	readonly studioIds: readonly number[];
 
 	/** Aired start date. */
 	readonly airedStart: Date;
 
 	/** Aired end date. */
 	readonly airedEnd: Date;
-
-	/** Description. */
-	readonly description: string;
-
-	/** Age rating. */
-	readonly ageRating: AnimeRating;
-
-	/** Source. */
-	readonly source: AnimeSource;
-
-	/** Season. */
-	readonly season: AnimeSeason;
-
-	/** Genres ids. */
-	readonly genreIds: readonly number[];
-
-	/** Studio ids. */
-	readonly studioIds: readonly number[];
-}
+};
