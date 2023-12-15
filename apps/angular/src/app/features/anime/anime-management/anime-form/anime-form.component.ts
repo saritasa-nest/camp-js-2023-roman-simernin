@@ -17,7 +17,6 @@ import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
-
 	/** Title in English. */
 	readonly englishTitle: FormControl<string>;
 
@@ -84,7 +83,7 @@ export class AnimeFormComponent implements OnInit {
 
 	/** Submit event. */
 	@Output()
-	public submitEvent = new EventEmitter<AnimeFormData>();
+	public readonly submitEvent = new EventEmitter<AnimeFormData>();
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
