@@ -5,7 +5,7 @@ import { StudioService } from '@js-camp/angular/core/services/studio.service';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { ImageFileType } from '@js-camp/core/models/s3/image-file-type';
 import { AnimeFormDataMapper } from '@js-camp/core/mappers/anime/anime-form-data.mapper';
-import { Observable, combineLatest, forkJoin, from, map, mergeMap, of, switchMap, toArray } from 'rxjs';
+import { Observable, combineLatest, forkJoin, map, of, switchMap } from 'rxjs';
 
 import { AnimeService } from './anime-service';
 
@@ -41,7 +41,7 @@ export class AnimeFormService {
 			this.addImageToFileStorage(formData),
 		]).pipe(
 			switchMap(([genreIds, studioIds, imageUrl]) =>
-				this.animeService.createAnime(AnimeFormDataMapper.toCreateData(formData, genreIds, studioIds, imageUrl))
+				this.animeService.createAnime(AnimeFormDataMapper.toCreateData({ formData, genreIds, studioIds, imageUrl }))
 			)
 		);
 	}
@@ -58,7 +58,7 @@ export class AnimeFormService {
 			this.addImageToFileStorage(formData),
 		]).pipe(
 			switchMap(([genreIds, studioIds, imageUrl]) =>
-				this.animeService.editAnime(id, AnimeFormDataMapper.toEditData(formData, genreIds, studioIds, imageUrl))
+				this.animeService.editAnime(id, AnimeFormDataMapper.toEditData({ formData, genreIds, studioIds, imageUrl }))
 			)
 		);
 	}

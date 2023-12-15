@@ -4,7 +4,6 @@ import { AnimeFormData } from '../../models/anime/anime-form-data';
 import { AnimeEditData } from '../../models/anime/anime-edit-data';
 
 export namespace AnimeFormDataMapper {
-
 	/**
 	 * Map anime details to form data.
 	 * @param details - Anime details.
@@ -24,24 +23,22 @@ export namespace AnimeFormDataMapper {
 			ageRating: details.ageRating,
 			source: details.source,
 			season: details.season,
-			genres: details.genres.map(genre => ({ id: genre.id, name: genre.name })),
-			studios: details.studios.map(studio => ({ id: studio.id, name: studio.name })),
+			genres: details.genres.map((genre) => ({ id: genre.id, name: genre.name })),
+			studios: details.studios.map((studio) => ({ id: studio.id, name: studio.name })),
 		};
 	}
 
 	/**
 	 * Map anime form data to creating data.
-	 * @param formData - Anime form data.
-	 * @param genreIds - Genre ids.
-	 * @param studioIds - Studio ids.
-	 * @param imageUrl - Image url.
+	 * @param params - Anime creating params.
 	 */
-	export function toCreateData(
-		formData: AnimeFormData,
-		genreIds: number[],
-		studioIds: number[],
-		imageUrl: string,
-	): AnimeCreateData {
+	export function toCreateData(params: {
+		formData: AnimeFormData;
+		genreIds: number[];
+		studioIds: number[];
+		imageUrl: string;
+	}): AnimeCreateData {
+		const { formData, genreIds, studioIds, imageUrl } = params;
 		return {
 			genreIds,
 			studioIds,
@@ -63,17 +60,15 @@ export namespace AnimeFormDataMapper {
 
 	/**
 	 * Map anime form data to editing data.
-	 * @param formData - Anime form data.
-	 * @param genreIds - Genre ids.
-	 * @param studioIds - Studio ids.
-	 * @param imageUrl - Image url.
+	 * @param params - Anime editing params.
 	 */
-	export function toEditData(
-		formData: AnimeFormData,
-		genreIds: number[],
-		studioIds: number[],
-		imageUrl: string,
-	): AnimeEditData {
+	export function toEditData(params: {
+		formData: AnimeFormData;
+		genreIds: number[];
+		studioIds: number[];
+		imageUrl: string;
+	}): AnimeEditData {
+		const { formData, genreIds, studioIds, imageUrl } = params;
 		return {
 			genreIds,
 			studioIds,
