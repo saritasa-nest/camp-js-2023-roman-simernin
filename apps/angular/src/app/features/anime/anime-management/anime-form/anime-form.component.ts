@@ -14,10 +14,8 @@ import { StudioSortingField } from '@js-camp/core/models/anime/studio-sorting-fi
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
-import { Pagination } from '@js-camp/core/models/pagination';
 import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
-import { Observable } from 'rxjs';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
@@ -61,10 +59,10 @@ interface AnimeManagementFormControls {
 	readonly youtubeTrailerId: FormControl<string>;
 
 	/** Genres. */
-	readonly genres: FormControl<MultipleAutocompleteItem[]>;
+	readonly genres: FormControl<readonly MultipleAutocompleteItem[]>;
 
 	/** Genres. */
-	readonly studios: FormControl<MultipleAutocompleteItem[]>;
+	readonly studios: FormControl<readonly MultipleAutocompleteItem[]>;
 }
 
 /** Anime form component. */

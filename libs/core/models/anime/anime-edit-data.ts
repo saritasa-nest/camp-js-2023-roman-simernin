@@ -6,7 +6,6 @@ import { AnimeStatus } from './anime-status';
 
 /** Data for anime editing. */
 export interface AnimeEditData {
-
 	/** Image file.*/
 	readonly imageUrl: string;
 
@@ -47,8 +46,8 @@ export interface AnimeEditData {
 	readonly season: AnimeSeason;
 
 	/** Genres ids. */
-	readonly genreIds: number[];
+	readonly genreIds: readonly number[];
 
 	/** Studio ids. */
-	readonly studioIds: number[];
+	readonly studioIds: readonly number[];
 }

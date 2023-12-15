@@ -9,7 +9,6 @@ import { AnimeStatus } from './anime-status';
 
 /** Model for anime form data. */
 export interface AnimeFormData {
-
 	/** Image file.*/
 	readonly imageFile: ImageFile;
 
@@ -50,8 +49,8 @@ export interface AnimeFormData {
 	readonly season: AnimeSeason;
 
 	/** Genres. */
-	readonly genres: MultipleAutocompleteItem[];
+	readonly genres: readonly MultipleAutocompleteItem[];
 
 	/** Genres. */
-	readonly studios: MultipleAutocompleteItem[];
+	readonly studios: readonly MultipleAutocompleteItem[];
 }
