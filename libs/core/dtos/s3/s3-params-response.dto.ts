@@ -1,11 +1,10 @@
 /** DTO for s3 parameters response. */
-export interface S3ParamsResponseDto{
-
+export interface S3ParamsResponseDto {
 	/** Policy. */
-	readonly 'policy': string;
+	readonly policy: string;
 
 	/** Action status. */
-	readonly 'success_action_status': string;
+	readonly success_action_status: string;
 
 	/** Amz credential. */
 	readonly 'x-amz-credential': string;
@@ -20,13 +19,13 @@ export interface S3ParamsResponseDto{
 	readonly 'x-amz-algorithm': string;
 
 	/** Form action. */
-	readonly 'form_action': string;
+	readonly form_action: string;
 
 	/** Key. */
-	readonly 'key': string;
+	readonly key: string;
 
 	/** Acl. */
-	readonly 'acl': string;
+	readonly acl: string;
 
 	/** Amx security token. */
 	readonly 'x-amz-security-token': string;
