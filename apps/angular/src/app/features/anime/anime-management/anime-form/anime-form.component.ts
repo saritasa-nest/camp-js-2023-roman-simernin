@@ -1,19 +1,23 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import {
-	AnimeMultipleAutocompleteService,
-	animeMultipleAutocompleteGroups,
-} from '@js-camp/angular/core/services/anime-multiple-autocomplete.service';
-import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
+import { GenreService } from '@js-camp/angular/core/services/genre-service';
+import { StudioService } from '@js-camp/angular/core/services/studio.service';
+import { MultipleAutocompleteItemProvider } from '@js-camp/angular/shared/components/multiple-autocomplete/multiple-autocomplete.component';
 import { AnimeType } from '@js-camp/core/models/anime/anime';
 import { AnimeFormData } from '@js-camp/core/models/anime/anime-form-data';
 import { AnimeRating } from '@js-camp/core/models/anime/anime-rating';
 import { AnimeSeason } from '@js-camp/core/models/anime/anime-season';
 import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
 import { AnimeStatus } from '@js-camp/core/models/anime/anime-status';
+import { GenreSortingField } from '@js-camp/core/models/anime/genre-sorting-field';
+import { StudioSortingField } from '@js-camp/core/models/anime/studio-sorting-field';
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
+import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
+import { Pagination } from '@js-camp/core/models/pagination';
+import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
+import { Observable } from 'rxjs';
 
 /** Anime management form controls. */
 interface AnimeManagementFormControls {
@@ -69,12 +73,6 @@ interface AnimeManagementFormControls {
 	templateUrl: './anime-form.component.html',
 	styleUrls: ['./anime-form.component.css'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [
-		{
-			provide: MultipleAutocompleteService,
-			useClass: AnimeMultipleAutocompleteService,
-		},
-	],
 })
 export class AnimeFormComponent implements OnInit {
 	/** Anime form data. */
@@ -86,6 +84,10 @@ export class AnimeFormComponent implements OnInit {
 	public readonly submitEvent = new EventEmitter<AnimeFormData>();
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
+
+	private readonly genreService = inject(GenreService);
+
+	private readonly studioService = inject(StudioService);
 
 	/** Anime types. */
 	protected readonly animeTypes = EnumUtils.toArray(AnimeType);
@@ -104,11 +106,6 @@ export class AnimeFormComponent implements OnInit {
 
 	/** Anime form data group. */
 	protected readonly formGroup: FormGroup<AnimeManagementFormControls>;
-
-	/** Multiple autocomplete groups. */
-	protected get multipleAutocompleteGroups(): typeof animeMultipleAutocompleteGroups {
-		return animeMultipleAutocompleteGroups;
-	}
 
 	public constructor() {
 		this.formGroup = this.initAnimeForm();
@@ -140,6 +137,26 @@ export class AnimeFormComponent implements OnInit {
 		const formData = this.formGroup.getRawValue();
 
 		this.submitEvent.emit(formData);
+	}
+
+	/** Get genre MultipleAutocompleteItemProvider. */
+	protected getGenreItemsProvider(): MultipleAutocompleteItemProvider {
+		return (parameters: MultipleAutocompleteParameters) =>
+			this.genreService.getGenreList({
+				field: GenreSortingField.Name,
+				direction: SortingDirection.Ascending,
+				...parameters,
+			});
+	}
+
+	/** Get studio MultipleAutocompleteItemProvider. */
+	protected getStudioItemsProvider(): MultipleAutocompleteItemProvider {
+		return (parameters: MultipleAutocompleteParameters) =>
+			this.studioService.getStudoList({
+				field: StudioSortingField.Name,
+				direction: SortingDirection.Ascending,
+				...parameters,
+			});
 	}
 
 	private initAnimeForm(): FormGroup<AnimeManagementFormControls> {

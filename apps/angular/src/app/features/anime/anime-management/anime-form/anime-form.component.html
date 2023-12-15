@@ -75,13 +75,15 @@
 	<div class="anime-form-section">
 		<camp-multiple-autocomplete
 			class="anime-form-section__field"
-			[itemGroup]="multipleAutocompleteGroups.genreGroup"
+			label="Genres"
+			[provider]="getGenreItemsProvider()"
 			[formControl]="formGroup.controls.genres"
 		/>
 
 		<camp-multiple-autocomplete
 			class="anime-form-section__field"
-			[itemGroup]="multipleAutocompleteGroups.studioGroup"
+			label="Studios"
+			[provider]="getStudioItemsProvider()"
 			[formControl]="formGroup.controls.studios"
 		/>
 	</div>

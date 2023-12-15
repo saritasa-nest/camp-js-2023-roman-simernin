@@ -1,5 +1,5 @@
 <mat-form-field class="multiple-autocomplete" floatLabel="always">
-	<mat-label>{{itemGroup}}</mat-label>
+	<mat-label>{{ label }}</mat-label>
 	<mat-chip-listbox>
 		<mat-chip-option *ngFor="let addedItem of addedItems; trackBy: trackItem" (removed)="removeItem(addedItem)">
 			{{ addedItem.name }}
@@ -8,15 +8,27 @@
 			</button>
 		</mat-chip-option>
 	</mat-chip-listbox>
-	<input type="text" matInput placeholder="Select..." [formControl]="itemNameControl" [matAutocomplete]="auto"
-		[disabled]="isDisabled" />
+	<input
+		type="text"
+		matInput
+		placeholder="Select..."
+		[formControl]="itemNameControl"
+		[matAutocomplete]="auto"
+		[disabled]="isDisabled"
+	/>
 
 	<mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleItemSelected($event)">
 		<ng-container *ngIf="totalItems$ | async as totalItems; else itemsLoadingOption">
-			<div *ngIf="parameters$ | async as parameters" class="multiple-autocomplete__option-container"
-				infiniteScroll [infiniteScrollDistance]="1" [scrollWindow]="false" [infiniteScrollThrottle]="50"
+			<div
+				*ngIf="parameters$ | async as parameters"
+				class="multiple-autocomplete__option-container"
+				infiniteScroll
+				[infiniteScrollDistance]="1"
+				[scrollWindow]="false"
+				[infiniteScrollThrottle]="50"
 				(scrolled)="scrollToNextPage(parameters, totalItems.totalCount)"
-				(scrolledUp)="scrollToPreviousPage(parameters)">
+				(scrolledUp)="scrollToPreviousPage(parameters)"
+			>
 				<mat-option *ngFor="let itemOption of totalItems.results; trackBy: trackItem" [value]="itemOption.id">
 					{{ itemOption.name }}
 				</mat-option>
@@ -27,7 +39,11 @@
 		</ng-template>
 	</mat-autocomplete>
 </mat-form-field>
-<button mat-icon-button type="button" (click)="handleItemAdding()"
-	[disabled]="(isItemsLoading$ | async) || isForbiddenToCreateItem((totalItems$ | async)?.results ?? [])">
+<button
+	mat-icon-button
+	type="button"
+	(click)="handleItemAdding()"
+	[disabled]="(isItemsLoading$ | async) || isForbiddenToCreateItem((totalItems$ | async)?.results ?? [])"
+>
 	<mat-icon class="item-creation-btn-icon">add_circle_outline</mat-icon>
 </button>

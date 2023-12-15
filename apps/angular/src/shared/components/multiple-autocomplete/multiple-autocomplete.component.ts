@@ -2,12 +2,27 @@ import { ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit, inject }
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, NonNullableFormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
-import { BehaviorSubject, Observable, Subject, combineLatest, debounceTime, distinctUntilChanged, shareReplay, switchMap, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	EMPTY,
+	Observable,
+	Subject,
+	combineLatest,
+	debounceTime,
+	distinctUntilChanged,
+	shareReplay,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MultipleAutocompleteService } from '@js-camp/angular/core/services/multiple-autocomplete.service';
 import { PaginationParameters } from '@js-camp/core/models/pagination-parameters';
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { Pagination } from '@js-camp/core/models/pagination';
+
+/** Multiple autocomplete item orovider. */
+export type MultipleAutocompleteItemProvider = (
+	parameters: MultipleAutocompleteParameters
+) => Observable<Pagination<MultipleAutocompleteItem>>;
 
 type MultipleAutocompleteChangedFunction = (addedItems: MultipleAutocompleteItem[]) => void;
 type MultipleAutocompleteTouchedFunction = () => void;
@@ -27,17 +42,17 @@ type MultipleAutocompleteTouchedFunction = () => void;
 	],
 })
 export class MultipleAutocompleteComponent implements OnInit, ControlValueAccessor {
+	/** Label. */
+	@Input({ required: true })
+	public label = '';
 
 	/** Item group. */
 	@Input({ required: true })
-	public itemGroup = '';
+	public provider: MultipleAutocompleteItemProvider = () => EMPTY;
 
 	private readonly formBuilder = inject(NonNullableFormBuilder);
 
 	private readonly destroyRef = inject(DestroyRef);
-
-	// Must be provided in parent component.
-	private readonly multipleAutocompleteService = inject(MultipleAutocompleteService);
 
 	private readonly defaultPagination: PaginationParameters = {
 		pageNumber: 1,
@@ -77,9 +92,9 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		this.totalItems$ = this.parameters$.pipe(
 			tap(() => this.isItemsLoading$.next(true)),
 			debounceTime(1500),
-			switchMap(parameters => this.multipleAutocompleteService.getItems(this.itemGroup, parameters)),
+			switchMap((parameters) => this.provider(parameters)),
 			tap(() => this.isItemsLoading$.next(false)),
-			shareReplay({ bufferSize: 1, refCount: true }),
+			shareReplay({ bufferSize: 1, refCount: true })
 		);
 	}
 
@@ -118,7 +133,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	protected handleItemSelected(event: MatAutocompleteSelectedEvent): void {
 		const autocompleteValue = event.option.value;
 
-		if (typeof (autocompleteValue) !== 'number') {
+		if (typeof autocompleteValue !== 'number') {
 			return;
 		}
 
@@ -198,27 +213,30 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	}
 
 	private subscribeToItemSearch(): void {
-		this.itemNameControl.valueChanges.pipe(
-			distinctUntilChanged(),
-			tap(itemNameToSearch => this.parameters$.next({
-				search: itemNameToSearch,
-				...this.defaultPagination,
-			})),
-			takeUntilDestroyed(this.destroyRef),
-		)
+		this.itemNameControl.valueChanges
+			.pipe(
+				distinctUntilChanged(),
+				tap((itemNameToSearch) =>
+					this.parameters$.next({
+						search: itemNameToSearch,
+						...this.defaultPagination,
+					})
+				),
+				takeUntilDestroyed(this.destroyRef)
+			)
 			.subscribe();
 	}
 
 	private subscribeToItemAdd(): void {
-		combineLatest([
-			this.itemIdentityToAdd$,
-			this.totalItems$,
-		]).pipe(
-			distinctUntilChanged(([previousItemIdentityToAdd], [currentItemIdentityToAdd]) =>
-				previousItemIdentityToAdd === currentItemIdentityToAdd),
-			tap(([itemIdentityToAdd, totalItems]) => this.addItem(itemIdentityToAdd, totalItems.results)),
-			takeUntilDestroyed(this.destroyRef),
-		)
+		combineLatest([this.itemIdentityToAdd$, this.totalItems$])
+			.pipe(
+				distinctUntilChanged(
+					([previousItemIdentityToAdd], [currentItemIdentityToAdd]) =>
+						previousItemIdentityToAdd === currentItemIdentityToAdd
+				),
+				tap(([itemIdentityToAdd, totalItems]) => this.addItem(itemIdentityToAdd, totalItems.results)),
+				takeUntilDestroyed(this.destroyRef)
+			)
 			.subscribe();
 	}
 
@@ -226,9 +244,10 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		this.onMultipleAutocompleteTouched?.();
 		this.itemNameControl.reset();
 
-		const isItemAdded = typeof (itemIdentity) === 'number' ?
-			this.trySelectItem(itemIdentity, totalItems) :
-			this.tryCreateItem(itemIdentity, totalItems);
+		const isItemAdded =
+			typeof itemIdentity === 'number'
+				? this.trySelectItem(itemIdentity, totalItems)
+				: this.tryCreateItem(itemIdentity, totalItems);
 
 		if (!isItemAdded) {
 			return;
@@ -238,13 +257,13 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	}
 
 	private trySelectItem(itemIdToSelect: number, totalItems: readonly MultipleAutocompleteItem[]): boolean {
-		const isAddedBefore = this.addedItems.some(item => item.id === itemIdToSelect);
+		const isAddedBefore = this.addedItems.some((item) => item.id === itemIdToSelect);
 
 		if (isAddedBefore) {
 			return false;
 		}
 
-		const itemToSelect = totalItems.find(item => item.id === itemIdToSelect);
+		const itemToSelect = totalItems.find((item) => item.id === itemIdToSelect);
 
 		if (itemToSelect === undefined) {
 			return false;
@@ -277,15 +296,13 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			return false;
 		}
 
-		const isSelectable = totalItems
-			.some(item => this.equalItemNames(item.name, itemNameToCreate));
+		const isSelectable = totalItems.some((item) => this.equalItemNames(item.name, itemNameToCreate));
 
 		if (isSelectable) {
 			return false;
 		}
 
-		const isAddedBefore = this.addedItems
-			.some(item => this.equalItemNames(item.name, itemNameToCreate));
+		const isAddedBefore = this.addedItems.some((item) => this.equalItemNames(item.name, itemNameToCreate));
 
 		if (isAddedBefore) {
 			return false;
