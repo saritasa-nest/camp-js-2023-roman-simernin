@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { FormControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { GenreService } from '@js-camp/angular/core/services/genre-service';
 import { StudioService } from '@js-camp/angular/core/services/studio.service';
 import { MultipleAutocompleteItemProvider } from '@js-camp/angular/shared/components/multiple-autocomplete/multiple-autocomplete.component';
@@ -11,59 +11,11 @@ import { AnimeSource } from '@js-camp/core/models/anime/anime-source';
 import { AnimeStatus } from '@js-camp/core/models/anime/anime-status';
 import { GenreSortingField } from '@js-camp/core/models/anime/genre-sorting-field';
 import { StudioSortingField } from '@js-camp/core/models/anime/studio-sorting-field';
-import { ImageFile } from '@js-camp/core/models/image-file';
-import { MultipleAutocompleteItem } from '@js-camp/core/models/multiple-autocomplete-item';
 import { MultipleAutocompleteParameters } from '@js-camp/core/models/multiple-autocomplete-parameters';
 import { SortingDirection } from '@js-camp/core/models/sorting-parameters';
 import { EnumUtils } from '@js-camp/core/utils/enum.utils';
 
-/** Anime management form controls. */
-interface AnimeManagementFormControls {
-	/** Title in English. */
-	readonly englishTitle: FormControl<string>;
-
-	/** Title in Japanese. */
-	readonly japaneseTitle: FormControl<string>;
-
-	/** Type. */
-	readonly type: FormControl<AnimeType>;
-
-	/** Status. */
-	readonly status: FormControl<AnimeStatus>;
-
-	/** Provides anime is airing. */
-	readonly isAiring: FormControl<boolean>;
-
-	/** Description. */
-	readonly description: FormControl<string>;
-
-	/** Age rating. */
-	readonly ageRating: FormControl<AnimeRating>;
-
-	/** Source. */
-	readonly source: FormControl<AnimeSource>;
-
-	/** Season. */
-	readonly season: FormControl<AnimeSeason>;
-
-	/** Aired start date. */
-	readonly airedStart: FormControl<Date>;
-
-	/** Aired end date. */
-	readonly airedEnd: FormControl<Date>;
-
-	/** Image file. */
-	readonly imageFile: FormControl<ImageFile>;
-
-	/** Youtube trailer id. */
-	readonly youtubeTrailerId: FormControl<string>;
-
-	/** Genres. */
-	readonly genres: FormControl<readonly MultipleAutocompleteItem[]>;
-
-	/** Genres. */
-	readonly studios: FormControl<readonly MultipleAutocompleteItem[]>;
-}
+import { AnimeManagementFormControls } from './anime-form';
 
 /** Anime form component. */
 @Component({
