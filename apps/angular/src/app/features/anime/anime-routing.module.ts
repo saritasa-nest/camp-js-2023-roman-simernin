@@ -16,7 +16,7 @@ const routes: Routes = [
 	{
 		path: 'create',
 		component: AnimeCreationComponent,
-		canActivateChild: [shouldBeAuthenticatedGuard],
+		canActivate: [shouldBeAuthenticatedGuard],
 	},
 	{
 		path: ':id',
@@ -43,4 +43,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class AnimeRoutingModule { }
+export class AnimeRoutingModule {}
