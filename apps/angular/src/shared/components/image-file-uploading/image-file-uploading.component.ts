@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { ImageFile } from '@js-camp/core/models/image-file';
 import { BehaviorSubject } from 'rxjs';
@@ -25,20 +25,27 @@ type ImageFileTouchedFunction = () => void;
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImageFileUploadingComponent implements ControlValueAccessor, Validator {
+export class ImageFileUploadingComponent implements OnDestroy, ControlValueAccessor, Validator {
+
+	private imageFileUrl: string | null = null;
 
 	/** Image file subject. */
-	protected imageFile$ = new BehaviorSubject<ImageFile>('');
+	protected readonly imageFile$ = new BehaviorSubject<ImageFile>('');
 
 	/** Provide control is disabled.  */
 	protected isDisabled = false;
+
+	/** @inheritdoc */
+	public ngOnDestroy(): void {
+		this.destroyImageUrl();
+	}
 
 	/**
 	 * Upload image file.
 	 * @param event - Event.
 	 */
 	protected uploadImageFile(event: Event): void {
-		this.onImageFileTouched?.();
+		this.onImageFileTouched();
 
 		const { target } = event;
 
@@ -53,17 +60,18 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 		}
 
 		const imageFile: ImageFile = files[0];
-
 		this.imageFile$.next(imageFile);
 
-		this.onImageFileChanged?.(imageFile);
+		this.onImageFileChanged(imageFile);
+
+		this.destroyImageUrl();
 	}
 
 	/**
 	 * Get image location.
 	 * @param imageFile Image file.
 	 */
-	protected getImageName(imageFile: string | File | null): string {
+	protected getImageName(imageFile: ImageFile | null): string {
 		if (imageFile === null) {
 			return '';
 		}
@@ -71,7 +79,7 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 		return typeof (imageFile) === 'string' ?
 
 			// Get last section in image url in file storage.
-			imageFile.split('/').pop() ?? '' :
+			imageFile.split('/').at(-1) ?? '' :
 			imageFile.name;
 	}
 
@@ -79,15 +87,29 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 	 * Get image source.
 	 * @param imageFile - Image file.
 	 */
-	protected getImageSource(imageFile: string | File): string {
+	protected getImageSource(imageFile: ImageFile): string {
 		return typeof (imageFile) === 'string' ?
 			imageFile :
-			URL.createObjectURL(imageFile);
+			this.createImageUrl(imageFile);
 	}
 
-	private onImageFileChanged: ImageFileChangedFunction | null = null;
+	private createImageUrl(file: File): string {
+		this.imageFileUrl = URL.createObjectURL(file);
+		return this.imageFileUrl;
+	}
 
-	private onImageFileTouched: ImageFileTouchedFunction | null = null;
+	private destroyImageUrl() {
+		if (this.imageFileUrl === null) {
+			return;
+		}
+
+		URL.revokeObjectURL(this.imageFileUrl);
+		this.imageFileUrl = null;
+	}
+
+	private onImageFileChanged: ImageFileChangedFunction = () => undefined;
+
+	private onImageFileTouched: ImageFileTouchedFunction = () => undefined;
 
 	/** @inheritdoc */
 	public writeValue(imageFile: ImageFile): void {
@@ -105,7 +127,7 @@ export class ImageFileUploadingComponent implements ControlValueAccessor, Valida
 	}
 
 	/** @inheritdoc */
-	public setDisabledState?(isDisabled: boolean): void {
+	public setDisabledState(isDisabled: boolean): void {
 		this.isDisabled = isDisabled;
 	}
 
