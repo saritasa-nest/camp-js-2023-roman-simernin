@@ -10,7 +10,6 @@ export namespace AnimeStatusMapper {
 		{ model: AnimeStatus.Airing, dto: AnimeStatusDto.Airing },
 		{ model: AnimeStatus.Finished, dto: AnimeStatusDto.Finished },
 		{ model: AnimeStatus.NotYetAired, dto: AnimeStatusDto.NotYetAired },
-		{ model: AnimeStatus.Unknown, dto: AnimeStatusDto.Unknown },
 	];
 
 	/**

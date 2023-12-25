@@ -1,0 +1,11 @@
+:root {
+  --font-size-xs: 0.75rem;
+  --font-size-s: 1rem;
+  --font-size-m: 1.5rem;
+  --font-size-l: 2rem;
+  --font-size-xl: 4rem;
+  --space: 20px;
+  --border: 1px solid grey;
+  --border-radius: 10px;
+  --background-color: white;
+}

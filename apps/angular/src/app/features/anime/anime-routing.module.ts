@@ -5,6 +5,8 @@ import { shouldBeAuthenticatedGuard } from '@js-camp/angular/core/guards/auth.gu
 
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
+import { AnimeCreationComponent } from './anime-management/anime-creation/anime-creation.component';
+import { AnimeEditingComponent } from './anime-management/anime-editing/anime-editing.component';
 
 const routes: Routes = [
 	{
@@ -12,9 +14,23 @@ const routes: Routes = [
 		component: AnimeDashboardComponent,
 	},
 	{
+		path: 'create',
+		component: AnimeCreationComponent,
+		canActivate: [shouldBeAuthenticatedGuard],
+	},
+	{
 		path: ':id',
-		component: AnimeDetailsComponent,
 		canActivateChild: [shouldBeAuthenticatedGuard],
+		children: [
+			{
+				path: '',
+				component: AnimeDetailsComponent,
+			},
+			{
+				path: 'edit',
+				component: AnimeEditingComponent,
+			},
+		],
 	},
 	{
 		path: '**',
@@ -27,4 +43,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class AnimeRoutingModule { }
+export class AnimeRoutingModule {}

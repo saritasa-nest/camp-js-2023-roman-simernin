@@ -1,0 +1,19 @@
+<div class="image-file-uploading">
+	<mat-form-field class="image-file-uploading__file-name">
+		<mat-label>Image file</mat-label>
+		<input matInput disabled="true" [value]="getImageName(imageFile$ | async)" />
+	</mat-form-field>
+	<div>
+		<input hidden type="file" #imageFileInput (change)="uploadImageFile($event)" accept=".jpg, .png" />
+		<button mat-icon-button type="button" (click)="imageFileInput.click()" [disabled]="isDisabled">
+			<mat-icon>image</mat-icon>
+		</button>
+	</div>
+</div>
+<div class="image-file-preview">
+	<img *ngIf="imageFile$ | async as imageFile; else noImageAvailable" class="image-file-preview__image"
+		[src]="getImageSource(imageFile)" alt="" />
+	<ng-template #noImageAvailable>
+		<img class="image-file-preview__image" alt="No image available" src="assets/no-image-available.jpg" />
+	</ng-template>
+</div>

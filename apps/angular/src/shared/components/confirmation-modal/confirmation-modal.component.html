@@ -1,0 +1,16 @@
+<h1 class="confirmation-text" mat-dialog-title>{{ modalParameters.confirmationText }}</h1>
+<div class="confirmation-actions" mat-dialog-actions>
+	<button 
+      type="button" 
+      mat-button  
+      [mat-dialog-close]="false" 
+      (click)="closeDialog()">
+        No
+    </button>
+    <button 
+      type="button"
+      mat-button  
+      [mat-dialog-close]="true">
+        Yes
+    </button>
+</div>

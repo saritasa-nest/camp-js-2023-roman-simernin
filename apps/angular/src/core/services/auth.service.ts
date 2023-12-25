@@ -15,7 +15,7 @@ import { UserAccessTokenMapper } from '@js-camp/core/mappers/auth/tokens.mapper'
 
 import { applicationApiErrorHandler, catchApiError } from '../utils/rxjs/catch-api-error';
 
-import { ApiUriBuilder } from './api-uri-builder';
+import { ApiUrlBuilder } from './api-url-builder';
 import { UserAccessTokenStorageService } from './user-access-token-storage.service';
 
 /** Service for authentication. */
@@ -26,7 +26,7 @@ export class AuthService {
 
 	private readonly httpClient = inject(HttpClient);
 
-	private readonly apiUriBuilder = inject(ApiUriBuilder);
+	private readonly apiUrlBuilder = inject(ApiUrlBuilder);
 
 	private readonly tokenStorageService = inject(UserAccessTokenStorageService);
 
@@ -47,9 +47,9 @@ export class AuthService {
 	 * @param loginModel - Login model.
 	 **/
 	public login(loginModel: Login): Observable<void> {
-		const uri = this.apiUriBuilder.buildLoginUri();
+		const url = this.apiUrlBuilder.buildLoginUrl();
 
-		return this.httpClient.post<UserAccessTokenDto>(uri, LoginMapper.toDto(loginModel)).pipe(
+		return this.httpClient.post<UserAccessTokenDto>(url, LoginMapper.toDto(loginModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 			catchApiError(apiError => applicationApiErrorHandler(apiError)),
 		);
@@ -60,9 +60,9 @@ export class AuthService {
 	 * @param registrationModel - Registration model.
 	 **/
 	public register(registrationModel: Registration): Observable<void> {
-		const uri = this.apiUriBuilder.buildRegistrationUri();
+		const url = this.apiUrlBuilder.buildRegistrationUrl();
 
-		return this.httpClient.post<UserAccessTokenDto>(uri, RegistrationMapper.toDto(registrationModel)).pipe(
+		return this.httpClient.post<UserAccessTokenDto>(url, RegistrationMapper.toDto(registrationModel)).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 			catchApiError(apiError => applicationApiErrorHandler(apiError)),
 		);
@@ -73,7 +73,7 @@ export class AuthService {
 	 * @param secret Secret data.
 	 */
 	public refreshAccessToken(): Observable<void> {
-		const uri = this.apiUriBuilder.buildRefreshUri();
+		const url = this.apiUrlBuilder.buildRefreshUrl();
 
 		const currentTokens = this.tokenStorageService.get();
 
@@ -81,7 +81,7 @@ export class AuthService {
 			refresh: currentTokens?.refreshToken ?? '',
 		};
 
-		return this.httpClient.post<UserAccessTokenDto>(uri, refreshTokensDto).pipe(
+		return this.httpClient.post<UserAccessTokenDto>(url, refreshTokensDto).pipe(
 			map(tokensDto => this.authenticate(tokensDto)),
 		);
 	}

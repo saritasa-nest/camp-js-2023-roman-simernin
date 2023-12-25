@@ -1,0 +1,17 @@
+.anime-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+  justify-content: space-between;
+}
+
+.anime-form-section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space);
+}
+
+.anime-form-section__field {
+  flex: 1 0 300px;
+}

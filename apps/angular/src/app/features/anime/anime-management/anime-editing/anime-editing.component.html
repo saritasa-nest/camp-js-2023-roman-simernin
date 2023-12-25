@@ -1,0 +1,5 @@
+<a *ngIf="animeId$ | async as animeId" [routerLink]="['/anime', animeId]" mat-icon-button>
+	<mat-icon>arrow_back</mat-icon>
+</a>
+<camp-anime-form *ngIf="animeFormData$ | async as animeFormData" [animeFormData]="animeFormData"
+	(submitEvent)="editAnime($event)" />

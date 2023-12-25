@@ -1,0 +1,122 @@
+<form [formGroup]="formGroup" (ngSubmit)="handleSubmit()" class="anime-form">
+	<div class="anime-form-section">
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>English title</mat-label>
+			<input matInput [formControl]="formGroup.controls.englishTitle" />
+		</mat-form-field>
+
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Japanese title</mat-label>
+			<input matInput [formControl]="formGroup.controls.japaneseTitle" />
+		</mat-form-field>
+	</div>
+
+	<mat-form-field class="anime-form-section__field">
+		<mat-label>Description</mat-label>
+		<textarea matInput rows="10" [formControl]="formGroup.controls.description"></textarea>
+	</mat-form-field>
+
+	<div class="anime-form-section">
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Type</mat-label>
+			<mat-select [formControl]="formGroup.controls.type">
+				<mat-option *ngFor="let type of animeTypes; trackBy: trackByIndex" [value]="type">
+					{{ type }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Status</mat-label>
+			<mat-select [formControl]="formGroup.controls.status">
+				<mat-option *ngFor="let status of animeStatuses; trackBy: trackByIndex" [value]="status">
+					{{ status }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+
+	<div class="anime-form-section">
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Rating</mat-label>
+			<mat-select [formControl]="formGroup.controls.ageRating">
+				<mat-option *ngFor="let rating of animeRatings; trackBy: trackByIndex" [value]="rating">
+					{{ rating }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Source</mat-label>
+			<mat-select [formControl]="formGroup.controls.source">
+				<mat-option *ngFor="let source of animeSources; trackBy: trackByIndex" [value]="source">
+					{{ source }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+
+	<div class="anime-form-section">
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Season</mat-label>
+			<mat-select [formControl]="formGroup.controls.season">
+				<mat-option *ngFor="let season of animeSeasons; trackBy: trackByIndex" [value]="season">
+					{{ season }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Youtube trailer id</mat-label>
+			<input matInput [formControl]="formGroup.controls.youtubeTrailerId" />
+		</mat-form-field>
+	</div>
+
+	<div class="anime-form-section">
+		<camp-multiple-autocomplete
+			class="anime-form-section__field"
+			label="Genres"
+			[provider]="getGenreItemsProvider()"
+			[formControl]="formGroup.controls.genres"
+		/>
+
+		<camp-multiple-autocomplete
+			class="anime-form-section__field"
+			label="Studios"
+			[provider]="getStudioItemsProvider()"
+			[formControl]="formGroup.controls.studios"
+		/>
+	</div>
+
+	<div class="anime-form-section">
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Aired start</mat-label>
+			<input matInput [matDatepicker]="airedStartPicker" [formControl]="formGroup.controls.airedStart" />
+			<mat-hint>MM/DD/YYYY</mat-hint>
+			<mat-datepicker-toggle matIconSuffix [for]="airedStartPicker" />
+			<mat-datepicker #airedStartPicker />
+		</mat-form-field>
+
+		<mat-form-field class="anime-form-section__field">
+			<mat-label>Aired end</mat-label>
+			<input matInput [matDatepicker]="airedEndPicker" [formControl]="formGroup.controls.airedEnd" />
+			<mat-hint>MM/DD/YYYY</mat-hint>
+			<mat-datepicker-toggle matIconSuffix [for]="airedEndPicker" />
+			<mat-datepicker #airedEndPicker />
+		</mat-form-field>
+	</div>
+
+	<div class="anime-form-section">
+		<mat-checkbox class="anime-form-section__field" [formControl]="formGroup.controls.isAiring">
+			Is airing?
+		</mat-checkbox>
+
+		<camp-image-file-uploading
+			class="anime-form-section__field"
+			matInput
+			[formControl]="formGroup.controls.imageFile"
+		/>
+	</div>
+
+	<button type="submit" mat-button>Save</button>
+</form>

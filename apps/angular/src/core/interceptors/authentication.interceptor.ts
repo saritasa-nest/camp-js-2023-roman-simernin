@@ -5,7 +5,7 @@ import { Observable, map, switchMap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { catchApiError } from '../utils/rxjs/catch-api-error';
 import { UserAccessTokenStorageService } from '../services/user-access-token-storage.service';
-import { ApiUriBuilder } from '../services/api-uri-builder';
+import { ApiUrlBuilder } from '../services/api-url-builder';
 
 /** Interceptor for request authentication. */
 @Injectable()
@@ -15,10 +15,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
 	private readonly tokensStorageService = inject(UserAccessTokenStorageService);
 
-	private readonly apiUriBuilder = inject(ApiUriBuilder);
+	private readonly apiUrlBuilder = inject(ApiUrlBuilder);
 
 	/** @inheritdoc */
 	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+		if (!this.apiUrlBuilder.isApiUrl(request.url)) {
+			return next.handle(request);
+		}
+
 		if (this.isAuthenticationRequest(request)) {
 			return next.handle(request);
 		}
@@ -35,7 +39,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 	}
 
 	private isAuthenticationRequest(request: HttpRequest<unknown>): boolean {
-		return this.apiUriBuilder.isAuthUri(request.url);
+		return this.apiUrlBuilder.isAuthUrl(request.url);
 	}
 
 	private addAuthentication(request: HttpRequest<unknown>): HttpRequest<unknown> {

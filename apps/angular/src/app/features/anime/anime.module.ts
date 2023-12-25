@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-
 import { AnimeService } from '@js-camp/angular/core/services/anime-service';
+import { GenreService } from '@js-camp/angular/core/services/genre-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -12,21 +12,29 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from '@js-camp/angular/shared/shared.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { RouterModule } from '@angular/router';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { StudioService } from '@js-camp/angular/core/services/studio.service';
 
+import { AnimeFormService } from '@js-camp/angular/core/services/anime-form.service';
+
+import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeDashboardComponent } from './anime-dashboard/anime-dashboard.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 import { AnimeCoverModalComponent } from './anime-details/anime-cover-modal/anime-cover-modal.component';
-
-import { AnimeRoutingModule } from './anime-routing.module';
 import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-info-item.component';
+import { AnimeFormComponent } from './anime-management/anime-form/anime-form.component';
+import { AnimeCreationComponent } from './anime-management/anime-creation/anime-creation.component';
+import { AnimeEditingComponent } from './anime-management/anime-editing/anime-editing.component';
 
 /** Anime module. */
 @NgModule({
 	imports: [
 		HttpClientModule,
-		CommonModule,
 		MatTableModule,
 		MatPaginatorModule,
 		MatSortModule,
@@ -34,12 +42,32 @@ import { AnimeInfoItemComponent } from './anime-details/anime-info-item/anime-in
 		MatFormFieldModule,
 		ReactiveFormsModule,
 		MatInputModule,
-		AnimeRoutingModule,
 		SharedModule,
 		MatDialogModule,
 		MatIconModule,
+		MatButtonModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
+		CommonModule,
+		RouterModule,
+		AnimeRoutingModule,
+		MatCheckboxModule,
 	],
-	declarations: [AnimeDashboardComponent, AnimeDetailsComponent, AnimeCoverModalComponent, AnimeInfoItemComponent],
-	providers: [AnimeService, { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }],
+	declarations: [
+		AnimeDashboardComponent,
+		AnimeDetailsComponent,
+		AnimeCoverModalComponent,
+		AnimeInfoItemComponent,
+		AnimeFormComponent,
+		AnimeCreationComponent,
+		AnimeEditingComponent,
+	],
+	providers: [
+		AnimeService,
+		GenreService,
+		StudioService,
+		AnimeFormService,
+		{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+	],
 })
 export class AnimeModule {}

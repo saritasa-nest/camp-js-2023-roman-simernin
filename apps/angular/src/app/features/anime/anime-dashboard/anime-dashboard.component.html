@@ -10,6 +10,9 @@
         <mat-option *ngFor="let animeType of animeTypes; trackBy: trackAnimeType" [value]="animeType">{{animeType}}</mat-option>
       </mat-select>
     </mat-form-field>
+    <a routerLink="create" mat-icon-button>
+				<mat-icon>add_circle_outline</mat-icon>
+		</a>
   </form>
   <ng-container *ngIf="paginatedAnime$ | async as paginatedAnime">
     <main class="anime-table-container">
@@ -19,8 +22,8 @@
         matSort  
         [dataSource]="paginatedAnime.results" 
         (matSortChange)="handleSortingChange($event)"
-        [matSortActive]="initialSortingParameters.field ?? '' "
-        [matSortDirection]="initialSortingParameters.direction ?? '' ">
+        [matSortActive]="initialSortingParameters.field"
+        [matSortDirection]="initialSortingParameters.direction">
 
         <caption class="anime-table__caption">Anime table</caption>
   

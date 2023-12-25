@@ -1,0 +1,48 @@
+@import url("https://fonts.cdnfonts.com/css/anime-ace");
+
+.typography {
+  font-size: var(--font-size-l);
+}
+
+.typography_title {
+  font-size: var(--font-size-xl);
+}
+
+.typography_title,
+.typography_subtitle {
+  font-family: "Anime Ace", sans-serif;
+}
+
+.typography_body {
+  font-family: Georgia, serif;
+}
+
+@media (width < 1920px) {
+  .typography {
+    font-size: var(--font-size-m);
+  }
+
+  .typography_title {
+    font-size: var(--font-size-l);
+  }
+}
+
+@media (width < 1280px) {
+  .typography {
+    font-size: var(--font-size-s);
+  }
+
+  .typography_title {
+    font-size: var(--font-size-m);
+  }
+}
+
+@media (width < 360px) {
+  .typography {
+    font-size: var(--font-size-xs);
+  }
+
+  .typography_title {
+    font-size: var(--font-size-s);
+  }
+}

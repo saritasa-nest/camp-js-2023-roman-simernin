@@ -3,6 +3,9 @@ import { AnimeAiringDto } from './anime-airing.dto';
 import { AnimeTypeDto } from './anime-type.dto';
 import { StudioDto } from './studio.dto';
 import { AnimeStatusDto } from './anime-status.dto';
+import { AnimeRatingDto } from './anime-rating.dto';
+import { AnimeSourceDto } from './anime-source.dto';
+import { AnimeSeasonDto } from './anime-season.dto';
 
 /** DTO of anime for preview. */
 export interface AnimeDetailsDto {
@@ -35,13 +38,13 @@ export interface AnimeDetailsDto {
 	readonly user_score: number;
 
 	/** Age rating. */
-	readonly rating: string;
+	readonly rating: AnimeRatingDto;
 
 	/** Source. */
-	readonly source: string;
+	readonly source: AnimeSourceDto;
 
 	/** Season. */
-	readonly season: string;
+	readonly season: AnimeSeasonDto;
 
 	/** Description. */
 	readonly synopsis: string;
@@ -56,5 +59,5 @@ export interface AnimeDetailsDto {
 	readonly genres_data: readonly GenreDto[];
 
 	/** Youtube trailer id. */
-	readonly trailer_youtube_id: string | null;
+	readonly trailer_youtube_id: string;
 }
