@@ -10,6 +10,7 @@ import {
 	combineLatest,
 	debounceTime,
 	distinctUntilChanged,
+	finalize,
 	shareReplay,
 	switchMap,
 	tap,
@@ -63,13 +64,13 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 	private onMultipleAutocompleteTouched: MultipleAutocompleteTouchedFunction | null = null;
 
-	private itemIdentityToAdd$ = new Subject<string | number>();
+	private readonly itemIdentityToAdd$ = new Subject<string | number>();
 
 	/** Selected multiple autocomplete items. */
 	protected readonly addedItems: MultipleAutocompleteItem[] = [];
 
 	/** Input control for item name. */
-	protected itemNameControl: FormControl<string>;
+	protected readonly itemNameControl: FormControl<string>;
 
 	/** Provide control is disabled.  */
 	protected isDisabled = false;
@@ -91,9 +92,9 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 		this.totalItems$ = this.parameters$.pipe(
 			tap(() => this.isItemsLoading$.next(true)),
-			debounceTime(1500),
+			debounceTime(1000),
 			switchMap(parameters => this.provider(parameters)),
-			tap(() => this.isItemsLoading$.next(false)),
+			finalize(() => this.isItemsLoading$.next(false)),
 			shareReplay({ bufferSize: 1, refCount: true }),
 		);
 	}
@@ -280,7 +281,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			return false;
 		}
 
-		const itemToCreate = {
+		const itemToCreate: MultipleAutocompleteItem = {
 			id: null,
 			name: itemNameToCreate,
 		};

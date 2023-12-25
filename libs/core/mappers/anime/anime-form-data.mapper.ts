@@ -35,8 +35,8 @@ export namespace AnimeFormDataMapper {
 	 */
 	export function toCreateData(params: {
 		formData: AnimeFormData;
-		genreIds: number[];
-		studioIds: number[];
+		genreIds: readonly number[];
+		studioIds: readonly number[];
 		imageUrl: string;
 	}): AnimeCreateData {
 		const { formData, genreIds, studioIds, imageUrl } = params;
@@ -65,8 +65,8 @@ export namespace AnimeFormDataMapper {
 	 */
 	export function toEditData(params: {
 		formData: AnimeFormData;
-		genreIds: number[];
-		studioIds: number[];
+		genreIds: readonly number[];
+		studioIds: readonly number[];
 		imageUrl: string;
 	}): AnimeEditData {
 		const { formData, genreIds, studioIds, imageUrl } = params;

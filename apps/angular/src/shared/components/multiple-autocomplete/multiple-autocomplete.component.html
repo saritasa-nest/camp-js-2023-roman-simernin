@@ -17,7 +17,7 @@
 		[disabled]="isDisabled"
 	/>
 
-	<mat-autocomplete #auto="matAutocomplete" (optionSelected)="handleItemSelected($event)">
+	<mat-autocomplete #auto (optionSelected)="handleItemSelected($event)">
 		<ng-container *ngIf="totalItems$ | async as totalItems; else itemsLoadingOption">
 			<div
 				*ngIf="parameters$ | async as parameters"
