@@ -95,7 +95,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			.pipe(
 				startWith(''),
 				distinctUntilChanged(),
-		);
+			);
 
 		this.parameters$ = combineLatest([
 			search$,
@@ -106,7 +106,6 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 				...pagination,
 			})),
 		);
-	
 
 		this.totalItems$ = this.parameters$.pipe(
 			tap(() => this.isItemsLoading$.next(true)),

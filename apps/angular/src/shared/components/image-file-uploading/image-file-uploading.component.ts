@@ -98,7 +98,7 @@ export class ImageFileUploadingComponent implements OnDestroy, ControlValueAcces
 		return this.imageFileUrl;
 	}
 
-	private destroyImageUrl() {
+	private destroyImageUrl(): void {
 		if (this.imageFileUrl === null) {
 			return;
 		}
