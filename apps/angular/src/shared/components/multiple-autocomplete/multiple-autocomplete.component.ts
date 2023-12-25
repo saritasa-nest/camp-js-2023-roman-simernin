@@ -11,7 +11,9 @@ import {
 	debounceTime,
 	distinctUntilChanged,
 	finalize,
+	map,
 	shareReplay,
+	startWith,
 	switchMap,
 	tap,
 } from 'rxjs';
@@ -60,9 +62,9 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 		pageSize: 50,
 	};
 
-	private onMultipleAutocompleteChanged: MultipleAutocompleteChangedFunction | null = null;
+	private onMultipleAutocompleteChanged: MultipleAutocompleteChangedFunction = () => undefined;
 
-	private onMultipleAutocompleteTouched: MultipleAutocompleteTouchedFunction | null = null;
+	private onMultipleAutocompleteTouched: MultipleAutocompleteTouchedFunction = () => undefined;
 
 	private readonly itemIdentityToAdd$ = new Subject<string | number>();
 
@@ -79,16 +81,32 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	protected readonly totalItems$: Observable<Pagination<MultipleAutocompleteItem>>;
 
 	/** Multiple autocomplete parameters. */
-	protected readonly parameters$ = new BehaviorSubject<MultipleAutocompleteParameters>({
-		search: '',
-		...this.defaultPagination,
-	});
+	protected readonly parameters$: Observable<MultipleAutocompleteParameters>;
 
 	/** Stream provides items are loading. */
 	protected readonly isItemsLoading$ = new BehaviorSubject(true);
 
+	private readonly pagination$ = new BehaviorSubject<PaginationParameters>(this.defaultPagination);
+
 	public constructor() {
 		this.itemNameControl = this.formBuilder.control<string>('');
+
+		const search$ = this.itemNameControl.valueChanges
+			.pipe(
+				startWith(''),
+				distinctUntilChanged(),
+		);
+
+		this.parameters$ = combineLatest([
+			search$,
+			this.pagination$,
+		]).pipe(
+			map(([search, pagination]) => ({
+				search,
+				...pagination,
+			})),
+		);
+	
 
 		this.totalItems$ = this.parameters$.pipe(
 			tap(() => this.isItemsLoading$.next(true)),
@@ -101,7 +119,6 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 	/** @inheritdoc */
 	public ngOnInit(): void {
-		this.subscribeToItemSearch();
 		this.subscribeToItemAdd();
 	}
 
@@ -173,34 +190,34 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 
 	/**
 	 * Scroll to next page.
-	 * @param previousParameters - Previous multiple autocomplete parameters.
+	 * @param previousPagination - Previous pagination.
 	 * @param totalCount - Total count.
 	 */
-	protected scrollToNextPage(previousParameters: MultipleAutocompleteParameters, totalCount: number): void {
-		const lastPageNumber = Math.ceil(totalCount / previousParameters.pageSize);
+	protected scrollToNextPage(previousPagination: PaginationParameters, totalCount: number): void {
+		const lastPageNumber = Math.ceil(totalCount / previousPagination.pageSize);
 
-		if (previousParameters.pageNumber === lastPageNumber) {
+		if (previousPagination.pageNumber === lastPageNumber) {
 			return;
 		}
 
-		this.parameters$.next({
-			...previousParameters,
-			pageNumber: previousParameters.pageNumber + 1,
+		this.pagination$.next({
+			pageSize: previousPagination.pageSize,
+			pageNumber: previousPagination.pageNumber + 1,
 		});
 	}
 
 	/**
 	 * Scroll to previous page.
-	 * @param previousParameters - Previous multiple autocomplete parameters.
+	 * @param previousPagination - Previous pagination.
 	 */
-	protected scrollToPreviousPage(previousParameters: MultipleAutocompleteParameters): void {
-		if (previousParameters.pageNumber === 1) {
+	protected scrollToPreviousPage(previousPagination: PaginationParameters): void {
+		if (previousPagination.pageNumber === 1) {
 			return;
 		}
 
-		this.parameters$.next({
-			...previousParameters,
-			pageNumber: previousParameters.pageNumber - 1,
+		this.pagination$.next({
+			pageSize: previousPagination.pageSize,
+			pageNumber: previousPagination.pageNumber - 1,
 		});
 	}
 
@@ -211,20 +228,6 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	 */
 	protected trackItem(index: number, item: MultipleAutocompleteItem): string {
 		return item.name;
-	}
-
-	private subscribeToItemSearch(): void {
-		this.itemNameControl.valueChanges
-			.pipe(
-				distinctUntilChanged(),
-				tap(itemNameToSearch =>
-					this.parameters$.next({
-						search: itemNameToSearch,
-						...this.defaultPagination,
-					})),
-				takeUntilDestroyed(this.destroyRef),
-			)
-			.subscribe();
 	}
 
 	private subscribeToItemAdd(): void {
@@ -241,7 +244,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 	}
 
 	private addItem(itemIdentity: number | string, totalItems: readonly MultipleAutocompleteItem[]): void {
-		this.onMultipleAutocompleteTouched?.();
+		this.onMultipleAutocompleteTouched();
 		this.itemNameControl.reset();
 
 		const isItemAdded =
@@ -253,7 +256,7 @@ export class MultipleAutocompleteComponent implements OnInit, ControlValueAccess
 			return;
 		}
 
-		this.onMultipleAutocompleteChanged?.(this.addedItems);
+		this.onMultipleAutocompleteChanged(this.addedItems);
 	}
 
 	private trySelectItem(itemIdToSelect: number, totalItems: readonly MultipleAutocompleteItem[]): boolean {

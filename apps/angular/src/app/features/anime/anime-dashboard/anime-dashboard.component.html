@@ -22,8 +22,8 @@
         matSort  
         [dataSource]="paginatedAnime.results" 
         (matSortChange)="handleSortingChange($event)"
-        [matSortActive]="initialSortingParameters.field ?? '' "
-        [matSortDirection]="initialSortingParameters.direction ?? '' ">
+        [matSortActive]="initialSortingParameters.field"
+        [matSortDirection]="initialSortingParameters.direction">
 
         <caption class="anime-table__caption">Anime table</caption>
   
