@@ -1,0 +1,18 @@
+.registrationFormContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.registrationFormContainer__form {
+  width: 300px;
+}
+
+.registrationForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.registrationForm__loginLink {
+  text-align: center;
+}

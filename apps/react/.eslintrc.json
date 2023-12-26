@@ -5,6 +5,7 @@
     "project": ["apps/react/tsconfig.*?.json"]
   },
   "rules": {
+    "arrow-body-style": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-ordering": "off",
     "@typescript-eslint/naming-convention": "off",

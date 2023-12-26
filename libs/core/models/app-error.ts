@@ -2,10 +2,11 @@
 export class AppError extends Error {
 
 	/** Error messages. */
-	public readonly errorMessages: readonly string[];
+	public readonly errorMessages: string[];
 
-	public constructor(errorMessages: readonly string[]) {
+	public constructor(errorMessages: string[]) {
 		super();
+		super.message = errorMessages.toString();
 		this.errorMessages = errorMessages;
 	}
 }

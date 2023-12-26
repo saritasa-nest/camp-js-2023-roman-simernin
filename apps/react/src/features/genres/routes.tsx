@@ -6,10 +6,15 @@ const GenresPage = lazy(() => import('./pages/GenresPage').then(module => ({ def
 export const genresRoutes: RouteObject[] = [
 	{
 		path: 'genres',
-		element: <GenresPage />,
-	},
-	{
-		path: '*',
-		element: <Navigate to="GenresPage" />,
+		children: [
+			{
+				path: '',
+				element: <GenresPage />,
+			},
+			{
+				path: '*',
+				element: <Navigate to="" />,
+			},
+		],
 	},
 ];
